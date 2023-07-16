@@ -75,4 +75,12 @@ public class UserController {
         userRepository.deleteById(id);
         return "redirect:/users";
     }
+
+    @GetMapping("/viewAccount")
+    public String viewAccount(Long id, Model model) {
+        List<User> users;
+        users = userRepository.findUserById(id);
+        model.addAttribute("users", users);
+        return "viewAccount";
+    }
 }

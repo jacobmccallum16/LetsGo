@@ -50,29 +50,24 @@
 				<th>Admin</th>
 				<th>Username</th>
 				<th>User Status</th>
-				<th>Created At</th>
+				<th>Account</th>
 				<th>Edit</th>
 				<th>Delete</th>
 			</tr>
 			</thead>
 			<tbody class="table-group-divider border-indigo-subtle">
-			<tr th:each="p:${listUsers}">
-				<td th:text="${p.id}"></td>
-				<td th:text="${p.firstName}"></td>
-				<td th:text="${p.lastName}"></td>
-				<td th:text="${p.email}"></td>
-				<td th:text="${p.password}"></td>
-				<td th:text="${p.isAdmin}"></td>
-				<td th:text="${p.username}"></td>
-				<td th:text="${p.userStatus}"></td>
-				<td th:text="${p.createdAt}"></td>
-				<td>
-					<a class="btn btn-sm btn-info" th:href="@{editUser(id=${p.id})}">Edit</a>
-				</td>
-				<td>
-					<a th:href="@{deleteUser(id=${p.id})}" class="btn btn-danger btn-sm"
-					   onclick="return confirm('Are you sure you want to delete the record ?')">Delete</a>
-				</td>
+			<tr th:each="u:${listUsers}">
+				<td th:text="${u.id}"></td>
+				<td th:text="${u.firstName}"></td>
+				<td th:text="${u.lastName}"></td>
+				<td th:text="${u.email}"></td>
+				<td th:text="${u.password}"></td>
+				<td th:text="${u.isAdmin}"></td>
+				<td th:text="${u.username}"></td>
+				<td th:text="${u.userStatus}"></td>
+				<td><a class="btn btn-sm btn-outline-primary" th:href="@{viewAccount(id=${u.id})}">View Account</a></td>
+				<td><a class="btn btn-sm btn-info" th:href="@{editUser(id=${u.id})}">Edit</a></td>
+				<td><a th:href="@{deleteUser(id=${u.id})}" class="btn btn-danger btn-sm" onclick="return confirm('Are you sure you want to delete the record ?')">Delete</a></td>
 			</tr>
 			</tbody>
 		</table>
