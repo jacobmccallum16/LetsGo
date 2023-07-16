@@ -21,14 +21,14 @@ public class LetsGoV1Application {
     @Bean
     CommandLineRunner commandLineRunner(UserRepository userRepository) {
         return args -> {
-          userRepository.save(
-                  new User(null, "First", "Last",
-                          "firstlast@gmail.com", "password", false,
-                          "fLast", "inactive", 0,
-                          0.0, 0.0, 0.0,
-                          new Timestamp(System.currentTimeMillis()),
-                          new Timestamp(System.currentTimeMillis())
-          ));
+//          userRepository.save(
+//                  new User(null, "First", "Last",
+//                          "firstlast@gmail.com", "password", false,
+//                          "fLast", "inactive", 0,
+//                          0.0, 0.0, 0.0,
+//                          new Timestamp(System.currentTimeMillis()),
+//                          new Timestamp(System.currentTimeMillis())
+//          ));
         };
     }
 }

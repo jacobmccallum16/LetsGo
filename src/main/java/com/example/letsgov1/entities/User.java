@@ -18,13 +18,13 @@ public class User {
     private String lastName;
     private String email;
     private String password;
-    private Boolean isAdmin;
+    private Boolean isAdmin = false;
     private String username;
-    private String userStatus;
-    private Integer timesRated;
-    private Double overallSafetyScore;
-    private Double overallSafetyRating;
-    private Double overallResponsibilityRating;
+    private String userStatus = "inactive";
+    private Integer timesRated = 0;
+    private Double overallSafetyScore = 0.0;
+    private Double overallSafetyRating = 0.0;
+    private Double overallResponsibilityRating = 0.0;
     private Timestamp createdAt;
     private Timestamp updatedAt;
 }
