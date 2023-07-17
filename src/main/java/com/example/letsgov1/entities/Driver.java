@@ -13,7 +13,7 @@ import java.sql.Timestamp;
 @NoArgsConstructor
 public class Driver {
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY) Integer driverId;
-    @OneToOne @JoinColumn(name = "user_id") User user;
+    @OneToOne(optional = false, mappedBy = "driver") User user;
     Boolean isActive = false;
     String driverStatus = "inactive";
     Integer tripsDriver = 0;

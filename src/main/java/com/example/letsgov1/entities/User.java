@@ -28,8 +28,9 @@ public class User {
     Timestamp updatedAt;
     @OneToOne(mappedBy = "user", cascade = CascadeType.ALL, optional = false)
     Rider rider;
-    @OneToOne(mappedBy = "user", cascade = CascadeType.ALL, optional = false)
-    Driver driver;
+    @OneToOne(optional=false)
+    @JoinColumn(name="user_id", unique=true, nullable=false, updatable=false)
+    public Driver driver;
 
     public User(String firstName, String lastName) {
         this.firstName = firstName;
