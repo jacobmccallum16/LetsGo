@@ -28,17 +28,22 @@ public class User {
     Timestamp updatedAt;
     @OneToOne(mappedBy = "user", cascade = CascadeType.ALL, optional = false)
     Rider rider;
+    @OneToOne(mappedBy = "user", cascade = CascadeType.ALL, optional = false)
+    Driver driver;
 
-    public void setRider(Rider rider) {
-        if (rider == null) {
-            if (this.rider != null) {
-                this.rider.setUser(null);
-            }
-        }
-        else {
-            rider.setUser(this);
-        }
-        this.rider = rider;
+    public User(String firstName, String lastName) {
+        this.firstName = firstName;
+        this.lastName = lastName;
+        email = firstName.toLowerCase() + lastName.toLowerCase() + "@gmail.com";
+        password = firstName.toLowerCase() + lastName.toLowerCase();
+        isAdmin = false;
+        username = firstName.toLowerCase() + lastName.toLowerCase();
+        userStatus = "inactive";
+        timesRated = 0;
+        overallSafetyScore = 0f;
+        overallSafetyRating = 0f;
+        overallResponsibilityRating = 0f;
+        createdAt = new Timestamp(System.currentTimeMillis());
+        updatedAt = new Timestamp(System.currentTimeMillis());
     }
-
 }

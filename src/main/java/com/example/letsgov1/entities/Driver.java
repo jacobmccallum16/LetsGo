@@ -1,9 +1,6 @@
 package com.example.letsgov1.entities;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -15,7 +12,8 @@ import java.sql.Timestamp;
 @AllArgsConstructor
 @NoArgsConstructor
 public class Driver {
-    @Id @GeneratedValue(strategy = GenerationType.IDENTITY) Integer userId = 0;
+    @Id @GeneratedValue(strategy = GenerationType.IDENTITY) Integer driverId;
+    @OneToOne @JoinColumn(name = "user_id") User user;
     Boolean isActive = false;
     String driverStatus = "inactive";
     Integer tripsDriver = 0;
@@ -25,8 +23,10 @@ public class Driver {
     Float driverResponsibilityRating = 0f;
     Timestamp createdAt;
     Timestamp updatedAt;
-    public Driver(Integer id) {
-        userId = id;
+    public Driver(User user) {
+        this.user = user;
+        isActive = false;
+        driverStatus = "inactive";
         createdAt = new Timestamp(System.currentTimeMillis());
         updatedAt = new Timestamp(System.currentTimeMillis());
     }

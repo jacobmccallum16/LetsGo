@@ -74,37 +74,37 @@
 			<tr>
 				<th>firstName: </th><td th:text="${u.firstName}"></td><td></td>
 				<th>riderId: </th><td th:text="${u.rider.riderId}"></td><td></td>
-				<th>driverId: </th><td></td>
+				<th>driverId: </th><td th:text="${u.driver.driverId}"></td>
 			</tr>
 			<tr>
 				<th>lastName: </th><td th:text="${u.lastName}"></td><td></td>
 				<th>isActive: </th><td th:text="${u.rider.isActive}"></td><td></td>
-				<th>isActive: </th><td></td>
+				<th>isActive: </th><td th:text="${u.driver.isActive}"></td>
 			</tr>
 			<tr>
 				<th>userStatus: </th><td th:text="${u.userStatus}"></td><td></td>
 				<th>riderStatus: </th><td th:text="${u.rider.riderStatus}"></td><td></td>
-				<th>driverStatus: </th><td></td>
+				<th>driverStatus: </th><td th:text="${u.driver.driverStatus}"></td>
 			</tr>
 			<tr>
 				<th>timesRated: </th><td th:text="${u.timesRated}"></td><td></td>
 				<th>timesRated: </th><td th:text="${u.rider.timesRated}"></td><td></td>
-				<th>timesRated: </th><td></td>
+				<th>timesRated: </th><td th:text="${u.driver.timesRated}"></td>
 			</tr>
 			<tr>
 				<th>overallSafetyScore: </th><td th:text="${u.overallSafetyScore}"></td><td></td>
 				<th>riderSafetyScore: </th><td th:text="${u.rider.riderSafetyScore}"></td><td></td>
-				<th>driverSafetyScore: </th><td></td>
+				<th>driverSafetyScore: </th><td th:text="${u.driver.driverSafetyScore}"></td>
 			</tr>
 			<tr>
 				<th>overallSafetyRating: </th><td th:text="${u.overallSafetyRating}"></td><td></td>
 				<th>riderSafetyRating: </th><td th:text="${u.rider.riderSafetyRating}"></td><td></td>
-				<th>driverSafetyScore: </th><td></td>
+				<th>driverSafetyRating: </th><td th:text="${u.driver.driverSafetyRating}"></td>
 			</tr>
 			<tr>
 				<th>overallResponsibilityRating: </th><td th:text="${u.overallResponsibilityRating}"></td><td></td>
 				<th>riderResponsibilityRating: </th><td th:text="${u.rider.riderResponsibilityRating}"></td><td></td>
-				<th>driverResponsibilityRating: </th><td></td>
+				<th>driverResponsibilityRating: </th><td th:text="${u.driver.driverResponsibilityRating}"></td>
 			</tr>
 			<tr>
 				<th>email: </th><td th:text="${u.email}"></td><td colspan="6"></td>
@@ -121,12 +121,12 @@
 			<tr>
 				<th>createdAt: </th><td th:text="${u.createdAt}"></td><td></td>
 				<th></th><td th:text="${u.rider.createdAt}"></td><td></td>
-				<th></th><td></td>
+				<th></th><td th:text="${u.driver.createdAt}"></td>
 			</tr>
 			<tr>
 				<th>updatedAt: </th><td th:text="${u.updatedAt}"></td><td></td>
 				<th></th><td th:text="${u.rider.updatedAt}"></td><td></td>
-				<th></th><td></td>
+				<th></th><td th:text="${u.rider.updatedAt}"></td>
 			</tr>
 			</tbody>
 		</table>

@@ -54,8 +54,8 @@ public class UserController {
         return "newUser";
     }
 
-    @PostMapping("/createNewUser")
-    public String save(Model model, User user, BindingResult bindingResult,
+    @PostMapping("/createUser")
+    public String createUser(Model model, User user, BindingResult bindingResult,
                        ModelMap mm, HttpSession session) {
         if (bindingResult.hasErrors()) {
             return "newUser";
@@ -67,7 +67,13 @@ public class UserController {
             user.setOverallResponsibilityRating(0f);
             user.setCreatedAt(new Timestamp(System.currentTimeMillis()));
             user.setUpdatedAt(new Timestamp(System.currentTimeMillis()));
+            Rider rider = new Rider(user);
+            Driver driver = new Driver(user);
+            user.setRider(rider);
+            user.setDriver(driver);
             userRepository.save(user);
+            driverRepository.save(driver);
+            riderRepository.save(rider);
             return "redirect:users";
         }
     }
@@ -80,11 +86,11 @@ public class UserController {
         riderRepository.save(new Rider(user));
         return viewAccount(id, model);
     }
-
     @GetMapping("/createDriver")
     public String createDriver(Integer id, Model model, Driver driver) {
-        model.addAttribute("driver", new Driver(id));
-        driverRepository.save(driver);
+        User user = userRepository.findUserByUserId(id).get(0);
+        model.addAttribute("driver", new Driver(user));
+        driverRepository.save(new Driver(user));
         return viewAccount(id, model);
     }
 
