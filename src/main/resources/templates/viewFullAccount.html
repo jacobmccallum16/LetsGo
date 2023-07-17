@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+	<meta charset="UTF-8">
+	<title>Let's Go!</title>
+	<link rel="stylesheet" th:href="@{/bootstrap-LetsGo.css}">
+	<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js"></script>
+	<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.min.js"></script>
+	<style>
+		tbody th {text-align: right}
+		tbody td {text-align: left}
+	</style>
+</head>
+<body>
+<nav class="navbar navbar-expand-sm bg-light" data-bs-theme="light">
+	<div class="container-sm">
+		<a class="navbar-brand bg-indigo-600 rounded-pill px-3 text-info fw-bold fst-italic" th:href="@{/index}">Let's Go!</a>
+		<button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+			<span class="navbar-toggler-icon"></span>
+		</button>
+		<div class="collapse navbar-collapse" id="navbarSupportedContent">
+			<ul class="navbar-nav me-auto mb-2 mb-lg-0">
+				<li class="nav-item">
+					<a class="nav-link link-primary" th:href="@{/index}">Home</a>
+				</li>
+				<li class="nav-item dropdown">
+					<a class="nav-link link-primary dropdown-toggle" th:href="@{/users}" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+						Users
+					</a>
+					<ul class="dropdown-menu">
+						<li><a class="dropdown-item link-primary" th:href="@{/users}">List of Users</a></li>
+						<li><hr class="dropdown-divider"></li>
+						<li><a class="dropdown-item link-primary" th:href="@{/newUser}">Create New User</a></li>
+					</ul>
+				</li>
+			</ul>
+			<form class="d-flex" role="search"method="get" th:action="@{/users}">
+				<input class="form-control me-2" type="search" placeholder="Search User" name="keyId" aria-label="Search">
+				<button class="btn btn-outline-info" type="submit">Search</button>
+			</form>
+		</div>
+	</div>
+</nav>
+<main class="container-sm text-center">
+	<section th:each="u:${users}">
+		<h1>Hello <span th:text="${u.firstName}"></span> <span th:text="${u.lastName}"></span></h1>
+		<table class="table table-striped table-hover table-sm align-middle">
+			<thead class="table-dark">
+			<tr>
+				<th colspan="2">User</th>
+				<th></th>
+				<th colspan="2">Rider</th>
+				<th></th>
+				<th colspan="2">Driver</th>
+			</tr>
+			<tr>
+				<th colspan="2"></th>
+				<th></th>
+				<th colspan="2">
+					<a th:href="@{createRider(id=${u.userId})}" class="btn btn-primary btn-sm">Create Rider Account</a>
+				</th>
+				<th></th>
+				<th colspan="2">
+					<a th:href="@{createDriver(id=${u.userId})}" class="btn btn-primary btn-sm">Create Driver Account</a>
+				</th>
+			</tr>
+			</thead>
+			<tbody class="table-group-divider border-indigo-subtle">
+			<tr>
+				<th>userID: </th><td th:text="${u.userId}"></td><td></td>
+				<th>userID: </th><td th:text="${u.rider.user.userId}"></td><td></td>
+				<th>userID: </th><td th:text="${u.userId}"></td>
+			</tr>
+			<tr>
+				<th>firstName: </th><td th:text="${u.firstName}"></td><td></td>
+				<th>riderId: </th><td th:text="${u.rider.riderId}"></td><td></td>
+				<th>driverId: </th><td></td>
+			</tr>
+			<tr>
+				<th>lastName: </th><td th:text="${u.lastName}"></td><td></td>
+				<th>isActive: </th><td th:text="${u.rider.isActive}"></td><td></td>
+				<th>isActive: </th><td></td>
+			</tr>
+			<tr>
+				<th>userStatus: </th><td th:text="${u.userStatus}"></td><td></td>
+				<th>riderStatus: </th><td th:text="${u.rider.riderStatus}"></td><td></td>
+				<th>driverStatus: </th><td></td>
+			</tr>
+			<tr>
+				<th>timesRated: </th><td th:text="${u.timesRated}"></td><td></td>
+				<th>timesRated: </th><td th:text="${u.rider.timesRated}"></td><td></td>
+				<th>timesRated: </th><td></td>
+			</tr>
+			<tr>
+				<th>overallSafetyScore: </th><td th:text="${u.overallSafetyScore}"></td><td></td>
+				<th>riderSafetyScore: </th><td th:text="${u.rider.riderSafetyScore}"></td><td></td>
+				<th>driverSafetyScore: </th><td></td>
+			</tr>
+			<tr>
+				<th>overallSafetyRating: </th><td th:text="${u.overallSafetyRating}"></td><td></td>
+				<th>riderSafetyRating: </th><td th:text="${u.rider.riderSafetyRating}"></td><td></td>
+				<th>driverSafetyScore: </th><td></td>
+			</tr>
+			<tr>
+				<th>overallResponsibilityRating: </th><td th:text="${u.overallResponsibilityRating}"></td><td></td>
+				<th>riderResponsibilityRating: </th><td th:text="${u.rider.riderResponsibilityRating}"></td><td></td>
+				<th>driverResponsibilityRating: </th><td></td>
+			</tr>
+			<tr>
+				<th>email: </th><td th:text="${u.email}"></td><td colspan="6"></td>
+			</tr>
+			<tr>
+				<th>password: </th><td th:text="${u.password}"></td><td colspan="6"></td>
+			</tr>
+			<tr>
+				<th>isAdmin: </th><td th:text="${u.isAdmin}"></td><td colspan="6"></td>
+			</tr>
+			<tr>
+				<th>username: </th><td th:text="${u.username}"></td><td colspan="6"></td>
+			</tr>
+			<tr>
+				<th>createdAt: </th><td th:text="${u.createdAt}"></td><td></td>
+				<th></th><td th:text="${u.rider.createdAt}"></td><td></td>
+				<th></th><td></td>
+			</tr>
+			<tr>
+				<th>updatedAt: </th><td th:text="${u.updatedAt}"></td><td></td>
+				<th></th><td th:text="${u.rider.updatedAt}"></td><td></td>
+				<th></th><td></td>
+			</tr>
+			</tbody>
+		</table>
+	</section>
+</main>
+</body>
+</html>

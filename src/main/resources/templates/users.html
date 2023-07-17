@@ -58,7 +58,7 @@
 				</thead>
 				<tbody class="table-group-divider border-indigo-subtle">
 				<tr th:each="u:${listUsers}">
-					<td th:text="${u.id}"></td>
+					<td th:text="${u.userId}"></td>
 					<td th:text="${u.firstName}"></td>
 					<td th:text="${u.lastName}"></td>
 					<td th:text="${u.email}"></td>
@@ -66,9 +66,10 @@
 					<td th:text="${u.isAdmin}"></td>
 					<td th:text="${u.username}"></td>
 					<td th:text="${u.userStatus}"></td>
-					<td><a class="btn btn-sm btn-outline-primary" th:href="@{viewAccount(id=${u.id})}">View Account</a></td>
-					<td><a class="btn btn-sm btn-info" th:href="@{editUser(id=${u.id})}">Edit</a></td>
-					<td><a th:href="@{deleteUser(id=${u.id})}" class="btn btn-danger btn-sm" onclick="return confirm('Are you sure you want to delete the record ?')">Delete</a></td>
+					<td><a class="btn btn-sm btn-outline-info" th:href="@{viewFullAccount(id=${u.userId})}">View Full Account</a>
+						<a class="btn btn-sm btn-outline-primary" th:href="@{viewAccount(id=${u.userId})}">View Account</a></td>
+					<td><a class="btn btn-sm btn-info" th:href="@{editUser(id=${u.userId})}">Edit</a></td>
+					<td><a th:href="@{deleteUser(id=${u.userId})}" class="btn btn-danger btn-sm" onclick="return confirm('Are you sure you want to delete the record ?')">Delete</a></td>
 				</tr>
 				</tbody>
 			</table>

@@ -53,16 +53,27 @@
 					<th></th>
 					<th colspan="2">Driver</th>
 				</tr>
+				<tr>
+					<th colspan="2"></th>
+					<th></th>
+					<th colspan="2">
+						<a th:href="@{createRider(id=${u.userId})}" class="btn btn-primary btn-sm">Create Rider Account</a>
+					</th>
+					<th></th>
+					<th colspan="2">
+						<a th:href="@{createDriver(id=${u.userId})}" class="btn btn-primary btn-sm">Create Driver Account</a>
+					</th>
+				</tr>
 				</thead>
 				<tbody class="table-group-divider border-indigo-subtle">
 					<tr>
-						<th>userID: </th><td th:text="${u.id}"></td><td></td>
-						<th>userID: </th><td th:text="${u.id}"></td><td></td>
-						<th>userID: </th><td th:text="${u.id}"></td>
+						<th>userID: </th><td th:text="${u.userId}"></td><td></td>
+						<th>userID: </th><td th:text="${u.userId}"></td><td></td>
+						<th>userID: </th><td th:text="${u.userId}"></td>
 					</tr>
 					<tr>
 						<th>firstName: </th><td th:text="${u.firstName}"></td><td></td>
-						<th>riderId: </th><td></td><td></td>
+<!--						<th>riderId: </th><td></td><td th:text="${u.rider.riderId}"></td>-->
 						<th>driverId: </th><td></td>
 					</tr>
 					<tr>

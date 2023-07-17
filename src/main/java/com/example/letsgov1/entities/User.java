@@ -12,19 +12,33 @@ import java.sql.Timestamp;
 @NoArgsConstructor
 @Entity
 public class User {
-    @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
-    private String firstName;
-    private String lastName;
-    private String email;
-    private String password;
-    private Boolean isAdmin = false;
-    private String username;
-    private String userStatus = "inactive";
-    private Integer timesRated = 0;
-    private Double overallSafetyScore = 0.0;
-    private Double overallSafetyRating = 0.0;
-    private Double overallResponsibilityRating = 0.0;
-    private Timestamp createdAt;
-    private Timestamp updatedAt;
+    @Id @GeneratedValue(strategy = GenerationType.IDENTITY) Integer userId;
+    String firstName;
+    String lastName;
+    String email = firstName + lastName + "@gmail.com";
+    String password = firstName + lastName;
+    Boolean isAdmin = false;
+    String username = firstName + lastName;
+    String userStatus = "inactive";
+    Integer timesRated = 0;
+    Float overallSafetyScore = 0f;
+    Float overallSafetyRating = 0f;
+    Float overallResponsibilityRating = 0f;
+    Timestamp createdAt;
+    Timestamp updatedAt;
+    @OneToOne(mappedBy = "user", cascade = CascadeType.ALL, optional = false)
+    Rider rider;
+
+    public void setRider(Rider rider) {
+        if (rider == null) {
+            if (this.rider != null) {
+                this.rider.setUser(null);
+            }
+        }
+        else {
+            rider.setUser(this);
+        }
+        this.rider = rider;
+    }
+
 }
