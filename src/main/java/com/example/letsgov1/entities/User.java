@@ -11,40 +11,41 @@ import java.sql.Timestamp;
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity
+@Inheritance(strategy = InheritanceType.JOINED)
 public class User {
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY) Integer userId;
     String firstName;
     String lastName;
-    String email = firstName + lastName + "@gmail.com";
-    String password = firstName + lastName;
-    Boolean isAdmin = false;
-    String username = firstName + lastName;
-    String userStatus = "inactive";
-    Integer timesRated = 0;
-    Float overallSafetyScore = 0f;
-    Float overallSafetyRating = 0f;
-    Float overallResponsibilityRating = 0f;
-    Timestamp createdAt;
-    Timestamp updatedAt;
-    @OneToOne(mappedBy = "user", cascade = CascadeType.ALL, optional = false)
-    Rider rider;
-    @OneToOne(optional=false)
-    @JoinColumn(name="user_id", unique=true, nullable=false, updatable=false)
-    public Driver driver;
+    String email;
+    String password;
+    @Column(columnDefinition = "BOOLEAN DEFAULT FALSE") Boolean isAdmin = false;
+    String username;
+    @Column(columnDefinition = "BOOLEAN DEFAULT FALSE") Boolean isActive = false;
+    @Column(columnDefinition = "VARCHAR(255) DEFAULT 'inactive'") String userStatus = "inactive";
+    @Column(columnDefinition = "INTEGER DEFAULT '0'") Integer timesRated = 0;
+    @Column(columnDefinition = "FLOAT DEFAULT '0'") Float overallSafetyScore = 0f;
+    @Column(columnDefinition = "FLOAT DEFAULT '0'") Float overallSafetyRating = 0f;
+    @Column(columnDefinition = "FLOAT DEFAULT '0'") Float overallResponsibilityRating = 0f;
+    @Column(columnDefinition = "TIMESTAMP DEFAULT CURRENT_TIMESTAMP") Timestamp createdAt;
+    @Column(columnDefinition = "TIMESTAMP DEFAULT CURRENT_TIMESTAMP") Timestamp updatedAt;
+    @OneToOne(mappedBy = "user", cascade = CascadeType.ALL, fetch = FetchType.LAZY) Rider rider;
+    @OneToOne(mappedBy = "user", cascade = CascadeType.ALL, fetch = FetchType.LAZY) Driver driver;
 
-    public User(String firstName, String lastName) {
-        this.firstName = firstName;
-        this.lastName = lastName;
-        email = firstName.toLowerCase() + lastName.toLowerCase() + "@gmail.com";
-        password = firstName.toLowerCase() + lastName.toLowerCase();
-        isAdmin = false;
-        username = firstName.toLowerCase() + lastName.toLowerCase();
-        userStatus = "inactive";
-        timesRated = 0;
-        overallSafetyScore = 0f;
-        overallSafetyRating = 0f;
-        overallResponsibilityRating = 0f;
-        createdAt = new Timestamp(System.currentTimeMillis());
+    public Boolean updateIsActive() {
+        if (userStatus != "banned") {
+            if (rider.isActive || driver.isActive) {
+                isActive = true;
+                userStatus = "active";
+            } else {
+                isActive = false;
+                userStatus = "inactive";
+            }
+        } else {
+            isActive = false;
+            userStatus = "banned";
+        }
         updatedAt = new Timestamp(System.currentTimeMillis());
+        return isActive;
     }
+
 }

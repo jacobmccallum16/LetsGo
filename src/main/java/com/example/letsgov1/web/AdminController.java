@@ -1,7 +1,11 @@
 package com.example.letsgov1.web;
 
-import com.example.letsgov1.entities.*;
-import com.example.letsgov1.repositories.*;
+import com.example.letsgov1.entities.Driver;
+import com.example.letsgov1.entities.Rider;
+import com.example.letsgov1.entities.User;
+import com.example.letsgov1.repositories.DriverRepository;
+import com.example.letsgov1.repositories.RiderRepository;
+import com.example.letsgov1.repositories.UserRepository;
 import jakarta.servlet.http.HttpSession;
 import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,24 +22,19 @@ import java.util.List;
 
 @Controller
 @AllArgsConstructor
-public class UserController {
+public class AdminController {
 
     @Autowired
     private UserRepository userRepository;
     private RiderRepository riderRepository;
     private DriverRepository driverRepository;
 
-    @GetMapping("/")
-    public String redirectIndex() {
-        return "redirect:/index";
+    @GetMapping("/admin")
+    public String adminHome() {
+            return "redirect:/users";
     }
 
-    @GetMapping("/index")
-    public String redirectUsers() {
-        return "redirect:/users";
-    }
-
-    @GetMapping("/users")
+    @GetMapping("/admin/users")
     public String users(Model model, @RequestParam(name="keyId",defaultValue = "") String keyId) {
         List<User> users;
         if (keyId.isEmpty()) {
@@ -48,15 +47,16 @@ public class UserController {
         return "users";
     }
 
-    @GetMapping("/newUser")
+
+    @GetMapping("/admin/newUser")
     public String newUser(Model model){
         model.addAttribute("user", new User());
         return "newUser";
     }
 
-    @PostMapping("/createUser")
+    @PostMapping("/admin/createUser")
     public String createUser(Model model, User user, BindingResult bindingResult,
-                       ModelMap mm, HttpSession session) {
+                             ModelMap mm, HttpSession session) {
         if (bindingResult.hasErrors()) {
             return "newUser";
         } else {
@@ -78,21 +78,21 @@ public class UserController {
         }
     }
 
-    @GetMapping("/deleteUser")
+    @GetMapping("/admin/deleteUser")
     public String deleteUser(Integer id){
         userRepository.deleteById(id);
         return "redirect:/users";
     }
 
-    @GetMapping("/viewAccount")
-    public String viewFullAccount(Integer id, Model model) {
+    @GetMapping("/admin/viewAccount")
+    public String viewAccount(Integer id, Model model) {
         List<User> users;
         users = userRepository.findUserByUserId(id);
         model.addAttribute("users", users);
         return "viewAccount";
     }
 
-    @GetMapping("activateRider")
+    @GetMapping("/admin/activateRider")
     public String activateRider(Integer id, Model model) {
         List<User> users = userRepository.findUserByUserId(id);
         model.addAttribute("users", users);
@@ -104,7 +104,7 @@ public class UserController {
         userRepository.save(user);
         return "viewAccount";
     }
-    @GetMapping("activateDriver")
+    @GetMapping("/admin/activateDriver")
     public String activateDriver(Integer id, Model model) {
         List<User> users = userRepository.findUserByUserId(id);
         model.addAttribute("users", users);

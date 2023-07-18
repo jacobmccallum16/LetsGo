@@ -13,7 +13,7 @@ import java.sql.Timestamp;
 @NoArgsConstructor
 public class Rider {
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY) Integer riderId;
-    @OneToOne @JoinColumn(name = "user_id") User user;
+    @OneToOne(fetch = FetchType.LAZY) @JoinColumn(name = "user_id") User user;
     @Column(columnDefinition = "BOOLEAN DEFAULT FALSE") Boolean isActive;
     @Column(columnDefinition = "VARCHAR(255) DEFAULT 'inactive'") String riderStatus;
     @Column(columnDefinition = "INTEGER DEFAULT '0'") Integer tripsTaken = 0;
@@ -29,5 +29,20 @@ public class Rider {
         riderStatus = "inactive";
         createdAt = new Timestamp(System.currentTimeMillis());
         updatedAt = new Timestamp(System.currentTimeMillis());
+    }
+    public Boolean toggleIsActive() {
+        if (riderStatus != "banned") {
+            if (!isActive) {
+                isActive = true;
+                riderStatus = "active";
+            } else {
+                isActive = false;
+                riderStatus = "inactive";
+            }
+        } else {
+            isActive = false;
+        }
+        updatedAt = new Timestamp(System.currentTimeMillis());
+        return isActive;
     }
 }
