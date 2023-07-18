@@ -28,8 +28,8 @@ public class User {
     @Column(columnDefinition = "FLOAT DEFAULT '0'") Float overallResponsibilityRating = 0f;
     @Column(columnDefinition = "TIMESTAMP DEFAULT CURRENT_TIMESTAMP") Timestamp createdAt;
     @Column(columnDefinition = "TIMESTAMP DEFAULT CURRENT_TIMESTAMP") Timestamp updatedAt;
-    @OneToOne(mappedBy = "user", cascade = CascadeType.ALL, fetch = FetchType.LAZY) Rider rider;
-    @OneToOne(mappedBy = "user", cascade = CascadeType.ALL, fetch = FetchType.LAZY) Driver driver;
+    @OneToOne(mappedBy = "user", cascade = CascadeType.ALL, fetch = FetchType.LAZY) public Rider rider;
+    @OneToOne(mappedBy = "user", cascade = CascadeType.ALL, fetch = FetchType.LAZY) public Driver driver;
 
     public Boolean updateIsActive() {
         if (userStatus != "banned") {
@@ -46,6 +46,13 @@ public class User {
         }
         updatedAt = new Timestamp(System.currentTimeMillis());
         return isActive;
+    }
+
+    public void updateAllTimestamps() {
+        Timestamp timestamp = new Timestamp(System.currentTimeMillis());
+        updatedAt = timestamp;
+        rider.setUpdatedAt(timestamp);
+        driver.setUpdatedAt(timestamp);
     }
 
 }
