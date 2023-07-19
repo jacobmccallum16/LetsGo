@@ -11,16 +11,15 @@ import java.sql.Timestamp;
 @Entity
 @AllArgsConstructor
 @NoArgsConstructor
-public class Routes {
-    @Id @GeneratedValue(strategy = GenerationType.IDENTITY) Integer routeId;
-    // Trips trips
-    String locationStart = "";
-    String locationEnd = "";
-    float routeDistance = 0f;
-    float routeDuration = 0f;
-    String routeStatus = "inactive";
-    // Integer[] requestedBy;
-    String routeImageSource;
+public class Vehicle {
+    @Id @GeneratedValue(strategy = GenerationType.IDENTITY) Integer vehicleId;
+    // Driver driver
+    String vehicleStatus = "inactive";
+    String name;
+    String color;
+    String type;
+    Integer seatsTotal;
+    Integer seatsAvailable;
     @Column(columnDefinition = "FLOAT DEFAULT '0'") Float driverResponsibilityRating = 0f;
     @Column(columnDefinition = "TIMESTAMP DEFAULT CURRENT_TIMESTAMP") Timestamp createdAt;
     @Column(columnDefinition = "TIMESTAMP DEFAULT CURRENT_TIMESTAMP") Timestamp updatedAt;
