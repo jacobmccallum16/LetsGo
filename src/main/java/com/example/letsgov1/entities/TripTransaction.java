@@ -17,7 +17,7 @@ public class TripTransaction {
     @ManyToOne(fetch = FetchType.LAZY) @JoinColumn(name = "trip_id") public Trip trip;
     @ManyToOne(fetch = FetchType.LAZY) @JoinColumn(name = "route_id") public Route route;
     @ManyToOne(fetch = FetchType.LAZY) @JoinColumn(name = "user_id") public User user;
-    @OneToOne(fetch = FetchType.LAZY) @JoinColumn(name = "payment_method_id") public PaymentMethod paymentMethod;
+    @ManyToOne(fetch = FetchType.LAZY) @JoinColumn(name = "payment_method_id") public PaymentMethod paymentMethod;
     @Column(columnDefinition = "BOOLEAN DEFAULT false") public Boolean isDriver = false;
     @Column(columnDefinition = "DECIMAL(8,2) DEFAULT 2") public BigDecimal baseRate = BigDecimal.valueOf(2.0);
     @Column(columnDefinition = "FLOAT DEFAULT 0") public Float tripDistance = 0f;

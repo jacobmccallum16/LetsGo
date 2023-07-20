@@ -34,7 +34,7 @@ public class Driver {
         updatedAt = new Timestamp(System.currentTimeMillis());
     }
     public Boolean toggleIsActive() {
-        if (driverStatus != "banned") {
+        if (!driverStatus.equals("banned")) {
             if (!isActive) {
                 isActive = true;
                 driverStatus = "active";

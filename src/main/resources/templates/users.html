@@ -38,9 +38,7 @@
 					<td th:text="${u.isAdmin}"></td>
 					<td th:text="${u.username}"></td>
 					<td th:text="${u.userStatus}"></td>
-					<td>
-						<a class="btn btn-sm btn-outline-primary" th:href="@{/admin/viewAccount(id=${u.userId})}">View Account</a></td>
-					</td>
+					<td><a class="btn btn-sm btn-outline-primary" th:href="@{/admin/viewAccount(id=${u.userId})}">View Account</a></td>
 					<td><a class="btn btn-sm btn-info" th:href="@{/admin/editUser(id=${u.userId})}">Edit</a></td>
 					<td><a th:href="@{/admin/deleteUser(id=${u.userId})}" class="btn btn-danger btn-sm" onclick="return confirm('Are you sure you want to delete the record ?')">Delete</a></td>
 				</tr>

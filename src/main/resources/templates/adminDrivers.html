@@ -36,9 +36,7 @@
 				<td th:text="${d.user.isAdmin.toString()}"></td>
 				<td th:text="${d.user.username}"></td>
 				<td th:text="${d.driverStatus}"></td>
-				<td>
-					<a class="btn btn-sm btn-outline-primary" th:href="@{/admin/viewAccount(id=${d.user.userId})}">View Account</a></td>
-				</td>
+				<td><a class="btn btn-sm btn-outline-primary" th:href="@{/admin/viewAccount(id=${d.user.userId})}">View Account</a></td>
 				<td><a class="btn btn-sm btn-info" th:href="@{/admin/editUser(id=${d.user.userId})}">Edit</a></td>
 				<td><a th:href="@{/admin/deleteUser(id=${d.user.userId})}" class="btn btn-danger btn-sm" onclick="return confirm('Are you sure you want to delete the record ?')">Delete</a></td>
 			</tr>

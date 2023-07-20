@@ -16,6 +16,7 @@ public class LetsGoV1Application {
     @Bean
     CommandLineRunner commandLineRunner(UserRepository userRepository) {
         return args -> {
+//            userRepository.save(new User("admin"));
 //            userRepository.save(new User("A", "B"));
 //            userRepository.save(new User("C", "D"));
 //            userRepository.save(new User("E", "F"));
@@ -29,7 +30,6 @@ public class LetsGoV1Application {
 //            userRepository.save(new User("U", "V"));
 //            userRepository.save(new User("W", "X"));
 //            userRepository.save(new User("Y", "Z"));
-//            userRepository.save(new User("admin"));
         };
     }
 }

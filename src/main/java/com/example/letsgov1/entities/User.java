@@ -74,7 +74,7 @@ public class User {
     }
 
     public Boolean updateIsActive() {
-        if (userStatus != "banned") {
+        if (!userStatus.equals("banned")) {
             if (rider.isActive || driver.isActive) {
                 isActive = true;
                 userStatus = "active";

@@ -65,7 +65,7 @@ public class AdminController {
             riders = riderRepository.findRiderByRiderId(Integer.parseInt(keyId));
         }
         for (int i = riders.size()-1; i >= 0; i--) {
-            if (riders.get(i).isActive == false) {
+            if (!riders.get(i).isActive) {
                 riders.remove(i);
             }
         }
@@ -83,7 +83,7 @@ public class AdminController {
             drivers = driverRepository.findDriverByDriverId(Integer.parseInt(keyId));
         }
         for (int i = drivers.size()-1; i >= 0; i--) {
-            if (drivers.get(i).isActive == false) {
+            if (!drivers.get(i).isActive) {
                 drivers.remove(i);
             }
         }
@@ -108,7 +108,7 @@ public class AdminController {
         if (bindingResult.hasErrors()) {
             return "newUser";
         } else {
-            if (user.getIsAdmin() == true) {user.setIsAdmin(false);}
+            if (user.getIsAdmin()) {user.setIsAdmin(false);}
             user.setTimesRated(0);
             user.setOverallSafetyScore(0f);
             user.setOverallSafetyRating(0f);

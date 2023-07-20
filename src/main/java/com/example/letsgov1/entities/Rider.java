@@ -40,7 +40,7 @@ public class Rider {
         updatedAt = new Timestamp(System.currentTimeMillis());
     }
     public Boolean toggleIsActive() {
-        if (riderStatus != "banned") {
+        if (!riderStatus.equals("banned")) {
             if (!isActive) {
                 isActive = true;
                 riderStatus = "active";
