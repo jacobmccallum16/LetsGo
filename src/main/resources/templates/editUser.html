@@ -17,40 +17,40 @@
 						<div class="card-title">Edit User</div>
 					</div>
 					<div class="card-body">
-						<form id="form" class="row g-3 p-2" method="post" th:action="@{/admin/editUser}">
+						<form id="form" class="row g-3 p-2" method="post" th:action="@{/admin/editUser}" th:object="${u}">
 							<div class="col-md-6">
 								<div class="form-floating">
-									<input type="text" id="firstName" name="firstName" class="form-control" placeholder="First Name" th:value="${u.firstName}" required autofocus>
+									<input type="text" id="firstName" name="firstName" class="form-control" placeholder="First Name" th:value="${u.firstName}" th:field="*{firstName}" th:errorClass="is-invalid" required autofocus>
 									<label for="firstName">First Name</label>
 								</div>
 							</div>
 							<div class="col-md-6">
 								<div class="form-floating">
-									<input type="text" id="lastName" name="lastName" class="form-control" placeholder="Last Name" th:value="${u.lastName}" required>
+									<input type="text" id="lastName" name="lastName" class="form-control" placeholder="Last Name" th:value="${u.lastName}" th:field="*{lastName}" th:errorClass="is-invalid" required>
 									<label for="lastName">Last Name</label>
 								</div>
 							</div>
 							<div class="col-md-6">
 								<div class="form-floating">
-									<input type="email" id="email" name="email" class="form-control" placeholder="email@example.com" th:value="${u.email}" required>
+									<input type="email" id="email" name="email" class="form-control" placeholder="email@example.com" th:value="${u.email}" th:field="*{email}" th:errorClass="is-invalid" required>
 									<label for="email">Email</label>
 								</div>
 							</div>
 							<div class="col-md-6">
 								<div class="form-floating">
-									<input type="password" id="password" name="password" class="form-control" placeholder="password" th:value="${u.password}" required>
+									<input type="password" id="password" name="password" class="form-control" placeholder="password" th:value="${u.password}" th:field="*{password}" th:errorClass="is-invalid" required>
 									<label for="password">Password</label>
 								</div>
 							</div>
 							<div class="col-md-6">
 								<div class="form-floating">
-									<input type="text" id="username" name="username" class="form-control" placeholder="username" th:value="${u.username}" required>
+								<input type="text" id="username" name="username" class="form-control" placeholder="username" th:value="${u.username}" th:field="*{username}" th:errorClass="is-invalid" required>
 									<label for="username">Username</label>
 								</div>
 							</div>
 							<div class="col-md-3">
 								<div class="form-floating">
-									<select class="form-select" id="isAdmin" name="isAdmin" th:value="${u.isAdmin}">
+									<select class="form-select" id="isAdmin" name="isAdmin" th:value="${u.isAdmin}" th:field="*{isAdmin}" th:errorClass="is-invalid">
 										<option value="0" th:selected="${u.isAdmin == false}">Not Admin</option>
 										<option value="1" th:selected="${u.isAdmin == true}">Admin</option>
 									</select>
@@ -59,7 +59,7 @@
 							</div>
 							<div class="col-md-3">
 								<div class="form-floating">
-									<select class="form-select" id="userStatus" name="userStatus" th:value="${u.userStatus}">
+									<select class="form-select" id="userStatus" name="userStatus" th:value="${u.userStatus}" th:field="*{userStatus}" th:errorClass="is-invalid">
 										<option value="inactive" th:selected="${u.userStatus == 'inactive'}">Inactive</option>
 										<option value="active" th:selected="${u.userStatus == 'active'}">Active</option>
 										<option value="banned" th:selected="${u.userStatus == 'banned'}">Banned</option>

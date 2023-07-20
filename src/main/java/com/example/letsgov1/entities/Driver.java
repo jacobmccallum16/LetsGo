@@ -6,6 +6,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.sql.Timestamp;
+import java.util.List;
 
 @Data
 @Entity
@@ -14,6 +15,8 @@ import java.sql.Timestamp;
 public class Driver {
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY) Integer driverId;
     @OneToOne(fetch = FetchType.LAZY) @JoinColumn(name = "user_id") User user;
+    @OneToMany(mappedBy = "driver", cascade = CascadeType.ALL, fetch = FetchType.LAZY) List<Vehicle> vehicle;
+    @OneToMany(mappedBy = "ratedDriver", cascade = CascadeType.ALL, fetch = FetchType.LAZY) List<DriverRating> driverRatings;
     @Column(columnDefinition = "BOOLEAN DEFAULT FALSE") Boolean isActive = false;
     @Column(columnDefinition = "VARCHAR(255) DEFAULT 'inactive'") String driverStatus = "inactive";
     @Column(columnDefinition = "INTEGER DEFAULT 0") Integer tripsDriven = 0;
