@@ -6,6 +6,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.sql.Timestamp;
+import java.util.List;
 
 @Data
 @AllArgsConstructor
@@ -14,6 +15,11 @@ import java.sql.Timestamp;
 @Inheritance(strategy = InheritanceType.JOINED)
 public class User {
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY) Integer userId;
+    @OneToOne(mappedBy = "user", cascade = CascadeType.ALL, fetch = FetchType.LAZY) public Rider rider;
+    @OneToOne(mappedBy = "user", cascade = CascadeType.ALL, fetch = FetchType.LAZY) public Driver driver;
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, fetch = FetchType.LAZY) public List<PaymentMethod> paymentMethods;
+    @OneToMany(mappedBy = "ratedByUser", cascade = CascadeType.ALL, fetch = FetchType.LAZY) public List<DriverRating> driverRatings;
+    @OneToMany(mappedBy = "ratedByUser", cascade = CascadeType.ALL, fetch = FetchType.LAZY) public List<RiderRating> riderRatings;
     String firstName;
     String lastName;
     String email;
@@ -28,8 +34,6 @@ public class User {
     @Column(columnDefinition = "FLOAT DEFAULT '0'") Float overallResponsibilityRating = 0f;
     @Column(columnDefinition = "TIMESTAMP DEFAULT CURRENT_TIMESTAMP") Timestamp createdAt;
     @Column(columnDefinition = "TIMESTAMP DEFAULT CURRENT_TIMESTAMP") Timestamp updatedAt;
-    @OneToOne(mappedBy = "user", cascade = CascadeType.ALL, fetch = FetchType.LAZY) public Rider rider;
-    @OneToOne(mappedBy = "user", cascade = CascadeType.ALL, fetch = FetchType.LAZY) public Driver driver;
 
     public Boolean updateIsActive() {
         if (userStatus != "banned") {

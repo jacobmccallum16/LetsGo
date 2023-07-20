@@ -6,6 +6,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.sql.Timestamp;
+import java.util.List;
 
 @Data
 @Entity
@@ -13,15 +14,15 @@ import java.sql.Timestamp;
 @NoArgsConstructor
 public class Route {
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY) Integer routeId;
-    // Trips trips
+    @OneToOne(mappedBy = "route", cascade = CascadeType.ALL, fetch = FetchType.LAZY) Trip trip;
+    @OneToMany(mappedBy = "route", cascade = CascadeType.ALL, fetch = FetchType.LAZY) List<TripTransaction> tripTransactions;
     String locationStart = "";
     String locationEnd = "";
-    float routeDistance = 0f;
-    float routeDuration = 0f;
+    @Column(columnDefinition = "FLOAT DEFAULT 0") float routeDistance = 0f;
+    @Column(columnDefinition = "FLOAT DEFAULT 0") float routeDuration = 0f;
     String routeStatus = "inactive";
     // Integer[] requestedBy;
     String routeImageSource;
-    @Column(columnDefinition = "FLOAT DEFAULT '0'") Float driverResponsibilityRating = 0f;
     @Column(columnDefinition = "TIMESTAMP DEFAULT CURRENT_TIMESTAMP") Timestamp createdAt;
     @Column(columnDefinition = "TIMESTAMP DEFAULT CURRENT_TIMESTAMP") Timestamp updatedAt;
 }

@@ -13,15 +13,16 @@ import java.sql.Timestamp;
 @NoArgsConstructor
 public class TripTransaction {
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY) Integer tripTransactionId;
-    // Trip trip
+    @ManyToOne(fetch = FetchType.LAZY) @JoinColumn(name = "trip_id") Trip trip;
+    @ManyToOne(fetch = FetchType.LAZY) @JoinColumn(name = "route_id") Route route;
     // User user
     // PaymentMethod paymentMethod
-    Boolean isDriver = false;
+    @Column(columnDefinition = "BOOLEAN DEFAULT false") Boolean isDriver = false;
     // Decimal baseRate;
-    Float tripDistance = 0f;
-    Float tripDuration = 0f;
-    Float surgePercent;
-    Float multipassengerAdjustment;
+    @Column(columnDefinition = "FLOAT DEFAULT 0") Float tripDistance = 0f;
+    @Column(columnDefinition = "FLOAT DEFAULT 0") Float tripDuration = 0f;
+    @Column(columnDefinition = "FLOAT DEFAULT 1") Float surgePercent = 1f;
+    @Column(columnDefinition = "FLOAT DEFAULT 1") Float multipassengerAdjustment = 1f;
     // Decimal distanceFee;
     // Decimal durationFee;
     // Decimal multipassengerDiscount;
@@ -31,7 +32,6 @@ public class TripTransaction {
     // Decimal total;
     // Decimal tipAmount;
     // Decimal finalPrice;
-    @Column(columnDefinition = "FLOAT DEFAULT '0'") Float driverResponsibilityRating = 0f;
     @Column(columnDefinition = "TIMESTAMP DEFAULT CURRENT_TIMESTAMP") Timestamp createdAt;
     @Column(columnDefinition = "TIMESTAMP DEFAULT CURRENT_TIMESTAMP") Timestamp updatedAt;
 }

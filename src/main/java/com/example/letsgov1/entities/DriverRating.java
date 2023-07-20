@@ -13,14 +13,13 @@ import java.sql.Timestamp;
 @NoArgsConstructor
 public class DriverRating {
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY) Integer driverRatingId;
-    // Trip trip;
-    // Driver ratedDriver;
-    // User ratingUser;
-    Integer driverSafetyScore = 1; // 1 to 5
-    Integer driverSafetyRating = 0; // 0 to 2
-    Integer driverResponsibilityRating = 0; // 0 to 2
+    @ManyToOne(fetch = FetchType.LAZY) @JoinColumn(name = "trip_id") Trip trip;
+    @ManyToOne(fetch = FetchType.LAZY) @JoinColumn(name = "rated_driver_id") Driver ratedDriver;
+    @ManyToOne(fetch = FetchType.LAZY) @JoinColumn(name = "rated_by_user_id") User ratedByUser;
+    @Column(columnDefinition = "INTEGER DEFAULT 1") Integer driverSafetyScore = 1; // 1 to 5
+    @Column(columnDefinition = "INTEGER DEFAULT 0") Integer driverSafetyRating = 0; // 0 to 2
+    @Column(columnDefinition = "INTEGER DEFAULT 0") Integer driverResponsibilityRating = 0; // 0 to 2
     String comments;
-    @Column(columnDefinition = "FLOAT DEFAULT '0'") Float driverResponsibilityRating = 0f;
     @Column(columnDefinition = "TIMESTAMP DEFAULT CURRENT_TIMESTAMP") Timestamp createdAt;
     @Column(columnDefinition = "TIMESTAMP DEFAULT CURRENT_TIMESTAMP") Timestamp updatedAt;
 }
