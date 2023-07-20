@@ -13,16 +13,16 @@ import java.util.List;
 @AllArgsConstructor
 @NoArgsConstructor
 public class Route {
-    @Id @GeneratedValue(strategy = GenerationType.IDENTITY) Integer routeId;
-    @OneToOne(mappedBy = "route", cascade = CascadeType.ALL, fetch = FetchType.LAZY) Trip trip;
-    @OneToMany(mappedBy = "route", cascade = CascadeType.ALL, fetch = FetchType.LAZY) List<TripTransaction> tripTransactions;
-    String locationStart = "";
-    String locationEnd = "";
-    @Column(columnDefinition = "FLOAT DEFAULT 0") float routeDistance = 0f;
-    @Column(columnDefinition = "FLOAT DEFAULT 0") float routeDuration = 0f;
-    String routeStatus = "inactive";
+    @Id @GeneratedValue(strategy = GenerationType.IDENTITY) public Integer routeId;
+    @OneToOne(mappedBy = "route", cascade = CascadeType.ALL, fetch = FetchType.LAZY) public Trip trip;
+    @OneToMany(mappedBy = "route", cascade = CascadeType.ALL, fetch = FetchType.LAZY) public List<TripTransaction> tripTransactions;
+    @Column(columnDefinition = "VARCHAR(255) DEFAULT ''") public String locationStart = "";
+    @Column(columnDefinition = "VARCHAR(255) DEFAULT ''") public String locationEnd = "";
+    @Column(columnDefinition = "FLOAT DEFAULT 0") public float routeDistance = 0f;
+    @Column(columnDefinition = "FLOAT DEFAULT 0") public float routeDuration = 0f;
+    @Column(columnDefinition = "VARCHAR(255) DEFAULT 'inactive'") public String routeStatus = "inactive";
     // Integer[] requestedBy;
-    String routeImageSource;
-    @Column(columnDefinition = "TIMESTAMP DEFAULT CURRENT_TIMESTAMP") Timestamp createdAt;
-    @Column(columnDefinition = "TIMESTAMP DEFAULT CURRENT_TIMESTAMP") Timestamp updatedAt;
+    @Column(columnDefinition = "VARCHAR(255) DEFAULT ''") public String routeImageSource = "";
+    @Column(columnDefinition = "TIMESTAMP DEFAULT CURRENT_TIMESTAMP") public Timestamp createdAt = new Timestamp(System.currentTimeMillis());
+    @Column(columnDefinition = "TIMESTAMP DEFAULT CURRENT_TIMESTAMP") public Timestamp updatedAt = new Timestamp(System.currentTimeMillis());
 }

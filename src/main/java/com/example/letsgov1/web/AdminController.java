@@ -83,9 +83,8 @@ public class AdminController {
 
     @GetMapping("/admin/editUser")
     public String editUser(Integer id, Model model) {
-        List<User> users;
-        users = userRepository.findUserByUserId(id);
-        model.addAttribute("users", users);
+        User user = userRepository.findUserByUserId(id).get(0);
+        model.addAttribute("user", user);
         httpSession.setAttribute("section", "admin");
         return "editUser";
     }

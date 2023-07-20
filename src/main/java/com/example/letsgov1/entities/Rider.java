@@ -13,18 +13,18 @@ import java.util.List;
 @AllArgsConstructor
 @NoArgsConstructor
 public class Rider {
-    @Id @GeneratedValue(strategy = GenerationType.IDENTITY) Integer riderId;
-    @OneToOne(fetch = FetchType.LAZY) @JoinColumn(name = "user_id") User user;
-    @OneToMany(mappedBy = "ratedRider", cascade = CascadeType.ALL, fetch = FetchType.LAZY) List<RiderRating> riderRatings;
-    @Column(columnDefinition = "BOOLEAN DEFAULT FALSE") Boolean isActive;
-    @Column(columnDefinition = "VARCHAR(255) DEFAULT 'inactive'") String riderStatus;
-    @Column(columnDefinition = "INTEGER DEFAULT '0'") Integer tripsTaken = 0;
-    @Column(columnDefinition = "INTEGER DEFAULT '0'") Integer timesRated = 0;
-    @Column(columnDefinition = "FLOAT DEFAULT '0'") Float riderSafetyScore = 0f;
-    @Column(columnDefinition = "FLOAT DEFAULT '0'") Float riderSafetyRating = 0f;
-    @Column(columnDefinition = "FLOAT DEFAULT '0'") Float riderResponsibilityRating = 0f;
-    @Column(columnDefinition = "TIMESTAMP DEFAULT CURRENT_TIMESTAMP") Timestamp createdAt;
-    @Column(columnDefinition = "TIMESTAMP DEFAULT CURRENT_TIMESTAMP") Timestamp updatedAt;
+    @Id @GeneratedValue(strategy = GenerationType.IDENTITY) public Integer riderId;
+    @OneToOne(fetch = FetchType.LAZY) @JoinColumn(name = "user_id") public User user;
+    @OneToMany(mappedBy = "ratedRider", cascade = CascadeType.ALL, fetch = FetchType.LAZY) public List<RiderRating> riderRatings;
+    @Column(columnDefinition = "BOOLEAN DEFAULT FALSE") public Boolean isActive = false;
+    @Column(columnDefinition = "VARCHAR(255) DEFAULT 'inactive'") public String riderStatus;
+    @Column(columnDefinition = "INTEGER DEFAULT '0'") public Integer tripsTaken = 0;
+    @Column(columnDefinition = "INTEGER DEFAULT '0'") public Integer timesRated = 0;
+    @Column(columnDefinition = "FLOAT DEFAULT '0'") public Float riderSafetyScore = 0f;
+    @Column(columnDefinition = "FLOAT DEFAULT '0'") public Float riderSafetyRating = 0f;
+    @Column(columnDefinition = "FLOAT DEFAULT '0'") public Float riderResponsibilityRating = 0f;
+    @Column(columnDefinition = "TIMESTAMP DEFAULT CURRENT_TIMESTAMP") public Timestamp createdAt = new Timestamp(System.currentTimeMillis());
+    @Column(columnDefinition = "TIMESTAMP DEFAULT CURRENT_TIMESTAMP") public Timestamp updatedAt = new Timestamp(System.currentTimeMillis());
     public Rider(User user) {
         this.user = user;
         isActive = false;
