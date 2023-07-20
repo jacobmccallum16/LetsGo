@@ -18,6 +18,10 @@
 					</div>
 					<div class="card-body">
 						<form id="form" class="row g-3 p-2" method="post" th:action="@{/admin/editUser}" th:object="${user}">
+							<div hidden>
+								<input type="text" name="userId" th:value="*{userId}" th:field="*{userId}">
+								<input type="text" name="createdAt" th:value="*{createdAt}" th:field="*{createdAt}">
+							</div>
 							<div class="col-md-6">
 								<div class="form-floating">
 									<input type="text" id="firstName" name="firstName" class="form-control" placeholder="First Name" th:value="*{firstName}" th:field="*{firstName}" th:errorClass="is-invalid" required autofocus>
@@ -38,7 +42,7 @@
 							</div>
 							<div class="col-md-6">
 								<div class="form-floating">
-									<input type="password" id="password" name="password" class="form-control" placeholder="password" th:value="*{password}" th:field="*{password}" th:errorClass="is-invalid" required>
+									<input type="password" id="password" name="password" class="form-control" placeholder="password" th:value="${user.password}" th:field="*{password}" th:errorClass="is-invalid" required>
 									<label for="password">Password</label>
 								</div>
 							</div>
@@ -51,8 +55,8 @@
 							<div class="col-md-3">
 								<div class="form-floating">
 									<select class="form-select" id="isAdmin" name="isAdmin" th:value="*{isAdmin}" th:field="*{isAdmin}" th:errorClass="is-invalid">
-										<option value="0" th:selected="*{isAdmin == false}">Not Admin</option>
-										<option value="1" th:selected="*{isAdmin == true}">Admin</option>
+										<option th:value="0" th:selected="*{isAdmin == false}">Not Admin</option>
+										<option th:value="1" th:selected="*{isAdmin == true}">Admin</option>
 									</select>
 									<label for="isAdmin">Admin Status</label>
 								</div>
@@ -60,9 +64,9 @@
 							<div class="col-md-3">
 								<div class="form-floating">
 									<select class="form-select" id="userStatus" name="userStatus" th:value="*{userStatus}" th:field="*{userStatus}" th:errorClass="is-invalid">
-										<option value="inactive" th:selected="*{userStatus == 'inactive'}">Inactive</option>
-										<option value="active" th:selected="*{userStatus == 'active'}">Active</option>
-										<option value="banned" th:selected="*{userStatus == 'banned'}">Banned</option>
+										<option th:value="inactive" th:selected="*{userStatus == 'inactive'}">Inactive</option>
+										<option th:value="active" th:selected="*{userStatus == 'active'}">Active</option>
+										<option th:value="banned" th:selected="*{userStatus == 'banned'}">Banned</option>
 									</select>
 									<label for="userStatus">Status</label>
 								</div>

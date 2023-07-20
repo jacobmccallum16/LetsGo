@@ -11,10 +11,12 @@
 				</li>
 				<li class="nav-item dropdown">
 					<a class="nav-link link-primary dropdown-toggle" th:href="@{/admin/users}" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-						Users
+						Admin
 					</a>
 					<ul class="dropdown-menu">
-						<li><a class="dropdown-item link-primary" th:href="@{/admin/users}">List of Users</a></li>
+						<li><a class="dropdown-item link-primary" th:href="@{/admin/users}">List All Users</a></li>
+						<li><a class="dropdown-item link-primary" th:href="@{/admin/riders}">List Active Riders</a></li>
+						<li><a class="dropdown-item link-primary" th:href="@{/admin/drivers}">List Active Drivers</a></li>
 						<li><hr class="dropdown-divider"></li>
 						<li><a class="dropdown-item link-primary" th:href="@{/admin/newUser}">Create New User</a></li>
 					</ul>
