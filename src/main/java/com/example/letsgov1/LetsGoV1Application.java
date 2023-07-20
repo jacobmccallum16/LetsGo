@@ -16,15 +16,20 @@ public class LetsGoV1Application {
     @Bean
     CommandLineRunner commandLineRunner(UserRepository userRepository) {
         return args -> {
-//            userRepository.save( new User(null, "F", "L", "fl@gmail.com", "fl", false, "fl", "active", 0, 0f, 0f, 0f, new Timestamp(System.currentTimeMillis()), new Timestamp(System.currentTimeMillis())));
-//          userRepository.save(
-//                  new User(null, "First", "Last",
-//                          "firstlast@gmail.com", "password", false,
-//                          "fLast", "inactive", 0,
-//                          0.0, 0.0, 0.0,
-//                          new Timestamp(System.currentTimeMillis()),
-//                          new Timestamp(System.currentTimeMillis())
-//          ));
+//            userRepository.save(new User("admin"));
+//            userRepository.save(new User("A", "B"));
+//            userRepository.save(new User("C", "D"));
+//            userRepository.save(new User("E", "F"));
+//            userRepository.save(new User("G", "H"));
+//            userRepository.save(new User("I", "J"));
+//            userRepository.save(new User("K", "L"));
+//            userRepository.save(new User("M", "N"));
+//            userRepository.save(new User("O", "P"));
+//            userRepository.save(new User("Q", "R"));
+//            userRepository.save(new User("S", "T"));
+//            userRepository.save(new User("U", "V"));
+//            userRepository.save(new User("W", "X"));
+//            userRepository.save(new User("Y", "Z"));
         };
     }
 }

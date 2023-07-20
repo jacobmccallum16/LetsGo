@@ -17,40 +17,40 @@
 							<div class="card-title">Create New User</div>
 						</div>
 						<div class="card-body">
-							<form id="form" class="row g-3 p-2" method="post" th:action="@{/admin/createUser}">
+							<form id="form" class="row g-3 p-2" method="post" th:action="@{/admin/createUser}"  th:object="${user}">
 								<div class="col-md-6">
 									<div class="form-floating">
-										<input type="text" id="firstName" name="firstName" class="form-control" placeholder="First Name" required autofocus>
+										<input type="text" id="firstName" name="firstName" class="form-control" placeholder="First Name" th:field="*{firstName}" th:errorClass="is-invalid" required autofocus>
 										<label for="firstName">First Name</label>
 									</div>
 								</div>
 								<div class="col-md-6">
 									<div class="form-floating">
-										<input type="text" id="lastName" name="lastName" class="form-control" placeholder="Last Name" required>
+										<input type="text" id="lastName" name="lastName" class="form-control" placeholder="Last Name" th:field="*{lastName}" th:errorClass="is-invalid" required>
 										<label for="lastName">Last Name</label>
 									</div>
 								</div>
 								<div class="col-md-6">
 									<div class="form-floating">
-										<input type="email" id="email" name="email" class="form-control" placeholder="email@example.com" required>
+										<input type="email" id="email" name="email" class="form-control" placeholder="email@example.com" th:field="*{email}" th:errorClass="is-invalid" required>
 										<label for="email">Email</label>
 									</div>
 								</div>
 								<div class="col-md-6">
 									<div class="form-floating">
-										<input type="password" id="password" name="password" class="form-control" placeholder="password" required>
+										<input type="password" id="password" name="password" class="form-control" placeholder="password" th:field="*{password}" th:errorClass="is-invalid" required>
 										<label for="password">Password</label>
 									</div>
 								</div>
 								<div class="col-md-6">
 									<div class="form-floating">
-										<input type="text" id="username" name="username" class="form-control" placeholder="username" required>
+										<input type="text" id="username" name="username" class="form-control" placeholder="username" th:field="*{username}" th:errorClass="is-invalid" required>
 										<label for="username">Username</label>
 									</div>
 								</div>
 								<div class="col-md-3">
 									<div class="form-floating">
-										<select class="form-select" id="isAdmin" name="isAdmin">
+										<select class="form-select" id="isAdmin" name="isAdmin" th:field="*{isAdmin}" th:errorClass="is-invalid">
 											<option value="0" selected>Not Admin</option>
 											<option value="1">Admin</option>
 										</select>
@@ -59,7 +59,7 @@
 								</div>
 								<div class="col-md-3">
 									<div class="form-floating">
-										<select class="form-select" id="userStatus" name="userStatus">
+										<select class="form-select" id="userStatus" name="userStatus" th:field="*{userStatus}" th:errorClass="is-invalid">
 											<option value="inactive">Inactive</option>
 											<option value="active">Active</option>
 											<option value="banned">Banned</option>

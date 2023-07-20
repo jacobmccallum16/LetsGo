@@ -13,7 +13,10 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.ui.ModelMap;
 import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.SessionAttributes;
 
 import java.sql.Timestamp;
 import java.util.List;
@@ -33,6 +36,10 @@ public class AdminController {
     public String adminHome() {
             return "redirect:/users";
     }
+    @GetMapping("/admin/")
+    public String adminHome2() {
+        return "redirect:/users";
+    }
 
     @GetMapping("/admin/users")
     public String users(Model model, @RequestParam(name="keyId",defaultValue = "") String keyId) {
@@ -49,6 +56,44 @@ public class AdminController {
         return "users";
     }
 
+    @GetMapping("/admin/riders")
+    public String listRiders(Model model, @RequestParam(name="keyId",defaultValue = "") String keyId) {
+        List<Rider> riders;
+        if (keyId.isEmpty()) {
+            riders = riderRepository.findAll();
+        } else {
+            riders = riderRepository.findRiderByRiderId(Integer.parseInt(keyId));
+        }
+        for (int i = riders.size()-1; i >= 0; i--) {
+            if (!riders.get(i).isActive) {
+                riders.remove(i);
+            }
+        }
+        model.addAttribute("listRiders", riders);
+        httpSession.setAttribute("section", "admin");
+        httpSession.setAttribute("page", "riders");
+        return "adminRiders";
+    }
+    @GetMapping("/admin/drivers")
+    public String listDrivers(Model model, @RequestParam(name="keyId",defaultValue = "") String keyId) {
+        List<Driver> drivers;
+        if (keyId.isEmpty()) {
+            drivers = driverRepository.findAll();
+        } else {
+            drivers = driverRepository.findDriverByDriverId(Integer.parseInt(keyId));
+        }
+        for (int i = drivers.size()-1; i >= 0; i--) {
+            if (!drivers.get(i).isActive) {
+                drivers.remove(i);
+            }
+        }
+        model.addAttribute("listDrivers", drivers);
+        httpSession.setAttribute("section", "admin");
+        httpSession.setAttribute("page", "drivers");
+        return "adminDrivers";
+    }
+
+
     @GetMapping("/admin/newUser")
     public String newUser(Model model){
         model.addAttribute("user", new User());
@@ -63,7 +108,7 @@ public class AdminController {
         if (bindingResult.hasErrors()) {
             return "newUser";
         } else {
-            if (user.getIsAdmin() == true) {user.setIsAdmin(false);}
+            if (user.getIsAdmin()) {user.setIsAdmin(false);}
             user.setTimesRated(0);
             user.setOverallSafetyScore(0f);
             user.setOverallSafetyRating(0f);
@@ -83,24 +128,19 @@ public class AdminController {
 
     @GetMapping("/admin/editUser")
     public String editUser(Integer id, Model model) {
-        List<User> users;
-        users = userRepository.findUserByUserId(id);
-        model.addAttribute("users", users);
+        User user = userRepository.findUserByUserId(id).get(0);
+        model.addAttribute("user", user);
         httpSession.setAttribute("section", "admin");
         return "editUser";
     }
     @PostMapping("/admin/editUser")
-    public String editUser(Integer id, Model model, BindingResult bindingResult,
+    public String editUser(Integer id, Model model, User user, BindingResult bindingResult,
                            ModelMap mm, HttpSession session) {
         if (bindingResult.hasErrors()) {
             return "editUser";
-        } else {
-            User user = userRepository.findUserByUserId(id).get(0);
-            Timestamp updatedAt = new Timestamp(System.currentTimeMillis());
-            user.setUpdatedAt(updatedAt);
-            userRepository.save(user);
-            return "redirect:/admin/users";
         }
+        userRepository.save(user);
+        return "redirect:/admin/users";
     }
 
     @GetMapping("/admin/deleteUser")
