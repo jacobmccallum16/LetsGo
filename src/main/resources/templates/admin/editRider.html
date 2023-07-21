@@ -21,18 +21,18 @@
 									<div class="row g-3">
 										<div hidden>
 											<label for="isActive" class="form-label"></label>
-											<select id="isActive" class="form-select" th:field="*{isActive}" hidden>
+											<select id="isActive" class="form-select" th:field="*{isActive}" required hidden>
 												<option th:value="0" th:selected="*{isActive == false}">Inactive</option>
 												<option th:value="1" th:selected="*{isActive == true}">Active</option>
 											</select>
 										</div>
 										<div class="col-3 col-sm-4">
 											<label for="userId" class="form-label">User Id</label>
-											<input id="userId" class="form-control" type="number" th:field="*{user.userId}" disabled>
+											<input id="userId" class="form-control" type="number" th:field="*{user.userId}" required>
 										</div>
 										<div class="col-3 col-sm-4">
 											<label for="riderId" class="form-label">Rider Id</label>
-											<input id="riderId" class="form-control" type="number" th:field="*{riderId}" disabled>
+											<input id="riderId" class="form-control" type="number" th:field="*{riderId}" required>
 										</div>
 										<div class="col-6 col-sm-4">
 											<label for="riderStatus" class="form-label">Status</label>

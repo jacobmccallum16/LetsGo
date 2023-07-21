@@ -154,6 +154,7 @@ public class AdminController {
         if (bindingResult.hasErrors()) {
             return "/admin/editRider";
         }
+        riderRepository.save(rider);
         rider.updateStatus(rider.riderStatus);
         rider.updateRiderSafetyScore();
         riderRepository.save(rider);
