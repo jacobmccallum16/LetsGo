@@ -34,11 +34,11 @@ public class AdminController {
 
     @GetMapping("/admin")
     public String adminHome() {
-            return "redirect:/users";
+            return "redirect:/admin/users";
     }
     @GetMapping("/admin/")
     public String adminHome2() {
-        return "redirect:/users";
+        return "redirect:/admin/users";
     }
 
     @GetMapping("/admin/users")
@@ -53,7 +53,7 @@ public class AdminController {
         model.addAttribute("listUsers", users);
         httpSession.setAttribute("section", "admin");
         httpSession.setAttribute("page", "users");
-        return "users";
+        return "/admin/users";
     }
 
     @GetMapping("/admin/riders")
@@ -72,7 +72,7 @@ public class AdminController {
         model.addAttribute("listRiders", riders);
         httpSession.setAttribute("section", "admin");
         httpSession.setAttribute("page", "riders");
-        return "adminRiders";
+        return "/admin/riders";
     }
     @GetMapping("/admin/drivers")
     public String listDrivers(Model model, @RequestParam(name="keyId",defaultValue = "") String keyId) {
@@ -90,7 +90,7 @@ public class AdminController {
         model.addAttribute("listDrivers", drivers);
         httpSession.setAttribute("section", "admin");
         httpSession.setAttribute("page", "drivers");
-        return "adminDrivers";
+        return "/admin/drivers";
     }
 
 
@@ -99,14 +99,14 @@ public class AdminController {
         model.addAttribute("user", new User());
         httpSession.setAttribute("section", "admin");
         httpSession.setAttribute("page", "createUser");
-        return "newUser";
+        return "/admin/newUser";
     }
 
     @PostMapping("/admin/createUser")
     public String createUser(Model model, User user, BindingResult bindingResult,
                              ModelMap mm, HttpSession session) {
         if (bindingResult.hasErrors()) {
-            return "newUser";
+            return "/admin/newUser";
         } else {
             if (user.getIsAdmin()) {user.setIsAdmin(false);}
             user.setTimesRated(0);
@@ -122,7 +122,7 @@ public class AdminController {
             userRepository.save(user);
             driverRepository.save(driver);
             riderRepository.save(rider);
-            return "redirect:users";
+            return "redirect:/admin/users";
         }
     }
 
@@ -131,32 +131,64 @@ public class AdminController {
         User user = userRepository.findUserByUserId(id).get(0);
         model.addAttribute("user", user);
         httpSession.setAttribute("section", "admin");
-        return "editUser";
+        return "/admin/editUser";
     }
     @PostMapping("/admin/editUser")
     public String editUser(Integer id, Model model, User user, BindingResult bindingResult,
                            ModelMap mm, HttpSession session) {
         if (bindingResult.hasErrors()) {
-            return "editUser";
+            return "/admin/editUser";
         }
         userRepository.save(user);
         return "redirect:/admin/users";
     }
 
+    @GetMapping("/admin/editRider")
+    public String editRider(Integer id, Model model) {
+        Rider rider = riderRepository.findRiderByRiderId(id).get(0);
+        model.addAttribute("rider", rider);
+        return "/admin/editRider";
+    }
+    @PostMapping("/admin/editRider")
+    public String editRider(Rider rider, BindingResult bindingResult) {
+        if (bindingResult.hasErrors()) {
+            return "/admin/editRider";
+        }
+        rider.updateStatus(rider.riderStatus);
+        rider.updateRiderSafetyScore();
+        riderRepository.save(rider);
+        return "redirect:/admin/riders";
+    }
+
+    @GetMapping("/admin/editDriver")
+    public String editDriver(Integer id, Model model) {
+        Driver driver = driverRepository.findDriverByDriverId(id).get(0);
+        model.addAttribute("driver", driver);
+        return "/admin/editDriver";
+    }
+    @PostMapping("/admin/editDriver")
+    public String editDriver(Driver driver, BindingResult bindingResult) {
+        if (bindingResult.hasErrors()) {
+            return "/admin/editDriver";
+        }
+        driverRepository.save(driver);
+        return "redirect:/admin/drivers";
+    }
+
     @GetMapping("/admin/deleteUser")
     public String deleteUser(Integer id){
         userRepository.deleteById(id);
-        return "redirect:/users";
+        return "redirect:/admin/users";
     }
 
     @GetMapping("/admin/viewAccount")
-    public String viewAccount(Integer id, Model model) {
+    public String adminViewAccount(Integer id, Model model) {
         List<User> users;
         users = userRepository.findUserByUserId(id);
         model.addAttribute("users", users);
         httpSession.setAttribute("section", "admin");
         httpSession.setAttribute("page", "viewAccount");
-        return "viewAccount";
+        return "/admin/viewAccount";
     }
 
     @GetMapping("/admin/activateRider")
@@ -169,7 +201,7 @@ public class AdminController {
         riderRepository.save(rider);
         user.updateIsActive();
         userRepository.save(user);
-        return "viewAccount";
+        return "/admin/viewAccount";
     }
     @GetMapping("/admin/activateDriver")
     public String activateDriver(Integer id, Model model) {
@@ -181,6 +213,6 @@ public class AdminController {
         driverRepository.save(driver);
         user.updateIsActive();
         userRepository.save(user);
-        return "viewAccount";
+        return "/admin/viewAccount";
     }
 }

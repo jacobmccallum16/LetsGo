@@ -2,7 +2,7 @@
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
 	<meta charset="UTF-8">
-	<title>Let's Go!</title>
+	<title>Let's Go! - Admin - View Account</title>
 	<th:block th:insert="~{fragments/scripts}"></th:block>
 	<style>
 		tbody th {text-align: right}
@@ -107,9 +107,9 @@
 					<tr>
 						<th colspan="2"><a class="btn btn-sm btn-outline-primary" th:href="@{/admin/editUser(id=${u.userId})}">Edit User</a></th>
 						<th></th>
-						<th colspan="2"></th>
+						<th colspan="2"><a class="btn btn-sm btn-outline-primary" th:href="@{/admin/editRider(id=${u.rider.riderId})}">Edit Rider</a></th>
 						<th></th>
-						<th colspan="2"></th>
+						<th colspan="2"><a class="btn btn-sm btn-outline-primary" th:href="@{/admin/editDriver(id=${u.driver.driverId})}">Edit Driver</a></th>
 					</tr>
 				</tfoot>
 			</table>
