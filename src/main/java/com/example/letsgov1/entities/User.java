@@ -96,5 +96,12 @@ public class User {
         rider.setUpdatedAt(timestamp);
         driver.setUpdatedAt(timestamp);
     }
+    public String getRole() {
+        if (isAdmin) {
+            return "ROLE_ADMIN";
+        } else {
+            return "ROLE_USER";
+        }
+    }
 
 }

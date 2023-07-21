@@ -17,10 +17,10 @@ public class UserController {
     private RiderRepository riderRepository;
     private DriverRepository driverRepository;
 
-    @GetMapping("/")
-    public String redirectIndex() {
-        return "redirect:/index";
-    }
+//    @GetMapping("/")
+//    public String redirectIndex() {
+//        return "redirect:/index";
+//    }
 
     @GetMapping("/index")
     public String redirectUsers() {
