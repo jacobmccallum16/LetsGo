@@ -26,6 +26,15 @@
 												<option th:value="1" th:selected="*{isActive == true}">Active</option>
 											</select>
 										</div>
+										<div class="col-6">
+											<label for="firstName" class="form-label">First Name</label>
+											<input id="firstName" class="form-control" type="text" th:field="*{user.firstName}" required>
+										</div>
+										<div class="col-6">
+											<label for="lastName" class="form-label">Last Name</label>
+											<input type="hidden" th:field="*{user.lastName}">
+											<input id="lastName" class="form-control" type="text" th:value="*{user.lastName}" disabled>
+										</div>
 										<div class="col-3 col-sm-4">
 											<label for="userId" class="form-label">User Id</label>
 											<input id="userId" class="form-control" type="number" th:field="*{user.userId}" required>
@@ -37,8 +46,8 @@
 										<div class="col-6 col-sm-4">
 											<label for="riderStatus" class="form-label">Status</label>
 											<select id="riderStatus" class="form-select" th:field="*{riderStatus}" required>
-												<option th:value="inactive" th:selected="*{riderStatus == 'inactive'}">Inactive</option>
 												<option th:value="active" th:selected="*{riderStatus == 'active'}">Active</option>
+												<option th:value="inactive" th:selected="*{riderStatus == 'inactive'}">Inactive</option>
 												<option th:value="banned" th:selected="*{riderStatus == 'banned'}">Banned</option>
 											</select>
 										</div>

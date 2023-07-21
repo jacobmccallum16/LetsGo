@@ -16,15 +16,14 @@
 			<thead class="table-dark">
 			<tr>
 				<th>ID</th>
-				<th>First Name</th>
-				<th>Last Name</th>
-				<th>Email</th>
-				<th>Admin</th>
-				<th>Username</th>
-				<th>Driver Status</th>
-				<th>Account</th>
+				<th>First<br>Name</th>
+				<th>Last<br>Name</th>
+				<th>Trips<br>Driven</th>
+				<th>Times<br>Rated</th>
+				<th>Safety<br>Score</th>
+				<th>Status</th>
+				<th>View<br>Account</th>
 				<th>Edit</th>
-				<th>Delete</th>
 			</tr>
 			</thead>
 			<tbody class="table-group-divider border-indigo-subtle">
@@ -32,13 +31,18 @@
 				<td th:text="${d.driverId}"></td>
 				<td th:text="${d.user.firstName}"></td>
 				<td th:text="${d.user.lastName}"></td>
-				<td th:text="${d.user.email}"></td>
-				<td th:text="${d.user.isAdmin.toString()}"></td>
-				<td th:text="${d.user.username}"></td>
-				<td th:text="${d.driverStatus}"></td>
+				<td th:text="${d.tripsDriven}"></td>
+				<td th:text="${d.timesRated}"></td>
+				<td th:text="${d.driverSafetyScore}"></td>
+				<td>
+					<a th:href="@{/admin/driverStatus(id=${d.driverId}, status='active')}" class="btn btn-sm" th:classappend="${d.driverStatus} == 'active' ? 'btn-green' : 'btn-outline-green'" th:text="${d.driverStatus} == 'active' ? 'Active' : 'Activate'"/>
+					<a th:href="@{/admin/driverStatus(id=${d.driverId}, status='inactive')}" class="btn btn-sm" th:classappend="${d.driverStatus} == 'inactive' ? 'btn-yellow' : 'btn-outline-yellow'" th:text="${d.driverStatus} == 'inactive' ? 'Inactive' : 'Deactivate'"/>
+					<a th:href="@{/admin/driverStatus(id=${d.driverId}, status='banned')}" class="btn btn-sm" th:classappend="${d.driverStatus} == 'banned' ? 'btn-red' : 'btn-outline-red'" th:text="${d.driverStatus} == 'banned' ? 'Banned' : 'Ban'"/>
+				</td>
 				<td><a class="btn btn-sm btn-outline-primary" th:href="@{/admin/viewAccount(id=${d.user.userId})}">View Account</a></td>
-				<td><a class="btn btn-sm btn-info" th:href="@{/admin/editUser(id=${d.user.userId})}">Edit</a></td>
-				<td><a th:href="@{/admin/deleteUser(id=${d.user.userId})}" class="btn btn-danger btn-sm" onclick="return confirm('Are you sure you want to delete the record ?')">Delete</a></td>
+				<td>
+					<a class="btn btn-sm btn-outline-teal" th:href="@{/admin/editDriver(id=${d.driverId})}">Edit Driver</a>
+				</td>
 			</tr>
 			</tbody>
 		</table>

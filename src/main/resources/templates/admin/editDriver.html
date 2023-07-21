@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+	<meta charset="UTF-8">
+	<title>Let's Go! - Admin - Edit Rider</title>
+	<th:block th:insert="~{fragments/scripts}"></th:block>
+</head>
+<body class="vh-100 d-flex flex-column">
+<th:block th:insert="~{fragments/navbar}"></th:block>
+<div class="d-flex flex-fill">
+	<th:block th:insert="~{fragments/sidebar}"></th:block>
+	<main class="container-sm text-center flex-grow-1">
+		<div class="row">
+			<div class="col-12 col-md-10 col-lg-9 col-xl-8 col-xxl-7 my-3 mx-auto align-middle">
+				<div class="card">
+					<div class="card-header">
+						Edit Driver
+					</div>
+					<div class="card-body text-start">
+						<form id="form" class="needs-validation" novalidate method="post" th:action="@{/admin/editDriver}" th:object="${driver}">
+							<div class="row g-3">
+								<div hidden>
+									<label for="isActive" class="form-label"></label>
+									<select id="isActive" class="form-select" th:field="*{isActive}" required hidden>
+										<option th:value="0" th:selected="*{isActive == false}">Inactive</option>
+										<option th:value="1" th:selected="*{isActive == true}">Active</option>
+									</select>
+								</div>
+								<div class="col-6">
+									<label for="firstName" class="form-label">First Name</label>
+									<input type="hidden" th:field="*{user.firstName}">
+									<input id="firstName" class="form-control" type="text" th:value="*{user.firstName}" disabled>
+								</div>
+								<div class="col-6">
+									<label for="lastName" class="form-label">Last Name</label>
+									<input type="hidden" th:field="*{user.lastName}">
+									<input id="lastName" class="form-control" type="text" th:value="*{user.lastName}" disabled>
+								</div>
+								<div class="col-3 col-sm-4">
+									<label for="userId" class="form-label">User Id</label>
+									<input id="userId" class="form-control" type="number" th:field="*{user.userId}" required>
+								</div>
+								<div class="col-3 col-sm-4">
+									<label for="riderId" class="form-label">Driver Id</label>
+									<input id="riderId" class="form-control" type="number" th:field="*{driverId}" required>
+								</div>
+								<div class="col-6 col-sm-4">
+									<label for="riderStatus" class="form-label">Status</label>
+									<select id="riderStatus" class="form-select" th:field="*{driverStatus}" required>
+										<option th:value="active" th:selected="*{driverStatus == 'active'}">Active</option>
+										<option th:value="inactive" th:selected="*{driverStatus == 'inactive'}">Inactive</option>
+										<option th:value="banned" th:selected="*{driverStatus == 'banned'}">Banned</option>
+									</select>
+								</div>
+								<div class="col-6">
+									<label for="timesRated" class="form-label">Times Rated</label>
+									<input id="timesRated" class="form-control" type="number" th:field="*{timesRated}" required>
+								</div>
+								<div class="col-6">
+									<label for="tripsTaken" class="form-label">Trips Driven</label>
+									<input id="tripsTaken" class="form-control" type="number" th:field="*{tripsDriven}" required>
+								</div>
+								<div class="col-4 col-sm-4">
+									<label for="riderSafetyRating" class="form-label">Safety <br class="d-sm-none">Rating</label>
+									<input id="riderSafetyRating" class="form-control" type="number" th:field="*{driverSafetyRating}" required>
+								</div>
+								<div class="col-4 col-sm-5">
+									<label for="riderResponsibilityRating" class="form-label">Responsibility <br class="d-sm-none">Rating</label>
+									<input id="riderResponsibilityRating" class="form-control" type="number" th:field="*{driverResponsibilityRating}" required>
+								</div>
+								<div class="col-4 col-sm-3">
+									<label for="riderSafetyScore" class="form-label">Safety <br class="d-sm-none">Score</label>
+									<input id="riderSafetyScore" class="form-control fw-bold" type="number" th:field="*{driverSafetyScore}" disabled>
+								</div>
+								<div class="col-12 col-sm-6">
+									<label for="createdAt" class="form-label">Created At</label>
+									<input type="text" th:field="*{createdAt}" required hidden>
+									<input id="createdAt" class="form-control" type="text" th:value="*{createdAt}" disabled>
+								</div>
+								<div class="col-12 col-sm-6">
+									<label for="updatedAt" class="form-label">Updated At</label>
+									<input id="updatedAt" class="form-control" type="text" th:value="*{updatedAt}" required disabled>
+								</div>
+							</div>
+						</form>
+					</div>
+					<div class="card-footer text-end">
+						<button form="form" type="submit" id="editRiderSubmit" class="btn btn-outline-primary">Update Driver Information</button>
+					</div>
+				</div>
+			</div>
+		</div>
+	</main>
+</div>
+</body>
+</html>

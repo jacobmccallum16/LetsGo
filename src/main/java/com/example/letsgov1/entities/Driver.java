@@ -48,4 +48,19 @@ public class Driver {
         updatedAt = new Timestamp(System.currentTimeMillis());
         return isActive;
     }
+
+    public void updateStatus() {
+        isActive = driverStatus.equals("active");
+    }
+    public void updateUpdatedAt() {
+        updatedAt = new Timestamp(System.currentTimeMillis());
+    }
+
+    // simplified methods for temporary use:
+    public void updateSafetyScore() {
+        if (timesRated > 0) {
+            driverSafetyScore = (timesRated + driverSafetyRating + driverResponsibilityRating) / timesRated;
+        }
+    }
+
 }

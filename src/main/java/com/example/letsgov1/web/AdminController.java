@@ -65,7 +65,7 @@ public class AdminController {
             riders = riderRepository.findRiderByRiderId(Integer.parseInt(keyId));
         }
         for (int i = riders.size()-1; i >= 0; i--) {
-            if (!riders.get(i).isActive) {
+            if (!riders.get(i).isActive && riders.get(i).tripsTaken.equals(0)) {
                 riders.remove(i);
             }
         }
@@ -156,7 +156,7 @@ public class AdminController {
         }
         riderRepository.save(rider);
         rider.updateStatus(rider.riderStatus);
-        rider.updateRiderSafetyScore();
+        rider.updateSafetyScore();
         riderRepository.save(rider);
         return "redirect:/admin/riders";
     }
@@ -172,6 +172,8 @@ public class AdminController {
         if (bindingResult.hasErrors()) {
             return "/admin/editDriver";
         }
+        driver.updateStatus();
+        driver.updateSafetyScore();
         driverRepository.save(driver);
         return "redirect:/admin/drivers";
     }
@@ -216,4 +218,23 @@ public class AdminController {
         userRepository.save(user);
         return "/admin/viewAccount";
     }
+
+    @GetMapping("/admin/riderStatus")
+    public String riderStatus(Integer id, String status) {
+        Rider rider = riderRepository.findRiderByRiderId(id).get(0);
+        rider.riderStatus = status;
+//        rider.updateStatus();
+        riderRepository.save(rider);
+        return "redirect:/admin/riders";
+    }
+    @GetMapping("/admin/driverStatus")
+    public String driverStatus(Integer id, String status) {
+        Driver driver = driverRepository.findDriverByDriverId(id).get(0);
+        driver.driverStatus = status;
+//        driver.updateStatus();
+        driverRepository.save(driver);
+        return "redirect:/admin/drivers";
+    }
+
+
 }

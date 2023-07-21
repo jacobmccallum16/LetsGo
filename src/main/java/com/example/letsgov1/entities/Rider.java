@@ -62,12 +62,17 @@ public class Rider {
             isActive = false;
         }
     }
+    public void updateStatus() {
+        isActive = riderStatus.equals("active");
+    }
     public void updateUpdatedAt() {
         updatedAt = new Timestamp(System.currentTimeMillis());
     }
 
     // simplified methods for temporary use:
-    public void updateRiderSafetyScore() {
-        riderSafetyScore = (timesRated + riderSafetyRating + riderResponsibilityRating) / timesRated;
+    public void updateSafetyScore() {
+        if (timesRated > 0) {
+            riderSafetyScore = (timesRated + riderSafetyRating + riderResponsibilityRating) / timesRated;
+        }
     }
 }
