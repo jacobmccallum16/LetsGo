@@ -10,22 +10,32 @@
 					<a class="nav-link link-primary" th:href="@{/index}">Home</a>
 				</li>
 				<li class="nav-item dropdown">
-					<a class="nav-link link-primary dropdown-toggle" th:href="@{/admin/users}" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-						Admin
+					<a class="nav-link link-primary dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+						Users
 					</a>
 					<ul class="dropdown-menu">
-						<li><a class="dropdown-item link-primary" th:href="@{/admin/users}">List Users</a></li>
-						<li><a class="dropdown-item link-primary" th:href="@{/admin/riders}">List Riders</a></li>
-						<li><a class="dropdown-item link-primary" th:href="@{/admin/drivers}">List Drivers</a></li>
+						<li><a class="dropdown-item link-primary" th:href="@{/admin/users}">Users</a></li>
+						<li><a class="dropdown-item link-primary" th:href="@{/admin/riders}">Riders</a></li>
+						<li><a class="dropdown-item link-primary" th:href="@{/admin/drivers}">Drivers</a></li>
 						<li><hr class="dropdown-divider"></li>
-						<li><a class="dropdown-item link-primary" th:href="@{/admin/newUser}">Create New User</a></li>
+						<li><a class="dropdown-item link-primary" th:href="@{/admin/newUser}">Create User</a></li>
+					</ul>
+				</li>
+				<li class="nav-item dropdown">
+					<a class="nav-link link-primary dropdown-toggle" th:href="@{/admin/users}" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+						Routes
+					</a>
+					<ul class="dropdown-menu">
+						<li><a class="dropdown-item link-primary" th:href="@{/templates/admin/routes}">Routes</a></li>
+						<li><hr class="dropdown-divider"></li>
+						<li><a class="dropdown-item link-primary" th:href="@{/admin/routes/createRoute}">Create Route</a></li>
 					</ul>
 				</li>
 			</ul>
-			<form class="d-flex" role="search" method="get" th:action="@{/admin/users}">
-				<input class="form-control me-2" type="search" placeholder="Search User" name="keyId" aria-label="Search">
-				<button class="btn btn-outline-info" type="submit">Search</button>
-			</form>
+<!--			<form class="d-flex" role="search" method="get" th:action="@{/admin/users}">-->
+<!--				<input class="form-control me-2" type="search" placeholder="Search User" name="keyId" aria-label="Search">-->
+<!--				<button class="btn btn-outline-info" type="submit">Search</button>-->
+<!--			</form>-->
 		</div>
 	</div>
 </nav>

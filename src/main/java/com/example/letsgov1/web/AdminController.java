@@ -55,7 +55,6 @@ public class AdminController {
         httpSession.setAttribute("page", "users");
         return "/admin/users";
     }
-
     @GetMapping("/admin/riders")
     public String listRiders(Model model, @RequestParam(name="keyId",defaultValue = "") String keyId) {
         List<Rider> riders;

@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
+<head>
+	<meta charset="UTF-8">
+	<title>Let's Go! - Admin - Routes</title>
+	<th:block th:insert="~{fragments/scripts}"></th:block>
+</head>
+<body class="vh-100 d-flex flex-column">
+<th:block th:insert="~{fragments/navbar}"></th:block>
+<div class="d-flex flex-fill">
+	<th:block th:insert="~{fragments/sidebar}"></th:block>
+	<main class="container-sm text-center flex-grow-1">
+		<h1>Routes</h1>
+		<table class="table table-striped table-hover table-sm align-middle">
+			<thead class="table-dark">
+			<tr>
+				<th>ID</th>
+				<th>Start</th>
+				<th>End</th>
+				<th>Distance</th>
+				<th>Duration</th>
+				<th>Status</th>
+				<th>Edit</th>
+			</tr>
+			</thead>
+			<tbody class="table-group-divider border-indigo-subtle">
+			<tr th:each="route:${routes}" th:object="${route}">
+				<td th:text="*{routeId}"></td>
+				<td th:text="*{locationStart}"></td>
+				<td th:text="*{locationEnd}"></td>
+				<td th:text="*{#numbers.formatDecimal(routeDistance,1,1) + ' km'}"></td>
+				<td th:text="*{#numbers.formatInteger(routeDuration, 1) + ' min'}"></td>
+				<td>
+					<a th:if="*{routeStatus == 'active'}" class="btn btn-sm btn-green active" th:text="*{routeStatus}"/>
+					<a th:if="*{routeStatus == 'inactive'}" class="btn btn-sm btn-yellow active" th:text="*{routeStatus}"/>
+					<a th:if="*{routeStatus == 'requested'}" class="btn btn-sm btn-indigo active" th:text="*{routeStatus}"/>
+				</td>
+				<td>
+					<a class="btn btn-sm btn-cyan" th:href="@{/admin/routes/editRoute(id=*{routeId})}">Edit</a>
+				</td>
+			</tr>
+			</tbody>
+		</table>
+	</main>
+</div>
+</body>
+</html>
