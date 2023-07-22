@@ -1,4 +1,4 @@
-package com.example.letsgov1;
+package com.example.letsgov1.web;
 
 import com.example.letsgov1.entities.User;
 import com.example.letsgov1.repositories.UserRepository;
@@ -14,6 +14,7 @@ public class UserDetailsService implements org.springframework.security.core.use
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
         User user = userRepository.findUserByUsername(username);
+        String role = user.isAdmin() ? "ROLE_ADMIN" : "ROLE_USER";
         return org.springframework.security.core.userdetails.User.builder()
                 .username(user.getUsername())
                 .password(user.getPassword())
