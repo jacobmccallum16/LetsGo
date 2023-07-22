@@ -59,7 +59,7 @@ public class Driver {
     // simplified methods for temporary use:
     public void updateSafetyScore() {
         if (timesRated > 0) {
-            driverSafetyScore = (timesRated + driverSafetyRating + driverResponsibilityRating) / timesRated;
+            driverSafetyScore = (1 + driverSafetyRating + driverResponsibilityRating);
         }
     }
 

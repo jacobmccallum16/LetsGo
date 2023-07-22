@@ -67,4 +67,10 @@ public class TripsController {
         tripRepository.save(trip);
         return "redirect:/admin/trips";
     }
+
+    @GetMapping("/admin/trips/deleteTrip")
+    public String deleteTrip(Integer id){
+        tripRepository.deleteById(id);
+        return "redirect:/admin/trips";
+    }
 }

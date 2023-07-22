@@ -10,7 +10,7 @@
 <div class="d-flex flex-fill">
 	<th:block th:insert="~{fragments/sidebar}"></th:block>
 	<main class="container-sm text-center flex-grow-1">
-		<h1>Active Drivers</h1>
+		<h1>Drivers</h1>
 		<table class="table table-striped table-hover table-sm align-middle">
 			<thead class="table-dark">
 			<tr>
@@ -26,7 +26,7 @@
 			</tr>
 			</thead>
 			<tbody class="table-group-divider border-indigo-subtle">
-			<tr th:each="d:${drivers}">
+			<tr th:each="d:${drivers}" th:object="${d}">
 				<td th:text="${d.driverId}"></td>
 				<td th:text="${d.user.firstName}"></td>
 				<td th:text="${d.user.lastName}"></td>
@@ -34,9 +34,9 @@
 				<td th:text="${d.timesRated}"></td>
 				<td th:text="${d.driverSafetyScore}"></td>
 				<td>
-					<a th:href="@{/admin/drivers/driverStatus(id=${d.driverId}, status='active')}" class="btn btn-sm" th:classappend="${d.driverStatus} == 'active' ? 'btn-green' : 'btn-outline-green'" th:text="${d.driverStatus} == 'active' ? 'Active' : 'Activate'"/>
-					<a th:href="@{/admin/drivers/driverStatus(id=${d.driverId}, status='inactive')}" class="btn btn-sm" th:classappend="${d.driverStatus} == 'inactive' ? 'btn-yellow' : 'btn-outline-yellow'" th:text="${d.driverStatus} == 'inactive' ? 'Inactive' : 'Deactivate'"/>
-					<a th:href="@{/admin/drivers/driverStatus(id=${d.driverId}, status='banned')}" class="btn btn-sm" th:classappend="${d.driverStatus} == 'banned' ? 'btn-red' : 'btn-outline-red'" th:text="${d.driverStatus} == 'banned' ? 'Banned' : 'Ban'"/>
+					<a th:if="*{driverStatus == 'active'}" class="btn btn-sm btn-green active">Active</a>
+					<a th:if="*{driverStatus == 'inactive'}" class="btn btn-sm btn-yellow active">Inactive</a>
+					<a th:if="*{driverStatus == 'banned'}" class="btn btn-sm btn-red active">Banned</a>
 				</td>
 				<td><a class="btn btn-sm btn-outline-primary" th:href="@{/admin/viewAccount(id=${d.user.userId})}">View Account</a></td>
 				<td>
