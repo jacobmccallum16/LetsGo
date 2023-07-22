@@ -17,7 +17,7 @@
 							<div class="card-title">Create New User</div>
 						</div>
 						<div class="card-body">
-							<form id="form" class="row g-3 p-2" method="post" th:action="@{/admin/createUser}"  th:object="${user}">
+							<form id="form" class="row g-3 p-2" method="post" th:action="@{/admin/users/createUser}"  th:object="${user}">
 								<div class="col-md-6">
 									<div class="form-floating">
 										<input type="text" id="firstName" name="firstName" class="form-control" placeholder="First Name" th:field="*{firstName}" th:errorClass="is-invalid" required autofocus>

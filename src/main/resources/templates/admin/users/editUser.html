@@ -17,7 +17,7 @@
 						<div class="card-title">Edit User</div>
 					</div>
 					<div class="card-body">
-						<form id="form" class="row g-3 p-2" method="post" th:action="@{/admin/editUser}" th:object="${user}">
+						<form id="form" class="row g-3 p-2" method="post" th:action="@{/admin/users/editUser}" th:object="${user}">
 							<div hidden>
 								<input type="text" name="userId" th:value="*{userId}" th:field="*{userId}">
 								<input type="text" name="createdAt" th:value="*{createdAt}" th:field="*{createdAt}">

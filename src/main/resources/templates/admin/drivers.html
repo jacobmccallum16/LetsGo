@@ -27,7 +27,7 @@
 			</tr>
 			</thead>
 			<tbody class="table-group-divider border-indigo-subtle">
-			<tr th:each="d:${listDrivers}">
+			<tr th:each="d:${drivers}">
 				<td th:text="${d.driverId}"></td>
 				<td th:text="${d.user.firstName}"></td>
 				<td th:text="${d.user.lastName}"></td>
@@ -35,13 +35,13 @@
 				<td th:text="${d.timesRated}"></td>
 				<td th:text="${d.driverSafetyScore}"></td>
 				<td>
-					<a th:href="@{/admin/driverStatus(id=${d.driverId}, status='active')}" class="btn btn-sm" th:classappend="${d.driverStatus} == 'active' ? 'btn-green' : 'btn-outline-green'" th:text="${d.driverStatus} == 'active' ? 'Active' : 'Activate'"/>
-					<a th:href="@{/admin/driverStatus(id=${d.driverId}, status='inactive')}" class="btn btn-sm" th:classappend="${d.driverStatus} == 'inactive' ? 'btn-yellow' : 'btn-outline-yellow'" th:text="${d.driverStatus} == 'inactive' ? 'Inactive' : 'Deactivate'"/>
-					<a th:href="@{/admin/driverStatus(id=${d.driverId}, status='banned')}" class="btn btn-sm" th:classappend="${d.driverStatus} == 'banned' ? 'btn-red' : 'btn-outline-red'" th:text="${d.driverStatus} == 'banned' ? 'Banned' : 'Ban'"/>
+					<a th:href="@{/admin/drivers/driverStatus(id=${d.driverId}, status='active')}" class="btn btn-sm" th:classappend="${d.driverStatus} == 'active' ? 'btn-green' : 'btn-outline-green'" th:text="${d.driverStatus} == 'active' ? 'Active' : 'Activate'"/>
+					<a th:href="@{/admin/drivers/driverStatus(id=${d.driverId}, status='inactive')}" class="btn btn-sm" th:classappend="${d.driverStatus} == 'inactive' ? 'btn-yellow' : 'btn-outline-yellow'" th:text="${d.driverStatus} == 'inactive' ? 'Inactive' : 'Deactivate'"/>
+					<a th:href="@{/admin/drivers/driverStatus(id=${d.driverId}, status='banned')}" class="btn btn-sm" th:classappend="${d.driverStatus} == 'banned' ? 'btn-red' : 'btn-outline-red'" th:text="${d.driverStatus} == 'banned' ? 'Banned' : 'Ban'"/>
 				</td>
 				<td><a class="btn btn-sm btn-outline-primary" th:href="@{/admin/viewAccount(id=${d.user.userId})}">View Account</a></td>
 				<td>
-					<a class="btn btn-sm btn-outline-teal" th:href="@{/admin/editDriver(id=${d.driverId})}">Edit Driver</a>
+					<a class="btn btn-sm btn-outline-teal" th:href="@{/admin/drivers/editDriver(id=${d.driverId})}">Edit Driver</a>
 				</td>
 			</tr>
 			</tbody>

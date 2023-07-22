@@ -1,10 +1,7 @@
 package com.example.letsgov1.web.adminControllers;
 
 import com.example.letsgov1.entities.Route;
-import com.example.letsgov1.repositories.DriverRepository;
-import com.example.letsgov1.repositories.RiderRepository;
 import com.example.letsgov1.repositories.RouteRepository;
-import com.example.letsgov1.repositories.UserRepository;
 import jakarta.servlet.http.HttpSession;
 import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,11 +16,9 @@ import java.util.List;
 
 @Controller
 @AllArgsConstructor
-public class RouteController {
+public class RoutesController {
+
     @Autowired
-    private UserRepository userRepository;
-    private RiderRepository riderRepository;
-    private DriverRepository driverRepository;
     private RouteRepository routeRepository;
     public HttpSession httpSession;
 

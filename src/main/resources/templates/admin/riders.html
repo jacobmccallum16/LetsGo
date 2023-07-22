@@ -26,7 +26,7 @@
 			</tr>
 			</thead>
 			<tbody class="table-group-divider border-indigo-subtle">
-			<tr th:each="r:${listRiders}">
+			<tr th:each="r:${riders}">
 				<td><div class="alert alert-light" th:text="${r.riderId}"></div></td>
 				<td><div class="alert alert-light" th:text="${r.user.firstName} + ' ' + ${r.user.lastName}"></div></td>
 				<td><div class="alert alert-light" th:text="${r.tripsTaken}"></div></td>
@@ -35,13 +35,13 @@
 				         th:classappend="${r.riderSafetyScore} > 0 ? (${r.riderSafetyScore} >= 2 ? (${r.riderSafetyScore} >= 3 ? (${r.riderSafetyScore} >= 4 ?
 				         'alert-green' : 'alert-yellow') : 'alert-orange') : 'alert-red') : 'alert-secondary'"></div></td>
 				<td>
-					<a th:href="@{/admin/riderStatus(id=${r.riderId}, status='active')}" class="btn btn-sm" th:classappend="${r.riderStatus} == 'active' ? 'btn-green active' : 'btn-outline-green'" th:text="${r.riderStatus} == 'active' ? 'Active' : 'Activate'"/>
-					<a th:href="@{/admin/riderStatus(id=${r.riderId}, status='inactive')}" class="btn btn-sm" th:classappend="${r.riderStatus} == 'inactive' ? 'btn-yellow active' : 'btn-outline-yellow'" th:text="${r.riderStatus} == 'inactive' ? 'Inactive' : 'Deactivate'"/>
-					<a th:href="@{/admin/riderStatus(id=${r.riderId}, status='banned')}" class="btn btn-sm" th:classappend="${r.riderStatus} == 'banned' ? 'btn-red active' : 'btn-outline-red'" th:text="${r.riderStatus} == 'banned' ? 'Banned' : 'Ban'"/>
+					<a th:href="@{/admin/riders/riderStatus(id=${r.riderId}, status='active')}" class="btn btn-sm" th:classappend="${r.riderStatus} == 'active' ? 'btn-green active' : 'btn-outline-green'" th:text="${r.riderStatus} == 'active' ? 'Active' : 'Activate'"/>
+					<a th:href="@{/admin/riders/riderStatus(id=${r.riderId}, status='inactive')}" class="btn btn-sm" th:classappend="${r.riderStatus} == 'inactive' ? 'btn-yellow active' : 'btn-outline-yellow'" th:text="${r.riderStatus} == 'inactive' ? 'Inactive' : 'Deactivate'"/>
+					<a th:href="@{/admin/riders/riderStatus(id=${r.riderId}, status='banned')}" class="btn btn-sm" th:classappend="${r.riderStatus} == 'banned' ? 'btn-red active' : 'btn-outline-red'" th:text="${r.riderStatus} == 'banned' ? 'Banned' : 'Ban'"/>
 				</td>
 				<td><a class="btn btn-sm btn-outline-primary" th:href="@{/admin/viewAccount(id=${r.user.userId})}">View Account</a></td>
 				<td>
-					<a class="btn btn-sm btn-outline-cyan" th:href="@{/admin/editRider(id=${r.riderId})}">Edit Rider</a>
+					<a class="btn btn-sm btn-outline-cyan" th:href="@{/admin/riders/editRider(id=${r.riderId})}">Edit Rider</a>
 				</td>
 			</tr>
 			</tbody>
