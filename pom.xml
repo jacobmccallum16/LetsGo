@@ -11,8 +11,8 @@
     <groupId>com.example</groupId>
     <artifactId>LetsGo</artifactId>
     <version>0.0.1-SNAPSHOT</version>
-    <name>LetsGoV1</name>
-    <description>LetsGoV1</description>
+    <name>LetsGo</name>
+    <description>LetsGo</description>
     <properties>
         <java.version>20</java.version>
     </properties>
