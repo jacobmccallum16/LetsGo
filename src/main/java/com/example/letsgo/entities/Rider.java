@@ -72,7 +72,7 @@ public class Rider {
     // simplified methods for temporary use:
     public void updateSafetyScore() {
         if (timesRated > 0) {
-            riderSafetyScore = (timesRated + riderSafetyRating + riderResponsibilityRating) / timesRated;
+            riderSafetyScore = (1 + riderSafetyRating + riderResponsibilityRating);
         }
     }
 }

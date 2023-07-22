@@ -23,6 +23,7 @@
 				<th>Duration</th>
 				<th>Status</th>
 				<th>Edit</th>
+				<th>Delete</th>
 			</tr>
 			</thead>
 			<tbody class="table-group-divider border-indigo-subtle">
@@ -41,6 +42,9 @@
 				<td>
 					<a class="btn btn-sm btn-cyan" th:href="@{/admin/routes/editRoute(id=*{routeId})}">Edit</a>
 					<a class="btn btn-sm btn-outline-indigo" th:href="@{/admin/trips/createTrip(routeId=*{routeId})}">Create Trip</a>
+				</td>
+				<td>
+					<a class="btn btn-sm btn-red" th:href="@{/admin/routes/deleteRoute(id=*{routeId})}">Delete</a>
 				</td>
 			</tr>
 			</tbody>

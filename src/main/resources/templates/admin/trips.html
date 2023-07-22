@@ -20,6 +20,7 @@
 				<th colspan="2">Destination</th>
 				<th>Status</th>
 				<th>Edit</th>
+				<th>Delete</th>
 			</tr>
 			</thead>
 			<tbody class="table-group-divider border-indigo-subtle">
@@ -38,6 +39,9 @@
 				</td>
 				<td>
 					<a class="btn btn-sm btn-cyan" th:href="@{/admin/trips/editTrip(id=*{tripId})}">Edit</a>
+				</td>
+				<td>
+					<a class="btn btn-sm btn-red" th:href="@{/admin/routes/deleteTrip(id=*{tripId})}">Delete</a>
 				</td>
 			</tr>
 			</tbody>

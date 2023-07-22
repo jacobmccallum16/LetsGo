@@ -63,4 +63,10 @@ public class RoutesController {
         routeRepository.save(route);
         return "redirect:/admin/routes";
     }
+
+    @GetMapping("/admin/routes/deleteRoute")
+    public String deleteRoute(Integer id){
+        routeRepository.deleteById(id);
+        return "redirect:/admin/routes";
+    }
 }
