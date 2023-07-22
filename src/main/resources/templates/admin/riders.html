@@ -28,7 +28,7 @@
 			<tbody class="table-group-divider border-indigo-subtle">
 			<tr th:each="r:${riders}">
 				<td><div class="alert alert-light" th:text="${r.riderId}"></div></td>
-				<td><div class="alert alert-light" th:text="${r.user.firstName} + ' ' + ${r.user.lastName}"></div></td>
+				<td><div class="alert alert-light" th:text="${r.user.firstName + ' ' + r.user.lastName}"></div></td>
 				<td><div class="alert alert-light" th:text="${r.tripsTaken}"></div></td>
 				<td><div class="alert alert-light" th:text="${r.timesRated}"></div></td>
 				<td><div class="alert fw-bold" th:text="${#numbers.formatDecimal(r.riderSafetyScore,1,1)}"
