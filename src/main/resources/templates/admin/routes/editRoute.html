@@ -2,7 +2,7 @@
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
 	<meta charset="UTF-8">
-	<title>Let's Go! - Admin - Create Route</title>
+	<title>Let's Go! - Edit Route</title>
 	<th:block th:insert="~{fragments/scripts}"></th:block>
 </head>
 <body class="vh-100 d-flex flex-column">
@@ -13,45 +13,50 @@
 		<div class="row">
 			<div class="col-12 col-md-10 col-lg-9 col-xl-8 col-xxl-7 my-3 mx-auto align-middle">
 				<div class="card">
-					<div class="card-header">
-						Create Route
-					</div>
+					<div class="card-header fs-4">Edit Route</div>
 					<div class="card-body text-start">
-						<form id="form" class="needs-validation" novalidate method="post" th:action="@{/admin/editRoute}" th:object="${route}">
+						<form id="form" class="needs-validation" novalidate method="post" th:action="@{/admin/routes/editRoute}" th:object="${route}">
 							<div class="row g-3">
 								<div hidden>
 								</div>
-								<div class="col-6">
+								<div class="col-2">
+									<label for="routeId" class="form-label">ID</label>
+									<input type="hidden" th:field="*{routeId}">
+									<input id="routeId" class="form-control" type="number" th:value="*{routeId}" disabled>
+								</div>
+								<div class="col-5">
 									<label for="locationStart" class="form-label">Location Start</label>
 									<input id="locationStart" class="form-control" type="text" th:field="*{locationStart}" required>
 								</div>
-								<div class="col-6">
+								<div class="col-5">
 									<label for="locationEnd" class="form-label">Location Start</label>
 									<input id="locationEnd" class="form-control" type="text" th:field="*{locationEnd}" required>
 								</div>
-								<div class="col-3 col-sm-4">
-									<label for="routeId" class="form-label">Route Id</label>
-									<input id="routeId" class="form-control" type="number" th:field="*{routeId}" required>
-								</div>
-								<div class="col-6">
-									<label for="routeImageSource" class="form-label">Image URL</label>
-									<input id="routeImageSource" class="form-control" type="text" th:field="*{routeImageSource}" required>
-								</div>
-								<div class="col-6 col-sm-4">
+								<div class="col-3">
 									<label for="routeStatus" class="form-label">Status</label>
 									<select id="routeStatus" class="form-select" th:field="*{routeStatus}" required>
 										<option th:value="active" th:selected="*{routeStatus == 'active'}">Active</option>
 										<option th:value="inactive" th:selected="*{routeStatus == 'inactive'}">Inactive</option>
-										<option th:value="requested" th:selected="*{routeStatus == 'requested'}">Banned</option>
+										<option th:value="requested" th:selected="*{routeStatus == 'requested'}">Requested</option>
 									</select>
 								</div>
-								<div class="col-6">
-									<label for="routeDistance" class="form-label">Route Distance</label>
-									<input id="routeDistance" class="form-control" type="number" th:field="*{routeDistance}" required>
+								<div class="col-3">
+									<label for="routeDistance" class="form-label">Distance</label>
+									<div class="input-group">
+										<input id="routeDistance" class="form-control" type="number" th:field="*{routeDistance}" required>
+										<span class="input-group-text">min</span>
+									</div>
 								</div>
-								<div class="col-6">
-									<label for="routeDuration" class="form-label">Route Duration</label>
-									<input id="routeDuration" class="form-control" type="number" th:field="*{routeDuration}" required>
+								<div class="col-3">
+									<label for="routeDuration" class="form-label">Duration</label>
+									<div class="input-group">
+										<input id="routeDuration" class="form-control" type="number" th:field="*{routeDuration}" required>
+										<span class="input-group-text">km</span>
+									</div>
+								</div>
+								<div class="col-3">
+									<label for="routeImageSource" class="form-label">Image URL</label>
+									<input id="routeImageSource" class="form-control" type="text" th:field="*{routeImageSource}" required>
 								</div>
 								<div class="col-12 col-sm-6">
 									<label for="createdAt" class="form-label">Created At</label>
@@ -65,7 +70,7 @@
 						</form>
 					</div>
 					<div class="card-footer text-end">
-						<button form="form" type="submit" id="editRiderSubmit" class="btn btn-outline-primary">Update Rider Information</button>
+						<button form="form" type="submit" id="editRiderSubmit" class="btn btn-outline-primary">Update Route</button>
 					</div>
 				</div>
 			</div>

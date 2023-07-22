@@ -2,7 +2,7 @@
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
 	<meta charset="UTF-8">
-	<title>Let's Go! - Admin - Create Route</title>
+	<title>Let's Go! - Create Route</title>
 	<th:block th:insert="~{fragments/scripts}"></th:block>
 </head>
 <body class="vh-100 d-flex flex-column">
@@ -17,7 +17,7 @@
 						Create Route
 					</div>
 					<div class="card-body text-start">
-						<form id="form" class="needs-validation" novalidate method="post" th:action="@{/admin/createRoute}" th:object="${route}">
+						<form id="form" class="needs-validation" novalidate method="post" th:action="@{/admin/routes/createRoute}" th:object="${route}">
 							<div class="row g-3">
 								<div hidden>
 								</div>
@@ -29,7 +29,7 @@
 									<label for="locationEnd" class="form-label">Location End</label>
 									<input id="locationEnd" class="form-control" type="text" th:field="*{locationEnd}" required>
 								</div>
-								<div class="col-4 col-sm-4">
+								<div class="col-4">
 									<label for="routeStatus" class="form-label">Status</label>
 									<select id="routeStatus" class="form-select" th:field="*{routeStatus}" required>
 										<option th:value="active" th:selected="*{routeStatus == 'active'}">Active</option>
