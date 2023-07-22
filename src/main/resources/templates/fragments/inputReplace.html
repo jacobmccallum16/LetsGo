@@ -1,6 +1,18 @@
-<th:block th:fragment="inputReplace(thField, label, type, class)">
+<th:block th:fragment="text(field, id, label, class)">
 	<div th:class="${class}" >
-		<label for="firstName" class="form-label" th:text="${label}"></label>
-		<input id="firstName" class="form-control" th:type="${type}" th:field="*{__${thField}__}" required>
+		<label th:for="${id}" class="form-label" th:text="${label}"></label>
+		<input th:id="${id}" class="form-control" th:type="text" th:field="*{__${field}__}" required>
+	</div>
+</th:block>
+<th:block th:fragment="inputReplace(type, field, id, label, class)">
+	<div th:class="${class}" >
+		<label th:for="${id}" class="form-label" th:text="${label}"></label>
+		<input th:id="${id}" class="form-control" th:type="${type}" th:field="*{__${field}__}" required>
+	</div>
+</th:block>
+<th:block th:fragment="inputReplaceReadOnly(type, field, id, label, class)">
+	<div th:class="${class}" >
+		<label th:for="${id}" class="form-label" th:text="${label}"></label>
+		<input th:id="${id}" class="form-control" th:type="${type}" th:field="*{__${field}__}" readonly>
 	</div>
 </th:block>

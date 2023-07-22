@@ -27,8 +27,8 @@
 												<option th:value="1" th:selected="*{isActive == true}">Active</option>
 											</select>
 										</div>
-<!--										<div th:classappend="col-6" th:insert="fragments/inputInsert :: inputInsert('user.firstName', 'First Name')"></div>-->
-										<div th:replace="fragments/inputReplace :: inputReplace('user.lastName', 'Last Name', 'col-6')"></div>
+										<div th:replace="fragments/inputReplace :: text('user.firstName', 'firstName', 'First Name', 'col-6')"></div>
+										<div th:replace="fragments/inputReplace :: inputReplace('text', 'user.lastName', 'lastName', 'Last Name', 'col-6')"></div>
 										<div class="col-6">
 											<label for="firstName" class="form-label">First Name</label>
 											<input id="firstName" class="form-control" type="text" th:field="*{user.firstName}" required>
@@ -76,7 +76,6 @@
 										</div>
 										<div class="col-12 col-sm-6">
 											<label for="createdAt" class="form-label">Created At</label>
-											<input type="text" th:field="*{createdAt}" required hidden>
 											<input id="createdAt" class="form-control" type="text" th:value="*{createdAt}" disabled>
 										</div>
 										<div class="col-12 col-sm-6">
