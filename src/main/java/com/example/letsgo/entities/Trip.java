@@ -17,7 +17,7 @@ import java.util.Set;
 @NoArgsConstructor
 public class Trip {
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY) public Integer tripId;
-    @OneToOne(fetch = FetchType.LAZY) @JoinColumn(name = "route_id") public Route route;
+    @ManyToOne(fetch = FetchType.LAZY) @JoinColumn(name = "route_id") public Route route;
     @OneToOne(fetch = FetchType.LAZY) @JoinColumn(name = "driver_id") public Driver driver;
     @OneToOne(fetch = FetchType.LAZY) @JoinColumn(name = "vehicle_id") public Vehicle vehicle;
     @OneToMany(mappedBy = "trip", cascade = CascadeType.ALL, fetch = FetchType.LAZY) public List<TripTransaction> tripTransaction;
@@ -34,4 +34,8 @@ public class Trip {
     @Column(columnDefinition = "VARCHAR(255) DEFAULT ''") public String tripImageSource = "";
     @Column(columnDefinition = "TIMESTAMP DEFAULT CURRENT_TIMESTAMP") public Timestamp createdAt = new Timestamp(System.currentTimeMillis());
     @Column(columnDefinition = "TIMESTAMP DEFAULT CURRENT_TIMESTAMP") public Timestamp updatedAt = new Timestamp(System.currentTimeMillis());
+
+    public Trip(Route route) {
+        this.route = route;
+    }
 }
