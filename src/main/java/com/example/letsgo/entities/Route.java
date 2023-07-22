@@ -15,7 +15,7 @@ import java.util.Set;
 @NoArgsConstructor
 public class Route {
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY) public Integer routeId;
-    @OneToOne(mappedBy = "route", cascade = CascadeType.ALL, fetch = FetchType.LAZY) public Trip trip;
+    @OneToMany(mappedBy = "route", cascade = CascadeType.ALL, fetch = FetchType.LAZY) public List<Trip> trips;
     @OneToMany(mappedBy = "route", cascade = CascadeType.ALL, fetch = FetchType.LAZY) public List<TripTransaction> tripTransactions;
     @Column(columnDefinition = "VARCHAR(255) DEFAULT ''") public String locationStart = "";
     @Column(columnDefinition = "VARCHAR(255) DEFAULT ''") public String locationEnd = "";
