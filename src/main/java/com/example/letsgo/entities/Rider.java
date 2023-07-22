@@ -1,4 +1,4 @@
-package com.example.letsgov1.entities;
+package com.example.letsgo.entities;
 
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
@@ -7,40 +7,46 @@ import lombok.NoArgsConstructor;
 
 import java.sql.Timestamp;
 import java.util.List;
+import java.util.Set;
 
 @Data
 @Entity
 @AllArgsConstructor
 @NoArgsConstructor
-public class Driver {
-    @Id @GeneratedValue(strategy = GenerationType.IDENTITY) public Integer driverId;
+public class Rider {
+    @Id @GeneratedValue(strategy = GenerationType.IDENTITY) public Integer riderId;
     @OneToOne(fetch = FetchType.LAZY) @JoinColumn(name = "user_id") public User user;
-    @OneToMany(mappedBy = "driver", cascade = CascadeType.ALL, fetch = FetchType.LAZY) public List<Vehicle> vehicle;
-    @OneToMany(mappedBy = "ratedDriver", cascade = CascadeType.ALL, fetch = FetchType.LAZY) public List<DriverRating> driverRatings;
+    @OneToMany(mappedBy = "ratedRider", cascade = CascadeType.ALL, fetch = FetchType.LAZY) public List<RiderRating> riderRatings;
+    @ManyToMany @JoinTable(
+            name = "rider_trip",
+            joinColumns = @JoinColumn(name = "rider_id"),
+            inverseJoinColumns = @JoinColumn(name = "trip_id")
+    )
+    public Set<Trip> riderTrips;
     @Column(columnDefinition = "BOOLEAN DEFAULT FALSE") public Boolean isActive = false;
-    @Column(columnDefinition = "VARCHAR(255) DEFAULT 'inactive'") public String driverStatus = "inactive";
-    @Column(columnDefinition = "INTEGER DEFAULT 0") public Integer tripsDriven = 0;
+    @Column(columnDefinition = "VARCHAR(255) DEFAULT 'inactive'") public String riderStatus;
+    @Column(columnDefinition = "INTEGER DEFAULT '0'") public Integer tripsTaken = 0;
     @Column(columnDefinition = "INTEGER DEFAULT '0'") public Integer timesRated = 0;
-    @Column(columnDefinition = "FLOAT DEFAULT '0'") public Float driverSafetyScore = 0f;
-    @Column(columnDefinition = "FLOAT DEFAULT '0'") public Float driverSafetyRating = 0f;
-    @Column(columnDefinition = "FLOAT DEFAULT '0'") public Float driverResponsibilityRating = 0f;
+    @Column(columnDefinition = "FLOAT DEFAULT '0'") public Float riderSafetyScore = 0f;
+    @Column(columnDefinition = "FLOAT DEFAULT '0'") public Float riderSafetyRating = 0f;
+    @Column(columnDefinition = "FLOAT DEFAULT '0'") public Float riderResponsibilityRating = 0f;
     @Column(columnDefinition = "TIMESTAMP DEFAULT CURRENT_TIMESTAMP") public Timestamp createdAt = new Timestamp(System.currentTimeMillis());
     @Column(columnDefinition = "TIMESTAMP DEFAULT CURRENT_TIMESTAMP") public Timestamp updatedAt = new Timestamp(System.currentTimeMillis());
-    public Driver(User user) {
+    public Rider(User user) {
         this.user = user;
         isActive = false;
-        driverStatus = "inactive";
+        riderStatus = "inactive";
         createdAt = new Timestamp(System.currentTimeMillis());
         updatedAt = new Timestamp(System.currentTimeMillis());
     }
     public Boolean toggleIsActive() {
-        if (!driverStatus.equals("banned")) {
+        if (!riderStatus.equals("banned")) {
             if (!isActive) {
                 isActive = true;
-                driverStatus = "active";
+                riderStatus = "active";
             } else {
                 isActive = false;
-                driverStatus = "inactive";
+                riderStatus = "inactive";
             }
         } else {
             isActive = false;
@@ -48,9 +54,16 @@ public class Driver {
         updatedAt = new Timestamp(System.currentTimeMillis());
         return isActive;
     }
-
+    public void updateStatus(String riderStatus) {
+        this.riderStatus = riderStatus;
+        if (riderStatus.equals("active")) {
+            isActive = true;
+        } else {
+            isActive = false;
+        }
+    }
     public void updateStatus() {
-        isActive = driverStatus.equals("active");
+        isActive = riderStatus.equals("active");
     }
     public void updateUpdatedAt() {
         updatedAt = new Timestamp(System.currentTimeMillis());
@@ -59,8 +72,7 @@ public class Driver {
     // simplified methods for temporary use:
     public void updateSafetyScore() {
         if (timesRated > 0) {
-            driverSafetyScore = (timesRated + driverSafetyRating + driverResponsibilityRating) / timesRated;
+            riderSafetyScore = (timesRated + riderSafetyRating + riderResponsibilityRating) / timesRated;
         }
     }
-
 }

@@ -1,7 +1,7 @@
-package com.example.letsgov1.web.adminControllers;
+package com.example.letsgo.web.adminControllers;
 
-import com.example.letsgov1.entities.Route;
-import com.example.letsgov1.repositories.RouteRepository;
+import com.example.letsgo.entities.Route;
+import com.example.letsgo.repositories.RouteRepository;
 import jakarta.servlet.http.HttpSession;
 import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;

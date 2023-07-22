@@ -1,4 +1,4 @@
-package com.example.letsgov1.entities;
+package com.example.letsgo.entities;
 
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;

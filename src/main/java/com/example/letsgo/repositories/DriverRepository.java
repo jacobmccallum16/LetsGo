@@ -1,6 +1,6 @@
-package com.example.letsgov1.repositories;
+package com.example.letsgo.repositories;
 
-import com.example.letsgov1.entities.Driver;
+import com.example.letsgo.entities.Driver;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.util.List;

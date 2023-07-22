@@ -1,6 +1,6 @@
-package com.example.letsgov1.repositories;
+package com.example.letsgo.repositories;
 
-import com.example.letsgov1.entities.Route;
+import com.example.letsgo.entities.Route;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.util.List;

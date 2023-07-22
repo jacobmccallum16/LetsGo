@@ -1,9 +1,9 @@
-package com.example.letsgov1.web.adminControllers;
+package com.example.letsgo.web.adminControllers;
 
-import com.example.letsgov1.entities.Driver;
-import com.example.letsgov1.repositories.DriverRepository;
-import com.example.letsgov1.repositories.RiderRepository;
-import com.example.letsgov1.repositories.UserRepository;
+import com.example.letsgo.entities.Driver;
+import com.example.letsgo.repositories.DriverRepository;
+import com.example.letsgo.repositories.RiderRepository;
+import com.example.letsgo.repositories.UserRepository;
 import jakarta.servlet.http.HttpSession;
 import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;

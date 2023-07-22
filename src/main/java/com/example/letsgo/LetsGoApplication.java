@@ -1,16 +1,16 @@
-package com.example.letsgov1;
+package com.example.letsgo;
 
-import com.example.letsgov1.repositories.UserRepository;
+import com.example.letsgo.repositories.UserRepository;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
 
 @SpringBootApplication
-public class LetsGoV1Application {
+public class LetsGoApplication {
 
     public static void main(String[] args) {
-        SpringApplication.run(LetsGoV1Application.class, args);
+        SpringApplication.run(LetsGoApplication.class, args);
     }
 
     @Bean
