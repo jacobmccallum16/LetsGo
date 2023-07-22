@@ -1,0 +1,6 @@
+<th:block th:fragment="inputReplace(thField, label, type, class)">
+	<div th:class="${class}" >
+		<label for="firstName" class="form-label" th:text="${label}"></label>
+		<input id="firstName" class="form-control" th:type="${type}" th:field="*{__${thField}__}" required>
+	</div>
+</th:block>
