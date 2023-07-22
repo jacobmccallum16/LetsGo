@@ -21,7 +21,7 @@
 							<div class="row g-3">
 								<div hidden>
 									<label for="isActive" class="form-label"></label>
-									<select id="isActive" class="form-select" th:field="*{isActive}" required hidden>
+									<select id="isActive" class="form-select" th:field="*{isActive}" required disabled>
 										<option th:value="0" th:selected="*{isActive == false}">Inactive</option>
 										<option th:value="1" th:selected="*{isActive == true}">Active</option>
 									</select>
