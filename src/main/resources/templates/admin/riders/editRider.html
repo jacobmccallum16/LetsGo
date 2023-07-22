@@ -35,8 +35,8 @@
 										<div th:replace="fragments/inputs :: required('number', 'timesRated', 'timesRated', 'Times Rated', 'col-6')"></div>
 										<div th:replace="fragments/inputs :: required('number', 'tripsTaken', 'tripsTaken', 'Trips Taken', 'col-6')"></div>
 										<div th:replace="fragments/inputs :: required('number', 'riderSafetyRating', 'riderSafetyRating', 'Safety Rating', 'col-4')"></div>
-										<div th:replace="fragments/inputs :: required('number', 'riderSafetyRating', 'riderSafetyRating', 'Responsibility Rating', 'col-4 col-sm-5')"></div>
-										<div th:replace="fragments/inputs :: disabled('number', 'riderSafetyRating', 'riderSafetyRating', 'Safety Score', 'col-4 col-sm-3')"></div>
+										<div th:replace="fragments/inputs :: required('number', 'riderResponsibilityRating', 'riderResponsibilityRating', 'Responsibility Rating', 'col-4 col-sm-5')"></div>
+										<div th:replace="fragments/inputs :: disabledData('number', 'riderSafetyScore', 'riderSafetyScore', 'Safety Score', 'col-4 col-sm-3')"></div>
 										<div th:replace="fragments/inputs :: disabledData('text', 'createdAt', 'createdAt', 'Created At', 'col-12 col-sm-6')"></div>
 										<div th:replace="fragments/inputs :: disabledNoData('text', 'updatedAt', 'updatedAt', 'Updated At', 'col-12 col-sm-6')"></div>
 									</div>
