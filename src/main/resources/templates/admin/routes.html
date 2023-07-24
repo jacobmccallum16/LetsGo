@@ -35,9 +35,9 @@
 				<td th:text="*{#numbers.formatDecimal(routeDistance,1,1) + ' km'}"></td>
 				<td th:text="*{#numbers.formatInteger(routeDuration, 1) + ' min'}"></td>
 				<td>
-					<a th:if="*{routeStatus == 'active'}" class="btn btn-sm btn-green active">Active</a>
-					<a th:if="*{routeStatus == 'inactive'}" class="btn btn-sm btn-yellow active">Inactive</a>
-					<a th:if="*{routeStatus == 'requested'}" class="btn btn-sm btn-indigo active">Requested</a>
+					<a th:if="*{routeStatus == 'Active'}" class="btn btn-sm btn-green active">Active</a>
+					<a th:if="*{routeStatus == 'Inactive'}" class="btn btn-sm btn-yellow active">Inactive</a>
+					<a th:if="*{routeStatus == 'Requested'}" class="btn btn-sm btn-indigo active">Requested</a>
 				</td>
 				<td>
 					<a class="btn btn-sm btn-cyan" th:href="@{/admin/routes/editRoute(id=*{routeId})}">Edit</a>

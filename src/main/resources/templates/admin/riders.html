@@ -39,9 +39,9 @@
 				         th:classappend="${r.riderSafetyScore} > 0 ? (${r.riderSafetyScore} >= 2 ? (${r.riderSafetyScore} >= 3 ? (${r.riderSafetyScore} >= 4 ?
 				         'alert-green' : 'alert-yellow') : 'alert-orange') : 'alert-red') : 'alert-secondary'"></div></td>
 				<td>
-					<a th:if="*{riderStatus == 'active'}" class="btn btn-sm btn-green active">Active</a>
-					<a th:if="*{riderStatus == 'inactive'}" class="btn btn-sm btn-yellow active">Inactive</a>
-					<a th:if="*{riderStatus == 'banned'}" class="btn btn-sm btn-red active">Banned</a>
+					<a th:if="*{riderStatus == 'Active'}" class="btn btn-sm btn-green active">Active</a>
+					<a th:if="*{riderStatus == 'Inactive'}" class="btn btn-sm btn-yellow active">Inactive</a>
+					<a th:if="*{riderStatus == 'Banned'}" class="btn btn-sm btn-red active">Banned</a>
 				</td>
 				<td><a class="btn btn-sm btn-outline-primary" th:href="@{/admin/viewAccount(id=${r.user.userId})}">View Account</a></td>
 				<td>

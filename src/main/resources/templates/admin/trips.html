@@ -32,10 +32,10 @@
 				<td th:text="*{route.locationEnd}"></td>
 				<td th:text="*{date + ' ' + arrivalTime}"></td>
 				<td>
-					<a th:if="*{tripStatus == 'completed'}" class="btn btn-sm btn-dark active">Completed</a>
-					<a th:if="*{tripStatus == 'planned'}" class="btn btn-sm btn-teal active">Planned</a>
-					<a th:if="*{tripStatus == 'requested'}" class="btn btn-sm btn-indigo active">Requested</a>
-					<a th:if="*{tripStatus == 'cancelled'}" class="btn btn-sm btn-red active">Cancelled</a>
+					<a th:if="*{tripStatus == 'Completed'}" class="btn btn-sm btn-dark active">Completed</a>
+					<a th:if="*{tripStatus == 'Planned'}" class="btn btn-sm btn-teal active">Planned</a>
+					<a th:if="*{tripStatus == 'Requested'}" class="btn btn-sm btn-indigo active">Requested</a>
+					<a th:if="*{tripStatus == 'Cancelled'}" class="btn btn-sm btn-red active">Cancelled</a>
 				</td>
 				<td>
 					<a class="btn btn-sm btn-cyan" th:href="@{/admin/trips/editTrip(id=*{tripId})}">Edit</a>
