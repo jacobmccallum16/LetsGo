@@ -41,7 +41,7 @@ public class User {
     @Column(columnDefinition = "BOOLEAN DEFAULT FALSE") public Boolean isAdmin = false;
     @Column(columnDefinition = "VARCHAR(255) DEFAULT ''") public String username = "";
     @Column(columnDefinition = "BOOLEAN DEFAULT FALSE") public Boolean isActive = false;
-    @Column(columnDefinition = "VARCHAR(255) DEFAULT 'inactive'") public String userStatus = "inactive";
+    @Column(columnDefinition = "VARCHAR(255) DEFAULT 'Inactive'") public String userStatus = "Inactive";
     @Column(columnDefinition = "INTEGER DEFAULT '0'") public Integer timesRated = 0;
     @Column(columnDefinition = "FLOAT DEFAULT '0'") public Float overallSafetyScore = 0f;
     @Column(columnDefinition = "FLOAT DEFAULT '0'") public Float overallSafetyRating = 0f;
@@ -74,17 +74,17 @@ public class User {
     }
 
     public Boolean updateIsActive() {
-        if (!userStatus.equals("banned")) {
+        if (!userStatus.equals("Banned")) {
             if (rider.isActive || driver.isActive) {
                 isActive = true;
-                userStatus = "active";
+                userStatus = "Active";
             } else {
                 isActive = false;
-                userStatus = "inactive";
+                userStatus = "Inactive";
             }
         } else {
             isActive = false;
-            userStatus = "banned";
+            userStatus = "Banned";
         }
         updatedAt = new Timestamp(System.currentTimeMillis());
         return isActive;

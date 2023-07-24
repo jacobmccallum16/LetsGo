@@ -18,27 +18,28 @@
 							</div>
 							<div class="card-body text-start">
 								<form id="form" class="needs-validation" novalidate method="post" th:action="@{/admin/riders/editRider}" th:object="${rider}">
+									<input type="hidden" th:field="*{riderId}">
+									<input type="hidden" th:field="*{user.userId}">
+									<input type="hidden" th:field="*{isActive}">
+									<input type="hidden" th:field="*{createdAt}">
 									<div class="row g-3">
-										<div th:replace="fragments/inputs :: disabled('text', 'user.firstName', 'firstName', 'First Name', 'col-6')"></div>
-										<div th:replace="fragments/inputs :: disabled('text', 'user.lastName', 'lastName', 'Last Name', 'col-6')"></div>
-										<div th:replace="fragments/inputs :: disabledData('number', 'user.userId', 'userId', 'User ID', 'col-6 col-sm-3')"></div>
-										<div th:replace="fragments/inputs :: disabledData('number', 'riderId', 'riderId', 'Rider ID', 'col-6 col-sm-3')"></div>
-										<div th:replace="fragments/inputs :: disabledData('text', 'isActive', 'isActive', 'Is Active', 'col-6 col-sm-3')"></div>
-										<div class="col-6 col-sm-3">
+										<div class="col-6" th:insert="fragments/inputs :: divDisabled('text', 'user.firstName', 'firstname', 'First Name')"></div>
+										<div class="col-6" th:insert="fragments/inputs :: divDisabled('text', 'user.lastName', 'lastname', 'Last Name')"></div>
+										<div class="col-6 col-sm-4">
 											<label for="riderStatus" class="form-label">Status</label>
 											<select id="riderStatus" class="form-select" th:field="*{riderStatus}" required>
-												<option th:value="active" th:selected="*{riderStatus == 'active'}">Active</option>
-												<option th:value="inactive" th:selected="*{riderStatus == 'inactive'}">Inactive</option>
-												<option th:value="banned" th:selected="*{riderStatus == 'banned'}">Banned</option>
+												<option th:value="Active" th:selected="*{riderStatus == 'Active'}">Active</option>
+												<option th:value="Inactive" th:selected="*{riderStatus == 'Inactive'}">Inactive</option>
+												<option th:value="Banned" th:selected="*{riderStatus == 'Banned'}">Banned</option>
 											</select>
 										</div>
-										<div th:replace="fragments/inputs :: required('number', 'timesRated', 'timesRated', 'Times Rated', 'col-6')"></div>
-										<div th:replace="fragments/inputs :: required('number', 'tripsTaken', 'tripsTaken', 'Trips Taken', 'col-6')"></div>
-										<div th:replace="fragments/inputs :: required('number', 'riderSafetyRating', 'riderSafetyRating', 'Safety Rating', 'col-4')"></div>
-										<div th:replace="fragments/inputs :: required('number', 'riderResponsibilityRating', 'riderResponsibilityRating', 'Responsibility Rating', 'col-4 col-sm-5')"></div>
-										<div th:replace="fragments/inputs :: disabledData('number', 'riderSafetyScore', 'riderSafetyScore', 'Safety Score', 'col-4 col-sm-3')"></div>
-										<div th:replace="fragments/inputs :: disabledData('text', 'createdAt', 'createdAt', 'Created At', 'col-12 col-sm-6')"></div>
-										<div th:replace="fragments/inputs :: disabledNoData('text', 'updatedAt', 'updatedAt', 'Updated At', 'col-12 col-sm-6')"></div>
+										<div class="col-6 col-sm-4" th:insert="fragments/inputs :: divRequired('number', 'tripsTaken', 'tripsTaken', 'Trips Taken')"></div>
+										<div class="col-6 col-sm-4" th:insert="fragments/inputs :: divRequired('number', 'timesRated', 'timesRated', 'Times Rated')"></div>
+										<div class="col-6 col-sm-3 order-sm-last" th:insert="fragments/inputs :: divDisabled('number', 'riderSafetyScore', 'riderSafetyScore', 'Safety Score')"></div>
+										<div class="col-6 col-sm-4" th:insert="fragments/inputs :: divRequired('number', 'riderSafetyRating', 'riderSafetyRating', 'Safety Rating')"></div>
+										<div class="col-6 col-sm-5" th:insert="fragments/inputs :: divRequired('number', 'riderResponsibilityRating', 'riderResponsibilityRating', 'Responsibility Rating')"></div>
+										<div class="col-12 col-sm-6 order-last" th:insert="fragments/inputs :: divDisabledNoData('text', 'createdAt', 'createdAt', 'Created At')"></div>
+										<div class="col-12 col-sm-6 order-last" th:insert="fragments/inputs :: divDisabledNoData('text', 'updatedAt', 'updatedAt', 'Updated At')"></div>
 									</div>
 								</form>
 							</div>

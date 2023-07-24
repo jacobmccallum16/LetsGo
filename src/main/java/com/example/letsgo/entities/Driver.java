@@ -18,7 +18,7 @@ public class Driver {
     @OneToMany(mappedBy = "driver", cascade = CascadeType.ALL, fetch = FetchType.LAZY) public List<Vehicle> vehicle;
     @OneToMany(mappedBy = "ratedDriver", cascade = CascadeType.ALL, fetch = FetchType.LAZY) public List<DriverRating> driverRatings;
     @Column(columnDefinition = "BOOLEAN DEFAULT FALSE") public Boolean isActive = false;
-    @Column(columnDefinition = "VARCHAR(255) DEFAULT 'inactive'") public String driverStatus = "inactive";
+    @Column(columnDefinition = "VARCHAR(255) DEFAULT 'Inactive'") public String driverStatus = "Inactive";
     @Column(columnDefinition = "INTEGER DEFAULT 0") public Integer tripsDriven = 0;
     @Column(columnDefinition = "INTEGER DEFAULT '0'") public Integer timesRated = 0;
     @Column(columnDefinition = "FLOAT DEFAULT '0'") public Float driverSafetyScore = 0f;
@@ -29,18 +29,18 @@ public class Driver {
     public Driver(User user) {
         this.user = user;
         isActive = false;
-        driverStatus = "inactive";
+        driverStatus = "Inactive";
         createdAt = new Timestamp(System.currentTimeMillis());
         updatedAt = new Timestamp(System.currentTimeMillis());
     }
     public Boolean toggleIsActive() {
-        if (!driverStatus.equals("banned")) {
+        if (!driverStatus.equals("Banned")) {
             if (!isActive) {
                 isActive = true;
-                driverStatus = "active";
+                driverStatus = "Active";
             } else {
                 isActive = false;
-                driverStatus = "inactive";
+                driverStatus = "Inactive";
             }
         } else {
             isActive = false;
@@ -50,7 +50,7 @@ public class Driver {
     }
 
     public void updateStatus() {
-        isActive = driverStatus.equals("active");
+        isActive = driverStatus.equals("Active");
     }
     public void updateUpdatedAt() {
         updatedAt = new Timestamp(System.currentTimeMillis());
