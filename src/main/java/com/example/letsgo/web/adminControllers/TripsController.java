@@ -64,7 +64,9 @@ public class TripsController {
         if (bindingResult.hasErrors()) {
             return "/admin/trips/editTrip";
         }
-        tripRepository.save(trip);
+        Route parentRoute = trip.route;
+        parentRoute.trips.add(trip);
+        routeRepository.save(parentRoute);
         return "redirect:/admin/trips";
     }
 

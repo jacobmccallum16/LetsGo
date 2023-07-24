@@ -24,7 +24,7 @@ public class Rider {
     )
     public Set<Trip> riderTrips;
     @Column(columnDefinition = "BOOLEAN DEFAULT FALSE") public Boolean isActive = false;
-    @Column(columnDefinition = "VARCHAR(255) DEFAULT 'inactive'") public String riderStatus;
+    @Column(columnDefinition = "VARCHAR(255) DEFAULT 'Inactive'") public String riderStatus = "Inactive";
     @Column(columnDefinition = "INTEGER DEFAULT '0'") public Integer tripsTaken = 0;
     @Column(columnDefinition = "INTEGER DEFAULT '0'") public Integer timesRated = 0;
     @Column(columnDefinition = "FLOAT DEFAULT '0'") public Float riderSafetyScore = 0f;
@@ -35,18 +35,18 @@ public class Rider {
     public Rider(User user) {
         this.user = user;
         isActive = false;
-        riderStatus = "inactive";
+        riderStatus = "Inactive";
         createdAt = new Timestamp(System.currentTimeMillis());
         updatedAt = new Timestamp(System.currentTimeMillis());
     }
     public Boolean toggleIsActive() {
-        if (!riderStatus.equals("banned")) {
+        if (!riderStatus.equals("Banned")) {
             if (!isActive) {
                 isActive = true;
-                riderStatus = "active";
+                riderStatus = "Active";
             } else {
                 isActive = false;
-                riderStatus = "inactive";
+                riderStatus = "Inactive";
             }
         } else {
             isActive = false;
@@ -56,14 +56,14 @@ public class Rider {
     }
     public void updateStatus(String riderStatus) {
         this.riderStatus = riderStatus;
-        if (riderStatus.equals("active")) {
+        if (riderStatus.equals("Active")) {
             isActive = true;
         } else {
             isActive = false;
         }
     }
     public void updateStatus() {
-        isActive = riderStatus.equals("active");
+        isActive = riderStatus.equals("Active");
     }
     public void updateUpdatedAt() {
         updatedAt = new Timestamp(System.currentTimeMillis());

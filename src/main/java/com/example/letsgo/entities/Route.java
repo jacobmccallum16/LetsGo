@@ -21,7 +21,7 @@ public class Route {
     @Column(columnDefinition = "VARCHAR(255) DEFAULT ''") public String locationEnd = "";
     @Column(columnDefinition = "FLOAT DEFAULT 0") public float routeDistance = 0f;
     @Column(columnDefinition = "FLOAT DEFAULT 0") public float routeDuration = 0f;
-    @Column(columnDefinition = "VARCHAR(255) DEFAULT 'inactive'") public String routeStatus = "inactive";
+    @Column(columnDefinition = "VARCHAR(255) DEFAULT 'Inactive'") public String routeStatus = "Inactive";
     @ManyToMany(mappedBy = "requestedRoutes") public Set<User> requestingUsers;
     @Column(columnDefinition = "VARCHAR(255) DEFAULT ''") public String routeImageSource = "";
     @Column(columnDefinition = "TIMESTAMP DEFAULT CURRENT_TIMESTAMP") public Timestamp createdAt = new Timestamp(System.currentTimeMillis());

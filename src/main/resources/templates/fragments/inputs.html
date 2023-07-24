@@ -1,15 +1,97 @@
-<th:block th:fragment="textRequired(field, id, label, class)">
+<th:block th:fragment="input(type, field, id, label, class)">
 	<div th:class="${class}" >
 		<label th:for="${id}" class="form-label" th:text="${label}"></label>
-		<input th:id="${id}" class="form-control" th:type="text" th:field="*{__${field}__}" required>
+		<input th:id="${id}" class="form-control" th:type="${type}" th:field="*{__${field}__}">
 	</div>
 </th:block>
-<th:block th:fragment="textDisabled(field, id, label, class)">
+<th:block th:fragment="inputRequired(type, field, id, label, class)">
 	<div th:class="${class}" >
 		<label th:for="${id}" class="form-label" th:text="${label}"></label>
-		<input th:id="${id}" class="form-control" th:type="text" th:field="*{__${field}__}" disabled>
+		<input th:id="${id}" class="form-control" th:type="${type}" th:field="*{__${field}__}" required>
 	</div>
 </th:block>
+<th:block th:fragment="inputDisabled(type, field, id, label, class)">
+	<div th:class="${class}" >
+		<label th:for="${id}" class="form-label" th:text="${label}"></label>
+		<input th:id="${id}" class="form-control" th:type="${type}" th:field="*{__${field}__}" disabled>
+	</div>
+</th:block>
+<th:block th:fragment="inputReadonly(type, field, id, label, class)">
+	<div th:class="${class}" >
+		<label th:for="${id}" class="form-label" th:text="${label}"></label>
+		<input th:id="${id}" class="form-control" th:type="${type}" th:field="*{__${field}__}" readonly>
+	</div>
+</th:block>
+<th:block th:fragment="inputHidden(field)">
+	<input type="hidden" th:field="*{__${field}__}">
+</th:block>
+<th:block th:fragment="inputHidden(type, field)">
+	<input class="form-control" th:type="${type}" th:field="*{__${field}__}" hidden>
+</th:block>
+<th:block th:fragment="inputDisabledData(type, field, id, label, class)">
+	<div th:class="${class}" >
+		<label th:for="${id}" class="form-label" th:text="${label}"></label>
+		<input th:type="${type}" th:field="*{__${field}__}" class="d-none">
+		<input th:id="${id}" class="form-control" th:type="${type}" th:value="*{__${field}__}" disabled>
+	</div>
+</th:block>
+<th:block th:fragment="inputDisabledNoData(type, field, id, label, class)">
+	<div th:class="${class}" >
+		<label th:for="${id}" class="form-label" th:text="${label}"></label>
+		<input th:id="${id}" class="form-control" th:type="${type}" th:value="*{__${field}__}" disabled>
+	</div>
+</th:block>
+<th:block th:fragment="inputReadonlyNoData(type, field, id, label, class)">
+	<div th:class="${class}" >
+		<label th:for="${id}" class="form-label" th:text="${label}"></label>
+		<input th:id="${id}" class="form-control" th:type="${type}" th:value="*{__${field}__}" readonly>
+	</div>
+</th:block>
+
+
+<div th:fragment="divDisabled(type, field, id, label)">
+	<label th:for="${id}" class="form-label" th:text="${label}"></label>
+	<input th:id="${id}" class="form-control" th:type="${type}" th:field="*{__${field}__}" disabled>
+</div>
+<div th:fragment="divInput(type, field, id, label)">
+	<label th:for="${id}" class="form-label" th:text="${label}"></label>
+	<input th:id="${id}" class="form-control" th:type="${type}" th:field="*{__${field}__}">
+</div>
+<div th:fragment="divRequired(type, field, id, label)">
+	<label th:for="${id}" class="form-label" th:text="${label}"></label>
+	<input th:id="${id}" class="form-control" th:type="${type}" th:field="*{__${field}__}" required>
+</div>
+<div th:fragment="divReadonly(type, field, id, label)">
+	<label th:for="${id}" class="form-label" th:text="${label}"></label>
+	<input th:id="${id}" class="form-control" th:type="${type}" th:field="*{__${field}__}" readonly>
+</div>
+<div th:fragment="divDisabledData(type, field, id, label)">
+	<label th:for="${id}" class="form-label" th:text="${label}"></label>
+	<input th:type="${type}" th:field="*{__${field}__}" class="d-none">
+	<input th:id="${id}" class="form-control" th:type="${type}" th:value="*{__${field}__}" disabled>
+</div>
+<div th:fragment="divDisabledNoData(type, field, id, label)">
+	<label th:for="${id}" class="form-label" th:text="${label}"></label>
+	<input th:id="${id}" class="form-control" th:type="${type}" th:value="*{__${field}__}" disabled>
+</div>
+<div th:fragment="divReadonlyNoData(type, field, id, label)">
+	<label th:for="${id}" class="form-label" th:text="${label}"></label>
+	<input th:id="${id}" class="form-control" th:type="${type}" th:value="*{__${field}__}" readonly>
+</div>
+
+<div th:fragment="divFloatingRequiredAutofocus(type, field, id, label)">
+	<div class="form-floating">
+		<input th:id="${id}" class="form-control" th:type="${type}" placeholder="floating" th:field="*{__${field}__}" th:errorClass="is-invalid" required autofocus>
+		<label th:for="${id}" th:text="${label}"></label>
+	</div>
+</div>
+<div th:fragment="divFloatingRequired(type, field, id, label)">
+	<div class="form-floating">
+		<input th:id="${id}" class="form-control" th:type="${type}" placeholder="floating" th:field="*{__${field}__}" th:errorClass="is-invalid" required>
+		<label th:for="${id}" th:text="${label}"></label>
+	</div>
+</div>
+
 
 <th:block th:fragment="input(type, field, id, label, class)">
 	<div th:class="${class}" >

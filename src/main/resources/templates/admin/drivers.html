@@ -32,7 +32,9 @@
 				<td th:text="${d.user.lastName}"></td>
 				<td th:text="${d.tripsDriven}"></td>
 				<td th:text="${d.timesRated}"></td>
-				<td th:text="${d.driverSafetyScore}"></td>
+				<td><div class="alert fw-bold" th:text="${#numbers.formatDecimal(d.driverSafetyScore,1,1)}"
+				         th:classappend="${d.driverSafetyScore} > 0 ? (${d.driverSafetyScore} >= 2 ? (${d.driverSafetyScore} >= 3 ? (${d.driverSafetyScore} >= 4 ?
+				         'alert-green' : 'alert-yellow') : 'alert-orange') : 'alert-red') : 'alert-secondary'"></div></td>
 				<td>
 					<a th:if="*{driverStatus == 'active'}" class="btn btn-sm btn-green active">Active</a>
 					<a th:if="*{driverStatus == 'inactive'}" class="btn btn-sm btn-yellow active">Inactive</a>

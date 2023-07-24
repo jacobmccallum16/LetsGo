@@ -26,7 +26,7 @@ public class Trip {
     @Column(columnDefinition = "INTEGER DEFAULT 0") public Integer seatsAvailable = 0;
     @Column(columnDefinition = "INTEGER DEFAULT 0") public Integer seatsUsed = 0;
     @ManyToMany(mappedBy = "riderTrips") public Set<Rider> riderSet;
-    @Column(columnDefinition = "VARCHAR(255) DEFAULT 'planned'") public String tripStatus = "planned";
+    @Column(columnDefinition = "VARCHAR(255) DEFAULT 'Planned'") public String tripStatus = "Planned";
     @ManyToMany(mappedBy = "requestedTrips") public Set<User> requestingUsers;
     @Column(columnDefinition = "DATE") public LocalDate date;
     @Column(columnDefinition = "TIME") public LocalTime departureTime;

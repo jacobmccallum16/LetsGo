@@ -18,69 +18,28 @@
 					</div>
 					<div class="card-body text-start">
 						<form id="form" class="needs-validation" novalidate method="post" th:action="@{/admin/drivers/editDriver}" th:object="${driver}">
+							<input type="hidden" th:field="*{driverId}">
+							<input type="hidden" th:field="*{user.userId}">
+							<input type="hidden" th:field="*{isActive}">
+							<input type="hidden" th:field="*{createdAt}">
 							<div class="row g-3">
-								<div hidden>
-									<label for="isActive" class="form-label"></label>
-									<select id="isActive" class="form-select" th:field="*{isActive}" required disabled>
-										<option th:value="0" th:selected="*{isActive == false}">Inactive</option>
-										<option th:value="1" th:selected="*{isActive == true}">Active</option>
-									</select>
-								</div>
-								<div class="col-6">
-									<label for="firstName" class="form-label">First Name</label>
-									<input type="hidden" th:field="*{user.firstName}">
-									<input id="firstName" class="form-control" type="text" th:value="*{user.firstName}" disabled>
-								</div>
-								<div class="col-6">
-									<label for="lastName" class="form-label">Last Name</label>
-									<input type="hidden" th:field="*{user.lastName}">
-									<input id="lastName" class="form-control" type="text" th:value="*{user.lastName}" disabled>
-								</div>
-								<div class="col-3 col-sm-4">
-									<label for="userId" class="form-label">User Id</label>
-									<input id="userId" class="form-control" type="number" th:field="*{user.userId}" required>
-								</div>
-								<div class="col-3 col-sm-4">
-									<label for="riderId" class="form-label">Driver Id</label>
-									<input id="riderId" class="form-control" type="number" th:field="*{driverId}" required>
-								</div>
+								<div class="col-6" th:insert="fragments/inputs :: divDisabled('text', 'user.firstName', 'firstname', 'First Name')"></div>
+								<div class="col-6" th:insert="fragments/inputs :: divDisabled('text', 'user.lastName', 'lastname', 'Last Name')"></div>
 								<div class="col-6 col-sm-4">
-									<label for="riderStatus" class="form-label">Status</label>
-									<select id="riderStatus" class="form-select" th:field="*{driverStatus}" required>
-										<option th:value="active" th:selected="*{driverStatus == 'active'}">Active</option>
-										<option th:value="inactive" th:selected="*{driverStatus == 'inactive'}">Inactive</option>
-										<option th:value="banned" th:selected="*{driverStatus == 'banned'}">Banned</option>
+									<label for="driverStatus" class="form-label">Status</label>
+									<select id="driverStatus" class="form-select" th:field="*{driverStatus}" required>
+										<option th:value="Active" th:selected="*{driverStatus == 'Active'}">Active</option>
+										<option th:value="Inactive" th:selected="*{driverStatus == 'Inactive'}">Inactive</option>
+										<option th:value="Banned" th:selected="*{driverStatus == 'Banned'}">Banned</option>
 									</select>
 								</div>
-								<div class="col-6">
-									<label for="timesRated" class="form-label">Times Rated</label>
-									<input id="timesRated" class="form-control" type="number" th:field="*{timesRated}" required>
-								</div>
-								<div class="col-6">
-									<label for="tripsTaken" class="form-label">Trips Driven</label>
-									<input id="tripsTaken" class="form-control" type="number" th:field="*{tripsDriven}" required>
-								</div>
-								<div class="col-4 col-sm-4">
-									<label for="riderSafetyRating" class="form-label">Safety <br class="d-sm-none">Rating</label>
-									<input id="riderSafetyRating" class="form-control" type="number" th:field="*{driverSafetyRating}" required>
-								</div>
-								<div class="col-4 col-sm-5">
-									<label for="riderResponsibilityRating" class="form-label">Responsibility <br class="d-sm-none">Rating</label>
-									<input id="riderResponsibilityRating" class="form-control" type="number" th:field="*{driverResponsibilityRating}" required>
-								</div>
-								<div class="col-4 col-sm-3">
-									<label for="riderSafetyScore" class="form-label">Safety <br class="d-sm-none">Score</label>
-									<input id="riderSafetyScore" class="form-control fw-bold" type="number" th:field="*{driverSafetyScore}" disabled>
-								</div>
-								<div class="col-12 col-sm-6">
-									<label for="createdAt" class="form-label">Created At</label>
-									<input type="text" th:field="*{createdAt}" required hidden>
-									<input id="createdAt" class="form-control" type="text" th:value="*{createdAt}" disabled>
-								</div>
-								<div class="col-12 col-sm-6">
-									<label for="updatedAt" class="form-label">Updated At</label>
-									<input id="updatedAt" class="form-control" type="text" th:value="*{updatedAt}" required disabled>
-								</div>
+								<div class="col-6 col-sm-4" th:insert="fragments/inputs :: divRequired('number', 'tripsDriven', 'tripsDriven', 'Trips Driven')"></div>
+								<div class="col-6 col-sm-4" th:insert="fragments/inputs :: divRequired('number', 'timesRated', 'timesRated', 'Times Rated')"></div>
+								<div class="col-6 col-sm-3 order-sm-last" th:insert="fragments/inputs :: divDisabled('number', 'driverSafetyScore', 'driverSafetyScore', 'Safety Score')"></div>
+								<div class="col-6 col-sm-4" th:insert="fragments/inputs :: divRequired('number', 'driverSafetyRating', 'driverSafetyRating', 'Safety Rating')"></div>
+								<div class="col-6 col-sm-5" th:insert="fragments/inputs :: divRequired('number', 'driverResponsibilityRating', 'driverResponsibilityRating', 'Responsibility Rating')"></div>
+								<div class="col-12 col-sm-6 order-last" th:insert="fragments/inputs :: divDisabledNoData('text', 'createdAt', 'createdAt', 'Created At')"></div>
+								<div class="col-12 col-sm-6 order-last" th:insert="fragments/inputs :: divDisabledNoData('text', 'updatedAt', 'updatedAt', 'Updated At')"></div>
 							</div>
 						</form>
 					</div>
