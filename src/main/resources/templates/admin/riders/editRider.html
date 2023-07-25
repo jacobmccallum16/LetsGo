@@ -17,7 +17,7 @@
 								Edit Rider
 							</div>
 							<div class="card-body text-start">
-								<form id="form" class="needs-validation" novalidate method="post" th:action="@{/admin/riders/editRider}" th:object="${rider}">
+								<form id="editRider" class="needs-validation" novalidate method="post" th:action="@{/admin/riders/editRider}" th:object="${rider}">
 									<input type="hidden" th:field="*{riderId}">
 									<input type="hidden" th:field="*{user.userId}">
 									<input type="hidden" th:field="*{isActive}">
@@ -44,7 +44,7 @@
 								</form>
 							</div>
 							<div class="card-footer text-end">
-								<button form="form" type="submit" id="editRiderSubmit" class="btn btn-outline-primary">Update Rider Information</button>
+								<button form="editRider" type="submit" id="editRiderSubmit" class="btn btn-outline-primary">Update Rider Information</button>
 							</div>
 						</div>
 					</div>

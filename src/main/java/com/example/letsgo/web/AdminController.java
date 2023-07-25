@@ -39,6 +39,8 @@ public class AdminController {
     public String adminViewAccount(Integer id, Model model) {
         User user = userRepository.findUserByUserId(id);
         model.addAttribute("user", user);
+        model.addAttribute("rider", user.rider);
+        model.addAttribute("driver", user.driver);
         httpSession.setAttribute("section", "admin");
         httpSession.setAttribute("page", "viewAccount");
         return "/admin/viewAccount";

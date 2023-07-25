@@ -17,7 +17,7 @@
 						Edit Driver
 					</div>
 					<div class="card-body text-start">
-						<form id="form" class="needs-validation" novalidate method="post" th:action="@{/admin/drivers/editDriver}" th:object="${driver}">
+						<form id="editDriver" class="needs-validation" novalidate method="post" th:action="@{/admin/drivers/editDriver}" th:object="${driver}">
 							<input type="hidden" th:field="*{driverId}">
 							<input type="hidden" th:field="*{user.userId}">
 							<input type="hidden" th:field="*{isActive}">
@@ -44,7 +44,7 @@
 						</form>
 					</div>
 					<div class="card-footer text-end">
-						<button form="form" type="submit" id="editRiderSubmit" class="btn btn-outline-primary">Update Driver Information</button>
+						<button form="editDriver" type="submit" id="editRiderSubmit" class="btn btn-outline-primary">Update Driver Information</button>
 					</div>
 				</div>
 			</div>
