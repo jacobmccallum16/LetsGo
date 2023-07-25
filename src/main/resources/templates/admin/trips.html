@@ -19,6 +19,7 @@
 				<th colspan="2">From</th>
 				<th colspan="2">Destination</th>
 				<th>Status</th>
+				<th></th>
 				<th>Edit</th>
 				<th>Delete</th>
 			</tr>
@@ -28,14 +29,17 @@
 				<td><img th:src="@{${'/routeImages/' + trip.getRoute().routeImageSource}}" height="100px"></td>
 				<td th:text="*{tripId}"></td>
 				<td th:text="*{getRoute().locationStart}"></td>
-				<td th:text="*{date + ' ' + departureTime.toString()}"></td>
+				<td th:text="*{date + ' ' + (departureTime != null ? departureTime.toString() : 'null')}"></td>
 				<td th:text="*{getRoute().locationEnd}"></td>
-				<td th:text="*{date + ' ' + arrivalTime}"></td>
+				<td th:text="*{date + ' ' + (arrivalTime != null ? arrivalTime.toString() : 'null')}"></td>
 				<td>
 					<a th:if="*{tripStatus == 'Completed'}" class="btn btn-sm btn-dark active">Completed</a>
 					<a th:if="*{tripStatus == 'Planned'}" class="btn btn-sm btn-teal active">Planned</a>
 					<a th:if="*{tripStatus == 'Requested'}" class="btn btn-sm btn-indigo active">Requested</a>
 					<a th:if="*{tripStatus == 'Cancelled'}" class="btn btn-sm btn-red active">Cancelled</a>
+				</td>
+				<td>
+					<a class="btn btn-sm btn-outline-blue" th:href="@{/admin/trips/calculateArrivalTime(tripId=*{tripId}, routeId=*{getRoute().routeId})}">Calculate Arrival</a>
 				</td>
 				<td>
 					<a class="btn btn-sm btn-cyan" th:href="@{/admin/trips/editTrip(id=*{tripId})}">Edit</a>
