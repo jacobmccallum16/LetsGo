@@ -50,7 +50,7 @@ public class TripsController {
         } else {
             tripRepository.save(trip);
             Route route = routeRepository.findRouteByRouteId(trip.route.routeId);
-            route.trips.put(trip.tripId, trip);
+            route.getTrips().put(trip.tripId, trip);
             routeRepository.save(route);
             return "redirect:/admin/trips";
         }
@@ -68,7 +68,7 @@ public class TripsController {
             return "/admin/trips/editTrip";
         }
         Route parentRoute = trip.route;
-        parentRoute.trips.put(trip.tripId, trip);
+        parentRoute.getTrips().put(trip.tripId, trip);
         routeRepository.save(parentRoute);
         return "redirect:/admin/trips";
     }
@@ -77,7 +77,7 @@ public class TripsController {
     public String deleteTrip(Integer id){
         Trip trip = tripRepository.findTripByTripId(id);
         Route route = routeRepository.findRouteByRouteId(trip.route.routeId);
-        route.trips.remove(trip.tripId);
+        route.getTrips().remove(trip.tripId);
         routeRepository.save(route);
         return "redirect:/admin/trips";
     }

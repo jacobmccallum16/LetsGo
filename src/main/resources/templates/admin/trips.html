@@ -25,11 +25,11 @@
 			</thead>
 			<tbody class="table-group-divider border-indigo-subtle">
 			<tr th:each="trip:${trips}" th:object="${trip}">
-				<td><img th:src="@{${'/routeImages/' + trip.route.routeImageSource}}" height="100px"></td>
+				<td><img th:src="@{${'/routeImages/' + trip.getRoute().routeImageSource}}" height="100px"></td>
 				<td th:text="*{tripId}"></td>
-				<td th:text="*{route.locationStart}"></td>
+				<td th:text="*{getRoute().locationStart}"></td>
 				<td th:text="*{date + ' ' + departureTime.toString()}"></td>
-				<td th:text="*{route.locationEnd}"></td>
+				<td th:text="*{getRoute().locationEnd}"></td>
 				<td th:text="*{date + ' ' + arrivalTime}"></td>
 				<td>
 					<a th:if="*{tripStatus == 'Completed'}" class="btn btn-sm btn-dark active">Completed</a>
