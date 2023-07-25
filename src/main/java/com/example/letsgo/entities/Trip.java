@@ -17,7 +17,7 @@ import java.util.Set;
 @NoArgsConstructor
 public class Trip {
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY) public Integer tripId;
-    @ManyToOne(fetch = FetchType.LAZY) @JoinColumn(name = "route_id") public Route route;
+    @ManyToOne(fetch = FetchType.LAZY) @JoinColumn(name = "route_id") private Route route;
     @OneToOne(fetch = FetchType.LAZY) @JoinColumn(name = "driver_id") public Driver driver;
     @OneToOne(fetch = FetchType.LAZY) @JoinColumn(name = "vehicle_id") public Vehicle vehicle;
     @OneToMany(mappedBy = "trip", cascade = CascadeType.ALL, fetch = FetchType.LAZY) private List<TripTransaction> tripTransaction;
