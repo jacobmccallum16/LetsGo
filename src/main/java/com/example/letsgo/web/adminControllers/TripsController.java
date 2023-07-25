@@ -46,9 +46,12 @@ public class TripsController {
     @PostMapping("/admin/trips/createTrip")
     public String createTrip(Trip trip, BindingResult bindingResult) {
         if (bindingResult.hasErrors()) {
-            return "/admin/trips/createTrips";
+            return "/admin/trips/createTrip";
         } else {
             tripRepository.save(trip);
+            Route route = routeRepository.findRouteByRouteId(trip.route.routeId);
+            route.trips.put(trip.tripId, trip);
+            routeRepository.save(route);
             return "redirect:/admin/trips";
         }
     }
@@ -65,14 +68,17 @@ public class TripsController {
             return "/admin/trips/editTrip";
         }
         Route parentRoute = trip.route;
-        parentRoute.trips.add(trip);
+        parentRoute.trips.put(trip.tripId, trip);
         routeRepository.save(parentRoute);
         return "redirect:/admin/trips";
     }
 
     @GetMapping("/admin/trips/deleteTrip")
     public String deleteTrip(Integer id){
-        tripRepository.deleteById(id);
+        Trip trip = tripRepository.findTripByTripId(id);
+        Route route = routeRepository.findRouteByRouteId(trip.route.routeId);
+        route.trips.remove(trip.tripId);
+        routeRepository.save(route);
         return "redirect:/admin/trips";
     }
 }

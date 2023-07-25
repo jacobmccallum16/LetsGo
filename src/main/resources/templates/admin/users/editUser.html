@@ -17,7 +17,7 @@
 						<div class="card-title">Edit User</div>
 					</div>
 					<div class="card-body">
-						<form id="form" class="row g-3 p-2" method="post" th:action="@{/admin/users/editUser}" th:object="${user}">
+						<form id="editUser" class="row g-3 p-2" method="post" th:action="@{/admin/users/editUser}" th:object="${user}">
 							<input type="hidden" th:field="*{userId}">
 							<input type="hidden" th:field="*{isActive}">
 							<input type="hidden" th:field="*{createdAt}">
@@ -50,7 +50,7 @@
 						</form>
 					</div>
 					<div class="card-footer text-end">
-						<button form="form" type="submit" id="editUserSubmit" class="btn btn-outline-primary">Update User Information</button>
+						<button form="editUser" type="submit" id="editUserSubmit" class="btn btn-outline-primary">Update User Information</button>
 					</div>
 				</div>
 			</div>

@@ -2935,7 +2935,7 @@ textarea.form-control-lg {
   color: #6c757d;
 }
 .form-floating > :disabled ~ label::after {
-  background-color: var(--bs-secondary-bg);
+  background-color: var(--bs-secondary-bg) !important;
 }
 
 .input-group {

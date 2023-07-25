@@ -109,6 +109,19 @@
 		<label th:for="${id}" th:text="${label}"></label>
 	</div>
 </div>
+<div th:fragment="divFloatingDisabled(type, field, id, label)">
+	<div class="form-floating">
+		<input th:id="${id}" class="form-control" th:type="${type}" placeholder="floating" th:value="*{__${field}__}" disabled>
+		<label th:for="${id}" class="form-label" th:text="${label}"></label>
+	</div>
+</div>
+<div th:fragment="divFloatingDisabledData(type, field, id, label)">
+	<div class="form-floating">
+		<input th:id="${id}" class="form-control" th:type="${type}" placeholder="floating" th:value="*{__${field}__}" disabled>
+		<input type="hidden" th:field="*{__${field}__}">
+		<label th:for="${id}" class="form-label" th:text="${label}"></label>
+	</div>
+</div>
 
 
 <th:block th:fragment="input(type, field, id, label, class)">
