@@ -19,7 +19,7 @@
 					<div class="card-body text-start">
 						<form id="form" class="needs-validation" novalidate method="post" th:action="@{/admin/trips/createTrip}" th:object="${trip}">
 							<div class="row g-3">
-								<input type="hidden" name="routeId" th:value="*{route}">
+								<input type="hidden" name="routeId" th:value="*{getRoute()}">
 								<div th:replace="fragments/inputs :: disabledData('text', 'route.routeId', 'routeId', 'Route ID', 'col-6')"></div>
 								<div class="col-6">
 									<label for="tripStatus" class="form-label">Status</label>
