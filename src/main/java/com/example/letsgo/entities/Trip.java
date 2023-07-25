@@ -20,7 +20,7 @@ public class Trip {
     @ManyToOne(fetch = FetchType.LAZY) @JoinColumn(name = "route_id") public Route route;
     @OneToOne(fetch = FetchType.LAZY) @JoinColumn(name = "driver_id") public Driver driver;
     @OneToOne(fetch = FetchType.LAZY) @JoinColumn(name = "vehicle_id") public Vehicle vehicle;
-    @OneToMany(mappedBy = "trip", cascade = CascadeType.ALL, fetch = FetchType.LAZY) public List<TripTransaction> tripTransaction;
+    @OneToMany(mappedBy = "trip", cascade = CascadeType.ALL, fetch = FetchType.LAZY) private List<TripTransaction> tripTransaction;
     @OneToMany(mappedBy = "trip", cascade = CascadeType.ALL, fetch = FetchType.LAZY) public List<RiderRating> riderRatings;
     @OneToMany(mappedBy = "trip", cascade = CascadeType.ALL, fetch = FetchType.LAZY) public List<DriverRating> driverRatings;
     @Column(columnDefinition = "INTEGER DEFAULT 0") public Integer seatsAvailable = 0;
