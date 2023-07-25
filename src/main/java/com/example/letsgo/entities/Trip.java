@@ -38,4 +38,12 @@ public class Trip {
     public Trip(Route route) {
         this.route = route;
     }
+    public Integer getRouteId() {
+        return getRoute().getRouteId();
+    }
+    public void calculateArrivalTime() {
+        long duration = (long) getRoute().getRouteDuration();
+        arrivalTime = departureTime.plusMinutes(duration);
+        return;
+    }
 }

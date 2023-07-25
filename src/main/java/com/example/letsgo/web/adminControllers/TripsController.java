@@ -48,8 +48,14 @@ public class TripsController {
         if (bindingResult.hasErrors()) {
             return "/admin/trips/createTrip";
         } else {
-            tripRepository.save(trip);
+//            tripRepository.save(trip);
+//            Route route = routeRepository.findRouteByRouteId(trip.getRoute().routeId);
+//            route.getTrips().put(trip.tripId, trip);
+//            routeRepository.save(route);
             Route route = routeRepository.findRouteByRouteId(trip.getRoute().routeId);
+            route.getTrips().put(trip.tripId, trip);
+            routeRepository.save(route);
+            route.getTrips().get(trip.tripId).calculateArrivalTime();
             route.getTrips().put(trip.tripId, trip);
             routeRepository.save(route);
             return "redirect:/admin/trips";
@@ -70,6 +76,16 @@ public class TripsController {
         Route parentRoute = trip.getRoute();
         parentRoute.getTrips().put(trip.tripId, trip);
         routeRepository.save(parentRoute);
+        return "redirect:/admin/trips";
+    }
+
+    @GetMapping("/admin/trips/calculateArrivalTime")
+    public String calculateArrivalTime(Integer tripId, Integer routeId) {
+        Route route = routeRepository.findRouteByRouteId(routeId);
+        Trip trip = route.getTrips().get(tripId);
+        trip.calculateArrivalTime();
+        route.getTrips().put(tripId, trip);
+        routeRepository.save(route);
         return "redirect:/admin/trips";
     }
 
