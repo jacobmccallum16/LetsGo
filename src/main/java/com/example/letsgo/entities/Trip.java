@@ -8,6 +8,8 @@ import lombok.NoArgsConstructor;
 import java.sql.Timestamp;
 import java.time.LocalDate;
 import java.time.LocalTime;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 import java.util.Set;
 
@@ -17,7 +19,7 @@ import java.util.Set;
 @NoArgsConstructor
 public class Trip {
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY) public Integer tripId;
-    @ManyToOne(fetch = FetchType.LAZY) @JoinColumn(name = "route_id") private Route route;
+    @ManyToOne(fetch = FetchType.LAZY) @JoinColumn(name = "route_id") public Route route;
     @OneToOne(fetch = FetchType.LAZY) @JoinColumn(name = "driver_id") public Driver driver;
     @OneToOne(fetch = FetchType.LAZY) @JoinColumn(name = "vehicle_id") public Vehicle vehicle;
     @OneToMany(mappedBy = "trip", cascade = CascadeType.ALL, fetch = FetchType.LAZY) private List<TripTransaction> tripTransaction;
@@ -45,5 +47,9 @@ public class Trip {
         long duration = (long) getRoute().getRouteDuration();
         arrivalTime = departureTime.plusMinutes(duration);
         return;
+    }
+
+    public static void sortByDateAndTime(List<Trip> trips) {
+        Collections.sort(trips, Comparator.comparing(Trip::getDate).thenComparing(Trip::getDepartureTime));
     }
 }

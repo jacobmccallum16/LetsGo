@@ -10,7 +10,7 @@
 <div class="d-flex flex-fill">
 	<th:block th:insert="~{fragments/sidebar}"></th:block>
 	<main class="container-sm text-center flex-grow-1">
-		<h1>Trips</h1>
+		<h1 th:text="${title}">Trips</h1>
 		<table class="table table-striped table-hover table-sm align-middle">
 			<thead class="table-dark">
 			<tr>
@@ -45,7 +45,7 @@
 					<a class="btn btn-sm btn-cyan" th:href="@{/admin/trips/editTrip(id=*{tripId})}">Edit</a>
 				</td>
 				<td>
-					<a class="btn btn-sm btn-red" th:href="@{/admin/routes/deleteTrip(id=*{tripId})}">Delete</a>
+					<a class="btn btn-sm btn-red" th:href="@{/admin/trips/deleteTrip(id=*{tripId})}">Delete</a>
 				</td>
 			</tr>
 			</tbody>
