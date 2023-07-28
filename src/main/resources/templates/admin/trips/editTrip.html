@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+	<meta charset="UTF-8">
+	<title>Let's Go! - Edit Trip</title>
+	<th:block th:insert="~{fragments/scripts}"></th:block>
+</head>
+<body class="vh-100 d-flex flex-column">
+<th:block th:insert="~{fragments/navbar}"></th:block>
+<div class="d-flex flex-fill">
+	<th:block th:insert="~{fragments/sidebar}"></th:block>
+	<main class="container-sm text-center flex-grow-1">
+		<div class="row">
+			<div class="col-12 col-md-10 col-lg-9 col-xl-8 col-xxl-7 my-3 mx-auto align-middle">
+				<div class="card">
+					<div class="card-header">
+						Create Route
+					</div>
+					<div class="card-body text-start">
+						<form id="form" class="row g-3 needs-validation" novalidate method="post" th:action="@{/admin/trips/editTrip}" th:object="${trip}">
+							<div class="col-6 col-sm-3" th:insert="~{fragments/inputs :: divFloatingDisabledData('number', 'tripId', 'tripId', 'Trip ID')}"></div>
+							<div class="col-6 col-sm-3" th:insert="~{fragments/inputs :: divFloatingDisabledData('number', 'route.routeId', 'route.routeId', 'Route ID')}"></div>
+							<div class="col-6">
+								<div class="form-floating">
+									<select id="tripStatus" class="form-select" th:field="*{tripStatus}" required>
+										<option th:value="Completed" th:selected="*{tripStatus == 'Completed'}">Completed</option>
+										<option th:value="Planned" th:selected="*{tripStatus == 'Planned'}">Planned</option>
+										<option th:value="Requested" th:selected="*{tripStatus == 'Requested'}">Requested</option>
+										<option th:value="Cancelled" th:selected="*{tripStatus == 'Cancelled'}">Cancelled</option>
+									</select>
+									<label for="tripStatus">Trip Status</label>
+								</div>
+							</div>
+							<div class="col-12 col-sm-6" th:insert="~{fragments/inputs :: divFloatingRequiredEdit('date', 'date', 'date', 'Date')}"></div>
+							<div class="col-6 col-sm-3" th:insert="~{fragments/inputs :: divFloatingRequiredEdit('time', 'departureTime', 'departureTime', 'Departure Time')}"></div>
+							<div class="col-6 col-sm-3" th:insert="~{fragments/inputs :: divFloatingDisabled('time', 'arrivalTime', 'arrivalTime', 'Arrival Time')}"></div>
+						</form>
+					</div>
+					<div class="card-footer text-end">
+						<button form="form" type="submit" id="submit" class="btn btn-outline-primary">Update Trip</button>
+					</div>
+				</div>
+			</div>
+		</div>
+	</main>
+</div>
+</body>
+</html>

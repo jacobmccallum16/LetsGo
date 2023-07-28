@@ -21,8 +21,8 @@
 							<div class="row g-3">
 								<div class="col-6">
 									<div class="form-floating">
-										<input id="route" class="form-control" type="number" placeholder="floating" th:value="${trip.getRoute().routeId}" disabled>
-										<input type="hidden" name="route.routeId" th:value="${trip.getRoute().routeId}">
+										<input id="route" class="form-control" type="number" placeholder="floating" th:value="${trip.route.routeId}" disabled>
+										<input type="hidden" th:field="${trip.route}">
 										<label for="route" class="form-label">Route ID</label>
 									</div>
 								</div>

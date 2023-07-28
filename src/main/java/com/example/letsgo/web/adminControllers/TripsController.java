@@ -4,6 +4,7 @@ import com.example.letsgo.entities.Route;
 import com.example.letsgo.entities.Trip;
 import com.example.letsgo.repositories.RouteRepository;
 import com.example.letsgo.repositories.TripRepository;
+import com.example.letsgo.service.TripService;
 import jakarta.servlet.http.HttpSession;
 import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,17 +24,27 @@ public class TripsController {
     @Autowired
     private RouteRepository routeRepository;
     private TripRepository tripRepository;
+    private TripService tripService;
     public HttpSession httpSession;
 
     @GetMapping("/admin/trips")
-    public String routes(Model model, @RequestParam(name="keyId",defaultValue = "") String keyId) {
+    public String routes(Model model, @RequestParam(name="keyId",defaultValue = "") String keyId, @RequestParam(name="routeId",defaultValue = "") String routeId) {
         List<Trip> trips;
+        String title = "Trips";
         if (keyId.isEmpty()) {
-            trips = tripRepository.findAll();
+            if (routeId.isEmpty()) {
+                trips = tripRepository.findAll();
+            } else {
+                Route route = routeRepository.findRouteByRouteId(Integer.parseInt(routeId));
+                trips = tripRepository.findTripsByRoute(route);
+                title = "Trips on route " + routeId;
+            }
         } else {
             trips = tripRepository.findTripsByTripId(Integer.parseInt(keyId));
         }
+        Trip.sortByDateAndTime(trips);
         model.addAttribute("trips", trips);
+        model.addAttribute("title", title);
         return "/admin/trips";
     }
 
@@ -48,17 +59,10 @@ public class TripsController {
         if (bindingResult.hasErrors()) {
             return "/admin/trips/createTrip";
         } else {
-//            tripRepository.save(trip);
-//            Route route = routeRepository.findRouteByRouteId(trip.getRoute().routeId);
-//            route.getTrips().put(trip.tripId, trip);
-//            routeRepository.save(route);
-            Route route = routeRepository.findRouteByRouteId(trip.getRoute().routeId);
-            route.getTrips().put(trip.tripId, trip);
-            routeRepository.save(route);
-            route.getTrips().get(trip.tripId).calculateArrivalTime();
-            route.getTrips().put(trip.tripId, trip);
-            routeRepository.save(route);
-            return "redirect:/admin/trips";
+            trip.calculateArrivalTime();
+            tripRepository.save(trip);
+            String redirect = "redirect:/admin/trips?routeId=" + trip.route.routeId.toString();
+            return redirect;
         }
     }
 
@@ -73,28 +77,22 @@ public class TripsController {
         if (bindingResult.hasErrors()) {
             return "/admin/trips/editTrip";
         }
-        Route parentRoute = trip.getRoute();
-        parentRoute.getTrips().put(trip.tripId, trip);
-        routeRepository.save(parentRoute);
+        trip.calculateArrivalTime();
+        tripRepository.save(trip);
         return "redirect:/admin/trips";
     }
 
     @GetMapping("/admin/trips/calculateArrivalTime")
-    public String calculateArrivalTime(Integer tripId, Integer routeId) {
-        Route route = routeRepository.findRouteByRouteId(routeId);
-        Trip trip = route.getTrips().get(tripId);
+    public String calculateArrivalTime(Integer tripId) {
+        Trip trip = tripRepository.findTripByTripId(tripId);
         trip.calculateArrivalTime();
-        route.getTrips().put(tripId, trip);
-        routeRepository.save(route);
+        tripRepository.save(trip);
         return "redirect:/admin/trips";
     }
 
     @GetMapping("/admin/trips/deleteTrip")
     public String deleteTrip(Integer id){
-        Trip trip = tripRepository.findTripByTripId(id);
-        Route route = routeRepository.findRouteByRouteId(trip.getRoute().routeId);
-        route.getTrips().remove(trip.tripId);
-        routeRepository.save(route);
+        tripRepository.deleteById(id);
         return "redirect:/admin/trips";
     }
 }
