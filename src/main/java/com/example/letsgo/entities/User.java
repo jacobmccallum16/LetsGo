@@ -6,6 +6,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.sql.Timestamp;
+import java.util.Comparator;
 import java.util.List;
 import java.util.Set;
 
@@ -95,6 +96,13 @@ public class User {
         updatedAt = timestamp;
         rider.setUpdatedAt(timestamp);
         driver.setUpdatedAt(timestamp);
+    }
+
+    public String getFullName() {
+        return firstName + " " + lastName;
+    }
+    public static void sortByFullName(List<User> users) {
+        users.sort(Comparator.comparing(User::getLastName).thenComparing(User::getFirstName));
     }
 
 }

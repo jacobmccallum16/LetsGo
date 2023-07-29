@@ -6,6 +6,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.sql.Timestamp;
+import java.util.Comparator;
 import java.util.List;
 import java.util.Set;
 
@@ -39,6 +40,20 @@ public class Rider {
         createdAt = new Timestamp(System.currentTimeMillis());
         updatedAt = new Timestamp(System.currentTimeMillis());
     }
+
+    public String getFullName() {
+        return getUser().getFullName();
+    }
+    public String getFirstName() {
+        return getUser().getFirstName();
+    }
+    public String getLastName() {
+        return getUser().getLastName();
+    }
+    public static void sortByFullName(List<Rider> riders) {
+        riders.sort(Comparator.comparing(Rider::getLastName).thenComparing(Rider::getFirstName));
+    }
+
     public Boolean toggleIsActive() {
         if (!riderStatus.equals("Banned")) {
             if (!isActive) {

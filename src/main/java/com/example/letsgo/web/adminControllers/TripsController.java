@@ -1,7 +1,9 @@
 package com.example.letsgo.web.adminControllers;
 
+import com.example.letsgo.entities.Driver;
 import com.example.letsgo.entities.Route;
 import com.example.letsgo.entities.Trip;
+import com.example.letsgo.repositories.DriverRepository;
 import com.example.letsgo.repositories.RouteRepository;
 import com.example.letsgo.repositories.TripRepository;
 import com.example.letsgo.service.TripService;
@@ -24,23 +26,28 @@ public class TripsController {
     @Autowired
     private RouteRepository routeRepository;
     private TripRepository tripRepository;
+    private DriverRepository driverRepository;
     private TripService tripService;
     public HttpSession httpSession;
 
     @GetMapping("/admin/trips")
-    public String routes(Model model, @RequestParam(name="keyId",defaultValue = "") String keyId, @RequestParam(name="routeId",defaultValue = "") String routeId) {
+    public String routes(Model model, @RequestParam(name="routeId",defaultValue = "") String routeId,
+                         @RequestParam(name="driverId",defaultValue = "") String driverId,
+                         @RequestParam(name="tripId",defaultValue = "") String tripId) {
         List<Trip> trips;
         String title = "Trips";
-        if (keyId.isEmpty()) {
-            if (routeId.isEmpty()) {
-                trips = tripRepository.findAll();
-            } else {
-                Route route = routeRepository.findRouteByRouteId(Integer.parseInt(routeId));
-                trips = tripRepository.findTripsByRoute(route);
-                title = "Trips on route " + routeId;
-            }
+        if (!routeId.isEmpty()) {
+            Route route = routeRepository.findRouteByRouteId(Integer.parseInt(routeId));
+            trips = tripRepository.findTripsByRoute(route);
+            title = "Trips on route " + routeId;
+        } else if (!driverId.isEmpty()) {
+            Driver driver = driverRepository.findDriverByDriverId(Integer.parseInt(driverId));
+            trips = tripRepository.findTripsByDriver(driver);
+            title = "Trips by " + driver.getFullName();
+        } else if (!tripId.isEmpty()) {
+            trips = tripRepository.findTripsByTripId(Integer.parseInt(tripId));
         } else {
-            trips = tripRepository.findTripsByTripId(Integer.parseInt(keyId));
+            trips = tripRepository.findAll();
         }
         Trip.sortByDateAndTime(trips);
         model.addAttribute("trips", trips);
@@ -70,6 +77,8 @@ public class TripsController {
     public String editTrip(Integer id, Model model) {
         Trip trip = tripRepository.findTripByTripId(id);
         model.addAttribute("trip", trip);
+        List<Driver> drivers = driverRepository.findActiveDriversSortedByName();
+        model.addAttribute("drivers", drivers);
         return "/admin/trips/editTrip";
     }
     @PostMapping("/admin/trips/editTrip")
