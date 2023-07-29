@@ -15,4 +15,6 @@ public interface TripRepository extends JpaRepository<Trip, Integer> {
     List<Trip> findTripsByRoute(Route route);
     List<Trip> findTripsByDriver(Driver driver);
     Integer countTripsByDriver(Driver driver);
+//    List<Trip> findTripsByRider(Rider rider);
+
 }

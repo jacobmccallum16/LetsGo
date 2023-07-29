@@ -10,6 +10,7 @@ import java.sql.Timestamp;
 import java.time.LocalDate;
 import java.time.LocalTime;
 import java.util.Comparator;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
@@ -27,7 +28,12 @@ public class Trip {
     @OneToMany(mappedBy = "trip", cascade = CascadeType.ALL, fetch = FetchType.LAZY) public List<DriverRating> driverRatings;
     @Column(columnDefinition = "INTEGER DEFAULT 0") public Integer seatsAvailable = 0;
     @Column(columnDefinition = "INTEGER DEFAULT 0") public Integer seatsUsed = 0;
-    @ManyToMany(mappedBy = "riderTrips") public Set<Rider> riderSet;
+    @ManyToMany
+    @JoinTable(name = "rider_trip",
+            joinColumns = @JoinColumn(name = "trip_id"),
+            inverseJoinColumns = @JoinColumn(name = "rider_id"))
+    private Set<Rider> riders = new HashSet<>();
+//    @ManyToMany(mappedBy = "riderTrips") public Set<Rider> riderSet;
     @Column(columnDefinition = "VARCHAR(255) DEFAULT 'Planned'") public String tripStatus = "Planned";
     @ManyToMany(mappedBy = "requestedTrips") public Set<User> requestingUsers;
     @Column(columnDefinition = "DATE") public LocalDate date;
