@@ -4,6 +4,7 @@ import com.example.letsgo.entities.Driver;
 import com.example.letsgo.entities.Route;
 import com.example.letsgo.entities.Trip;
 import com.example.letsgo.repositories.DriverRepository;
+import com.example.letsgo.repositories.RiderRepository;
 import com.example.letsgo.repositories.RouteRepository;
 import com.example.letsgo.repositories.TripRepository;
 import com.example.letsgo.service.TripService;
@@ -23,11 +24,11 @@ import java.util.List;
 @AllArgsConstructor
 public class TripsController {
 
-    @Autowired
-    private RouteRepository routeRepository;
-    private TripRepository tripRepository;
-    private DriverRepository driverRepository;
-    private TripService tripService;
+    @Autowired private RouteRepository routeRepository;
+    @Autowired private TripRepository tripRepository;
+    @Autowired private DriverRepository driverRepository;
+    @Autowired private RiderRepository riderRepository;
+    @Autowired private TripService tripService;
     public HttpSession httpSession;
 
     @GetMapping("/admin/trips")
@@ -104,4 +105,15 @@ public class TripsController {
         tripRepository.deleteById(id);
         return "redirect:/admin/trips";
     }
+
+//    @GetMapping("/admin/trips/addRiders}")
+//    public String addRiders(@RequestParam(name="tripId") String tripId, Model model) {
+//        Trip trip = tripRepository.findTripByTripId(Integer.parseInt(tripId));
+//        List<Rider> activeRiders = riderRepository.findActiveRidersSortedByName();
+//        model.addAttribute("trip", trip);
+//        model.addAttribute("activeRiders", activeRiders);
+//        return "/admin/trips/addRiders";
+//    }
+
+
 }
