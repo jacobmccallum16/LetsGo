@@ -6,6 +6,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.sql.Timestamp;
+import java.util.Comparator;
 import java.util.List;
 
 @Data
@@ -14,7 +15,7 @@ import java.util.List;
 @NoArgsConstructor
 public class Driver {
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY) public Integer driverId;
-    @OneToOne(fetch = FetchType.LAZY) @JoinColumn(name = "user_id") public User user;
+    @OneToOne(fetch = FetchType.LAZY) @JoinColumn(name = "user_id") private User user;
     @OneToMany(mappedBy = "driver", cascade = CascadeType.ALL, fetch = FetchType.LAZY) public List<Vehicle> vehicle;
     @OneToMany(mappedBy = "ratedDriver", cascade = CascadeType.ALL, fetch = FetchType.LAZY) public List<DriverRating> driverRatings;
     @Column(columnDefinition = "BOOLEAN DEFAULT FALSE") public Boolean isActive = false;
@@ -27,12 +28,26 @@ public class Driver {
     @Column(columnDefinition = "TIMESTAMP DEFAULT CURRENT_TIMESTAMP") public Timestamp createdAt = new Timestamp(System.currentTimeMillis());
     @Column(columnDefinition = "TIMESTAMP DEFAULT CURRENT_TIMESTAMP") public Timestamp updatedAt = new Timestamp(System.currentTimeMillis());
     public Driver(User user) {
-        this.user = user;
+        setUser(user);
         isActive = false;
         driverStatus = "Inactive";
         createdAt = new Timestamp(System.currentTimeMillis());
         updatedAt = new Timestamp(System.currentTimeMillis());
     }
+
+    public String getFullName() {
+        return getUser().getFullName();
+    }
+    public String getFirstName() {
+        return getUser().getFirstName();
+    }
+    public String getLastName() {
+        return getUser().getLastName();
+    }
+    public static void sortByFullName(List<Driver> drivers) {
+        drivers.sort(Comparator.comparing(Driver::getLastName).thenComparing(Driver::getFirstName));
+    }
+
     public Boolean toggleIsActive() {
         if (!driverStatus.equals("Banned")) {
             if (!isActive) {
@@ -62,5 +77,9 @@ public class Driver {
             driverSafetyScore = (1 + driverSafetyRating + driverResponsibilityRating);
         }
     }
+
+//    public static void sortByName(List<Driver> drivers) {
+//        Collections.sort(drivers, Comparator.comparing(Driver::getUser::).thenComparing(Driver::getDepartureTime));
+//    }
 
 }

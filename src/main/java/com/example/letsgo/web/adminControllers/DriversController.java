@@ -32,7 +32,7 @@ public class DriversController {
         if (keyId.isEmpty()) {
             drivers = driverRepository.findAll();
         } else {
-            drivers = driverRepository.findDriverByDriverId(Integer.parseInt(keyId));
+            drivers = driverRepository.findDriversByDriverId(Integer.parseInt(keyId));
         }
         for (int i = drivers.size()-1; i >= 0; i--) {
             if (!drivers.get(i).isActive) {
@@ -45,7 +45,7 @@ public class DriversController {
 
     @GetMapping("/admin/drivers/editDriver")
     public String editDriver(Integer id, Model model) {
-        Driver driver = driverRepository.findDriverByDriverId(id).get(0);
+        Driver driver = driverRepository.findDriversByDriverId(id).get(0);
         model.addAttribute("driver", driver);
         return "/admin/drivers/editDriver";
     }
@@ -62,7 +62,7 @@ public class DriversController {
 
     @GetMapping("/admin/drivers/driverStatus")
     public String driverStatus(Integer id, String status) {
-        Driver driver = driverRepository.findDriverByDriverId(id).get(0);
+        Driver driver = driverRepository.findDriversByDriverId(id).get(0);
         driver.driverStatus = status;
 //        driver.updateStatus();
         driverRepository.save(driver);

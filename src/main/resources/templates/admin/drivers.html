@@ -21,17 +21,18 @@
 				<th>Times<br>Rated</th>
 				<th>Safety<br>Score</th>
 				<th>Status</th>
-				<th>View<br>Account</th>
+				<th>Trips</th>
+				<th>Account</th>
 				<th>Edit</th>
 			</tr>
 			</thead>
 			<tbody class="table-group-divider border-indigo-subtle">
 			<tr th:each="d:${drivers}" th:object="${d}">
-				<td th:text="${d.driverId}"></td>
-				<td th:text="${d.user.firstName}"></td>
-				<td th:text="${d.user.lastName}"></td>
-				<td th:text="${d.tripsDriven}"></td>
-				<td th:text="${d.timesRated}"></td>
+				<td th:text="*{driverId}"></td>
+				<td th:text="*{user.firstName}"></td>
+				<td th:text="*{user.lastName}"></td>
+				<td th:text="*{tripsDriven}"></td>
+				<td th:text="*{timesRated}"></td>
 				<td><div class="alert fw-bold" th:text="${#numbers.formatDecimal(d.driverSafetyScore,1,1)}"
 				         th:classappend="${d.driverSafetyScore} > 0 ? (${d.driverSafetyScore} >= 2 ? (${d.driverSafetyScore} >= 3 ? (${d.driverSafetyScore} >= 4 ?
 				         'alert-green' : 'alert-yellow') : 'alert-orange') : 'alert-red') : 'alert-secondary'"></div></td>
@@ -40,10 +41,9 @@
 					<a th:if="*{driverStatus == 'Inactive'}" class="btn btn-sm btn-yellow active">Inactive</a>
 					<a th:if="*{driverStatus == 'Banned'}" class="btn btn-sm btn-red active">Banned</a>
 				</td>
-				<td><a class="btn btn-sm btn-outline-primary" th:href="@{/admin/viewAccount(id=${d.user.userId})}">View Account</a></td>
-				<td>
-					<a class="btn btn-sm btn-outline-teal" th:href="@{/admin/drivers/editDriver(id=${d.driverId})}">Edit Driver</a>
-				</td>
+				<td><a class="btn btn-sm btn-outline-cyan" th:href="@{/admin/trips(driverId=*{driverId})}">View Trips</a></td>
+				<td><a class="btn btn-sm btn-outline-primary" th:href="@{/admin/viewAccount(id=*{user.userId})}">View Account</a></td>
+				<td><a class="btn btn-sm btn-outline-teal" th:href="@{/admin/drivers/editDriver(id=*{driverId})}">Edit Driver</a></td>
 			</tr>
 			</tbody>
 		</table>

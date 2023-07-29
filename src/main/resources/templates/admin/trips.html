@@ -25,7 +25,7 @@
 			</tr>
 			</thead>
 			<tbody class="table-group-divider border-indigo-subtle">
-			<tr th:each="trip:${trips}" th:object="${trip}">
+			<tr th:rowspan="2" th:each="trip:${trips}" th:object="${trip}">
 				<td><img th:src="@{${'/routeImages/' + trip.getRoute().routeImageSource}}" height="100px"></td>
 				<td th:text="*{tripId}"></td>
 				<td th:text="*{getRoute().locationStart}"></td>

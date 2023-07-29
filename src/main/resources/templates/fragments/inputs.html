@@ -128,6 +128,15 @@
 		<label th:for="${id}" class="form-label" th:text="${label}"></label>
 	</div>
 </div>
+<div th:fragment="divFloatingDisabledUnit(type, field, id, label, unit)">
+	<div class="input-group">
+		<div class="form-floating">
+			<input th:id="${id}" class="form-control" th:type="${type}" placeholder="floating" th:value="*{__${field}__}" disabled>
+			<label th:for="${id}" class="form-label" th:text="${label}"></label>
+		</div>
+		<span class="input-group-text" th:text="${unit}"></span>
+	</div>
+</div>
 
 
 <th:block th:fragment="input(type, field, id, label, class)">
