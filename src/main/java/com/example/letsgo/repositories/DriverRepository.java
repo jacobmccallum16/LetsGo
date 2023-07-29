@@ -3,9 +3,11 @@ package com.example.letsgo.repositories;
 import com.example.letsgo.entities.Driver;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
+import org.springframework.stereotype.Repository;
 
 import java.util.List;
 
+@Repository
 public interface DriverRepository extends JpaRepository<Driver,Integer> {
     List<Driver> findDriversByDriverId(Integer id);
     Driver findDriverByDriverId(Integer id);
