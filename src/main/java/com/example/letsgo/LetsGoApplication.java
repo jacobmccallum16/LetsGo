@@ -5,6 +5,7 @@ import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
+import org.springframework.http.converter.json.Jackson2ObjectMapperBuilder;
 
 @SpringBootApplication
 public class LetsGoApplication {
@@ -31,5 +32,12 @@ public class LetsGoApplication {
 //            userRepository.save(new User("W", "X"));
 //            userRepository.save(new User("Y", "Z"));
         };
+    }
+
+    @Bean
+    public Jackson2ObjectMapperBuilder objectMapperBuilder() {
+        Jackson2ObjectMapperBuilder builder = new Jackson2ObjectMapperBuilder();
+        builder.indentOutput(true); // Enable indentation and spacing
+        return builder;
     }
 }
