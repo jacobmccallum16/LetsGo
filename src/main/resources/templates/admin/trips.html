@@ -19,6 +19,7 @@
 				<th colspan="2">From</th>
 				<th colspan="2">Destination</th>
 				<th>Status</th>
+				<th>Driver</th>
 				<th></th>
 				<th>Edit</th>
 				<th>Delete</th>
@@ -38,6 +39,7 @@
 					<a th:if="*{tripStatus == 'Requested'}" class="btn btn-sm btn-indigo active">Requested</a>
 					<a th:if="*{tripStatus == 'Cancelled'}" class="btn btn-sm btn-red active">Cancelled</a>
 				</td>
+				<td th:text="*{(driver != null ? driver.getFullName() : '—')}"></td>
 				<td>
 					<a class="btn btn-sm btn-outline-blue" th:href="@{/admin/trips/calculateArrivalTime(tripId=*{tripId}, routeId=*{getRoute().routeId})}">Calculate Arrival</a>
 				</td>
