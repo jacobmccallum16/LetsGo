@@ -44,7 +44,7 @@ public class Trip {
         return getRoute().getRouteId();
     }
     public void calculateArrivalTime() {
-        long duration = (long) getRoute().getRouteDuration();
+        long duration = (long) route.routeDuration;
         arrivalTime = departureTime.plusMinutes(duration);
         return;
     }

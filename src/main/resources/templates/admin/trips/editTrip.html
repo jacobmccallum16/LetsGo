@@ -21,7 +21,7 @@
 							<div class="col-3" th:insert="~{fragments/inputs :: divFloatingDisabledData('number', 'tripId', 'tripId', 'Trip ID')}"></div>
 							<div class="col-3" th:insert="~{fragments/inputs :: divFloatingDisabledData('number', 'route.routeId', 'route.routeId', 'Route ID')}"></div>
 							<div class="col-6" th:insert="~{fragments/inputs :: divFloatingDisabled('text', 'route.locationStart', 'route.locationStart', 'Start Location')}"></div>
-							<div class="col-3" th:insert="~{fragments/inputs :: divFloatingDisabledUnit('number', 'route.routeDuration', 'route.routeDuration', 'Duration', 'min')}"></div>
+							<div class="col-3" th:insert="~{fragments/inputs :: divFloatingDisabledUnitData('number', 'route.routeDuration', 'route.routeDuration', 'Duration', 'min')}"></div>
 							<div class="col-3" th:insert="~{fragments/inputs :: divFloatingDisabledUnit('number', 'route.routeDistance', 'route.routeDistance', 'Distance', 'km')}"></div>
 							<div class="col-6" th:insert="~{fragments/inputs :: divFloatingDisabled('text', 'route.locationEnd', 'route.locationEnd', 'Destination')}"></div>
 							<div class="col-3">
