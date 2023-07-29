@@ -30,7 +30,7 @@ public class DriversController {
     public String drivers(Model model, @RequestParam(name="keyId",defaultValue = "") String keyId) {
         List<Driver> drivers;
         if (keyId.isEmpty()) {
-            drivers = driverRepository.findAll();
+            drivers = driverRepository.findIsActiveDriversSortedByName();
         } else {
             drivers = driverRepository.findDriversByDriverId(Integer.parseInt(keyId));
         }
