@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Let's Go! - Driver Registration</title>
+    <th:block th:insert="~{fragments/scripts}"></th:block>
+    <style>
+        .logo {
+            width: 100px;
+            height: 100px;
+            margin-top: 20px;
+            margin-left: 20px;
+        }
+        main {
+            width: 80%;
+            height: 100%;
+            overflow: auto;
+        }
+        h2 {
+            width: 25%;
+            display: inline-block;
+            text-align: right;
+            clear: left;
+            margin:0 10px;
+        }
+        .button {
+            width: 100%;
+            padding: 15px 30px;
+            margin: 10px;
+            text-decoration: none;
+            border: none;
+            border-radius: 5px;
+            font-size: 18px;
+        }
+    </style>
+</head>
+<body>
+<a th:href="@{/user/drivers/home_driver}">
+    <img th:src="@{/company-logo.png}" alt="Let's Go! Logo" class="logo">
+</a>
+<a class="navbar-brand bg-indigo-600 rounded-pill px-3 text-info fw-bold fst-italic" th:href="@{/user/drivers/home_driver}">Let's Go!</a>
+<div class="d-flex flex-fill">
+    <th:block th:insert="~{fragments/sidebar_driver}"></th:block>
+<main>
+    <img src="#" alt="profile picture" style="width:100%">
+    <h2>Name</h2>
+    <h3>Rating:</h3><span>100</span>
+    <br />
+    <h3>Driver since:</h3><span>100</span>
+    <br />
+    <h3>Trips delivered:</h3><span>100</span>
+    <br />
+    <h3>Acceptance rate:</h3><span>100</span>
+    <br />
+    <h3>Driver cancellations:</h3><span>100</span>
+    <button type="button" href="/" class="button btn btn-lg btn-primary btn-block">Log out</button>
+</main>
+</div>
+</body>
+</html>

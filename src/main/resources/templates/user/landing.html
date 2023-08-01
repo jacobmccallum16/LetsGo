@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Let's Go! - Welcome Onboard</title>
+    <th:block th:insert="~{fragments/scripts}"></th:block>
+
+    <style>
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+            text-align: center;
+        }
+        .logo {
+            width: 100px;
+            height: 100px;
+            margin-top: 20px;
+            margin-left: 20px;
+        }
+        .welcome {
+            font-size: 36px;
+            margin-top: 30px;
+        }
+        .buttons {
+            display: flex;
+            justify-content: center;
+            margin-top: 40px;
+        }
+        .button {
+            padding: 15px 30px;
+            margin: 10px;
+            text-decoration: none;
+            border: none;
+            border-radius: 5px;
+            font-size: 18px;
+        }
+    </style>
+</head>
+
+<body>
+<div class="container">
+    <a th:href="@{/index}">
+        <img th:src="@{/company-logo.png}" alt="Let's Go! Logo" class="logo">
+    </a>
+    <a class="navbar-brand bg-indigo-600 rounded-pill px-3 text-info fw-bold fst-italic" th:href="@{/index}">Let's Go!</a>
+    <main class="container text-center flex-grow-1">
+        <h1 class="welcome text-primary">Welcome to Let's Go!</h1>
+        <div class="buttons">
+            <a th:href="@{/user/drivers/register_driver}" class="button btn btn-lg btn-primary btn-block">Sign Up As Driver</a><br/>
+            <a th:href="@{/user/riders/register_rider}" class="button btn btn-lg btn-primary btn-block">Sign Up As Rider</a><br/>
+            <a th:href="@{/user/login}" class="button btn btn-lg btn-primary btn-block">Login</a>
+        </div>
+    </main>
+</div>
+
+</body>
+</html>

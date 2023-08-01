@@ -24,6 +24,76 @@ public class UserController {
 
     @GetMapping("/index")
     public String redirectUsers() {
-        return "redirect:/admin/users";
+        return "/user/landing";
+    }
+
+    @GetMapping("/user/login")
+    public String login() {
+        return "/user/login";
+    }
+
+    @GetMapping("/user/forgot-password")
+    public String forgotPassword() {
+        return "/user/forgot-password";
+    }
+
+    @GetMapping("/user/drivers/register_driver")
+    public String registerDriver() {
+        return "/user/drivers/register_driver";
+    }
+
+    @GetMapping("/user/riders/register_rider")
+    public String registerRider() {
+        return "/user/riders/register_rider";
+    }
+
+    @GetMapping("/user/riders/home_rider")
+    public String homeRider() {
+        return "/user/riders/home_rider";
+    }
+
+    @GetMapping("/user/riders/profile_rider")
+    public String profileRider() {
+        return "/user/riders/profile_rider";
+    }
+
+    @GetMapping("/user/riders/my_trips_rider")
+    public String myTripsRider() {
+        return "/user/riders/my_trips_rider";
+    }
+
+    @GetMapping("/user/riders/settings_rider")
+    public String settingsRider() {
+        return "/user/riders/settings_rider";
+    }
+
+    @GetMapping("/user/riders/payment_method_rider")
+    public String paymentMethodRider() {
+        return "/user/riders/payment_method_rider";
+    }
+
+    @GetMapping("/user/drivers/home_driver")
+    public String homeDriver() {
+        return "/user/drivers/home_driver";
+    }
+
+    @GetMapping("/user/drivers/profile_driver")
+    public String profileDriver() {
+        return "/user/drivers/profile_driver";
+    }
+
+    @GetMapping("/user/drivers/my_trips_driver")
+    public String myTripsDriver() {
+        return "/user/drivers/my_trips_driver";
+    }
+
+    @GetMapping("/user/drivers/settings_driver")
+    public String settingsDriver() {
+        return "/user/drivers/settings_driver";
+    }
+
+    @GetMapping("/user/drivers/payment_method_driver")
+    public String paymentMethodDriver() {
+        return "/user/drivers/payment_method_driver";
     }
 }

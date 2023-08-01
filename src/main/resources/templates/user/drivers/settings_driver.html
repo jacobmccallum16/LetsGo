@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Let's Go! - Settings</title>
+    <th:block th:insert="~{fragments/scripts}"></th:block>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.13.1/css/all.min.css" integrity="sha256-2XFplPlrFClt0bIdPgpz8H7ojnk10H69xRqd9+uTShA=" crossorigin="anonymous" />
+    <style>
+        .logo {
+            width: 100px;
+            height: 100px;
+            margin-top: 20px;
+            margin-left: 20px;
+        }
+        body{margin-top:20px;
+            background-color:#f2f6fc;
+            color:#69707a;
+        }
+        .img-account-profile {
+            height: 10rem;
+        }
+        .rounded-circle {
+            border-radius: 50%;
+        }
+        .card {
+            box-shadow: 0 0.15rem 1.75rem 0 rgb(33 40 50 / 15%);
+        }
+        .card .card-header {
+            font-weight: 500;
+        }
+        .card-header:first-child {
+            border-radius: 0.35rem 0.35rem 0 0;
+        }
+        .card-header {
+            padding: 1rem 1.35rem;
+            margin-bottom: 0;
+            background-color: rgba(33, 40, 50, 0.03);
+            border-bottom: 1px solid rgba(33, 40, 50, 0.125);
+        }
+        .form-control, .dataTable-input {
+            display: block;
+            width: 100%;
+            padding: 0.875rem 1.125rem;
+            font-size: 0.875rem;
+            font-weight: 400;
+            line-height: 1;
+            color: #69707a;
+            background-color: #fff;
+            background-clip: padding-box;
+            border: 1px solid #c5ccd6;
+            -webkit-appearance: none;
+            -moz-appearance: none;
+            appearance: none;
+            border-radius: 0.35rem;
+            transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
+        }
+    </style>
+</head>
+<body>
+<a th:href="@{/user/drivers/home_driver}">
+    <img th:src="@{/company-logo.png}" alt="Let's Go! Logo" class="logo">
+</a>
+<a class="navbar-brand bg-indigo-600 rounded-pill px-3 text-info fw-bold fst-italic" th:href="@{/user/drivers/home_driver}">Let's Go!</a>
+<div class="d-flex flex-fill">
+    <th:block th:insert="~{fragments/sidebar_driver}"></th:block>
+    <div class="container-xl px-4 mt-4">
+        <div class="row">
+            <div class="col-xl-4">
+                <div class="card mb-4 mb-xl-0">
+                    <div class="card-header">Profile Picture</div>
+                    <div class="card-body text-center">
+                        <img class="img-account-profile rounded-circle mb-2" src="#">
+                        <div class="small font-italic text-muted mb-4">JPG or PNG no larger than 5 MB</div>
+                        <button class="btn btn-primary" type="button" onclick="document.getElementById('picture').click()">Upload new image</button>
+                        <input type="file" id="picture" name="picture" accept="image/jpeg, image/png" class="button btn btn-primary" style="display:none">
+                    </div>
+                </div>
+            </div>
+            <div class="col-xl-8">
+                <div class="card mb-4">
+                    <div class="card-header">Account Details</div>
+                    <div class="card-body">
+                        <form>
+                            <div class="mb-3">
+                                <label class="small mb-1" for="fname">First name</label>
+                                <input class="form-control" id="fname" type="text" placeholder="Enter your first name" value="Fname" disabled>
+                            </div>
+                            <div class="mb-3">
+                                <label class="small mb-1" for="lname">Last name</label>
+                                <input class="form-control" id="lname" type="text" placeholder="Enter your last name" value="Lname" disabled>
+                            </div>
+                            <div class="mb-3">
+                                <label class="small mb-1" for="email">Email address</label>
+                                <input class="form-control" id="email" type="email" placeholder="Enter your email address" value="name@example.com">
+                            </div>
+                            <div class="mb-3">
+                                <label class="small mb-1" for="phone">Phone number</label>
+                                <input class="form-control" id="phone" type="tel" placeholder="Enter your phone number" value="000-000-0000">
+                            </div>
+                            <div class="mb-3">
+                                <label class="small mb-1" for="dateofbirth">Date of Birth</label>
+                                <input class="form-control" id="dateofbirth" type="date" name="dateofbirth" placeholder="yyyy-mm-dd" min="1900-01-01" max="2022-12-31" value="1990-01-01">
+                            </div>
+                            <div class="mb-3">
+                                <div class="card card-header-actions mb-4">
+                                    <div class="card-header">
+                                        Payment Methods
+                                    </div>
+                                    <div class="card-body px-0">
+                                        <div class="d-flex align-items-center justify-content-between px-4">
+                                            <div class="d-flex align-items-center">
+                                                <i class="fab fa-cc-visa fa-2x cc-color-visa"></i>
+                                                <div class="ms-4">
+                                                    <div class="small">Visa ending in 1234</div>
+                                                    <div class="text-xs text-muted">Expires 04/2024</div>
+                                                </div>
+                                            </div>
+                                            <div class="ms-4 small">
+                                                <a th:href="@{payment_method_driver}">Edit</a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <button type="button" href="/" class="btn btn-primary">Save changes</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    var uploadField = document.getElementById("picture");
+
+    uploadField.onchange = function() {
+        if(this.files[0].size > 5242880){
+            alert("File size is too large.");
+            this.value = "";
+        };
+    };
+</script>
+
+</body>
+</html>
