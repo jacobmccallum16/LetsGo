@@ -5,6 +5,7 @@ import com.example.letsgo.entities.TripRider;
 import com.example.letsgo.service.RiderService;
 import com.example.letsgo.service.TripRiderService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -40,7 +41,13 @@ public class TripRiderRestController {
         return tripRiderService.addTripRider(tripRider);
     }
     @DeleteMapping("/removeById/{tripRiderId}")
-    public void removeTripRider(@PathVariable Integer tripRiderId) {
+    public ResponseEntity<Void> removeTripRider(@PathVariable Integer tripRiderId) {
         tripRiderService.deleteTripRider(tripRiderId);
+        return ResponseEntity.noContent().build();
+    }
+    @GetMapping("/removeById/{tripRiderId}")
+    public ResponseEntity<Void> removeTripRiderGet(@PathVariable Integer tripRiderId) {
+        tripRiderService.deleteTripRider(tripRiderId);
+        return ResponseEntity.noContent().build();
     }
 }

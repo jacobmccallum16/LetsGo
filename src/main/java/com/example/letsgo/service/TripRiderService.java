@@ -38,7 +38,10 @@ public class TripRiderService {
         List<TripRider> tripRiders = tripRiderRepository.findTripRidersByTripId(Integer.parseInt(tripId));
         List<Rider> riders = riderRepository.findActiveRidersSortedByName();
         Trip trip = tripRepository.findTripByTripId(Integer.parseInt(tripId));
-        Integer driverRiderId = trip.getDriverRiderId();
+        boolean checkDriverRiderId = false;
+        if (trip.getDriver() != null) {
+            checkDriverRiderId = true;
+        }
         boolean busy = false;
         for (int i = riders.size() - 1; i >= 0; i--) {
             int riderId = riders.get(i).getRiderId();
@@ -49,8 +52,10 @@ public class TripRiderService {
                     busy = true; // if potential rider is already taking this trip
                 }
             }
-            if (riderId == driverRiderId) {
-                busy = true; // if potential rider is the driver of this trip
+            if (checkDriverRiderId) {
+                if (riderId == trip.getDriverRiderId()) {
+                    busy = true; // if potential rider is the driver of this trip
+                }
             }
             if (busy) {
                 riders.remove(i); // remove rider if they're busy
