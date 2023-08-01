@@ -16,8 +16,8 @@ public class SecurityController {
     public String login(@RequestParam String username, @RequestParam String password, HttpSession session) {
         String status = securityService.login(username, password);
         session.setAttribute("status", status);
-        if (session.getAttribute("status") == "Admin") { return "/admin/users"; }
-        else if (session.getAttribute("status") == "User") { return "/user/riders/profile_rider"; }
+        if (session.getAttribute("status") == "Admin") { return "redirect:/admin"; }
+        else if (session.getAttribute("status") == "User") { return "redirect:/user/riders/profile_rider"; }
         else { return "redirect:/user/login" ; }
     }
     @GetMapping("/logout")
