@@ -18,13 +18,6 @@ public class Rider {
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY) public Integer riderId;
     @OneToOne(fetch = FetchType.LAZY) @JoinColumn(name = "user_id") @JsonIgnoreProperties({"hibernateLazyInitializer"}) public User user;
     @OneToMany(mappedBy = "ratedRider", cascade = CascadeType.ALL, fetch = FetchType.LAZY) public List<RiderRating> riderRatings;
-//    @ManyToMany @JoinTable(
-//            name = "rider_trip",
-//            joinColumns = @JoinColumn(name = "rider_id"),
-//            inverseJoinColumns = @JoinColumn(name = "trip_id")
-//    )
-//    public Set<Trip> riderTrips;
-//    @ManyToMany(mappedBy = "riders") private Set<Trip> trips = new HashSet<>();
     @Column(columnDefinition = "BOOLEAN DEFAULT FALSE") public Boolean isActive = false;
     @Column(columnDefinition = "VARCHAR(255) DEFAULT 'Inactive'") public String riderStatus = "Inactive";
     @Column(columnDefinition = "INTEGER DEFAULT '0'") public Integer tripsTaken = 0;

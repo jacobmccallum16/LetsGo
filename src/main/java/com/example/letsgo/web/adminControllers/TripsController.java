@@ -35,22 +35,8 @@ public class TripsController {
     public String routes(Model model, @RequestParam(name="routeId",defaultValue = "") String routeId,
                          @RequestParam(name="driverId",defaultValue = "") String driverId,
                          @RequestParam(name="tripId",defaultValue = "") String tripId) {
-        List<Trip> trips;
-        String title = "Trips";
-        if (!routeId.isEmpty()) {
-            Route route = routeRepository.findRouteByRouteId(Integer.parseInt(routeId));
-            trips = tripRepository.findTripsByRoute(route);
-            title = "Trips on route " + routeId;
-        } else if (!driverId.isEmpty()) {
-            Driver driver = driverRepository.findDriverByDriverId(Integer.parseInt(driverId));
-            trips = tripRepository.findTripsByDriver(driver);
-            title = "Trips by " + driver.getFullName();
-        } else if (!tripId.isEmpty()) {
-            trips = tripRepository.findTripsByTripId(Integer.parseInt(tripId));
-        } else {
-            trips = tripRepository.findAll();
-        }
-        Trip.sortByDateAndTime(trips);
+        List<Trip> trips = tripService.adminTrips(routeId, driverId, tripId);
+        String title = tripService.adminTripsTitle(routeId, driverId, tripId);
         model.addAttribute("trips", trips);
         model.addAttribute("title", title);
         return "/admin/trips";

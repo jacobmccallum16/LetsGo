@@ -57,12 +57,14 @@
 		let tripRidersData = JSON.parse(tripRidersText);
 		let titleHtml = 'Riders on this trip';
 		let tBodyHtml = '';
+		let tripRiderCount = 0;
 		tripRidersData.forEach((tripRider) => {
 			tBodyHtml += `<tr id="tripRiderId${tripRider.tripRiderId}">`;
 			tBodyHtml += '<td>' + tripRider.riderId + '</td>';
 			tBodyHtml += '<td>' + tripRider.fullName + '</td>';
 			tBodyHtml += '<td><button class="btn btn-sm btn-danger" data-trip-rider-id="' + tripRider.tripRiderId + '" onClick="removeTripRider(this)">Remove</button></td>';
 			tBodyHtml += '</tr>';
+			tripRiderCount += 1;
 		});
 		modalTitle.innerHTML = titleHtml;
 		modalTBody.innerHTML = tBodyHtml;
