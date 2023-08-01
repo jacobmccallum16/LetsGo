@@ -17,64 +17,40 @@
 						<div class="card-title">Edit User</div>
 					</div>
 					<div class="card-body">
-						<form id="form" class="row g-3 p-2" method="post" th:action="@{/admin/users/editUser}" th:object="${user}">
-							<div hidden>
-								<input type="text" name="userId" th:value="*{userId}" th:field="*{userId}">
-								<input type="text" name="createdAt" th:value="*{createdAt}" th:field="*{createdAt}">
-							</div>
-							<div class="col-md-6">
-								<div class="form-floating">
-									<input type="text" id="firstName" name="firstName" class="form-control" placeholder="First Name" th:value="*{firstName}" th:field="*{firstName}" th:errorClass="is-invalid" required autofocus>
-									<label for="firstName">First Name</label>
+						<form id="editUser" class="row g-3 p-2" method="post" th:action="@{/admin/users/editUser}" th:object="${user}">
+							<input type="hidden" th:field="*{userId}">
+							<input type="hidden" th:field="*{isActive}">
+							<input type="hidden" th:field="*{createdAt}">
+							<div class="row g-3">
+								<div class="col-12 col-md-6" th:insert="fragments/inputs :: divFloatingRequiredAutofocus('text', 'firstName', 'firstName', 'First Name')"></div>
+								<div class="col-12 col-md-6" th:insert="fragments/inputs :: divFloatingRequired('text', 'lastName', 'lastName', 'Last Name')"></div>
+								<div class="col-12 col-md-6" th:insert="fragments/inputs :: divFloatingRequired('email', 'email', 'email', 'Email')"></div>
+								<div class="col-12 col-md-6" th:insert="fragments/inputs :: divFloatingRequired('text', 'username', 'username', 'Username')"></div>
+								<div class="col-12 col-md-6" th:insert="fragments/inputs :: divFloatingRequired('password', 'password', 'password', 'Password')"></div>
+								<div class="col-md-3">
+									<div class="form-floating">
+										<select class="form-select" id="isAdmin" name="isAdmin" th:value="*{isAdmin}" th:field="*{isAdmin}" th:errorClass="is-invalid">
+											<option th:value="0" th:selected="*{isAdmin == false}">Not Admin</option>
+											<option th:value="1" th:selected="*{isAdmin == true}">Admin</option>
+										</select>
+										<label for="isAdmin">Admin Status</label>
+									</div>
 								</div>
-							</div>
-							<div class="col-md-6">
-								<div class="form-floating">
-									<input type="text" id="lastName" name="lastName" class="form-control" placeholder="Last Name" th:value="*{lastName}" th:field="*{lastName}" th:errorClass="is-invalid" required>
-									<label for="lastName">Last Name</label>
-								</div>
-							</div>
-							<div class="col-md-6">
-								<div class="form-floating">
-									<input type="email" id="email" name="email" class="form-control" placeholder="email@example.com" th:value="*{email}" th:field="*{email}" th:errorClass="is-invalid" required>
-									<label for="email">Email</label>
-								</div>
-							</div>
-							<div class="col-md-6">
-								<div class="form-floating">
-									<input type="password" id="password" name="password" class="form-control" placeholder="password" th:value="${user.password}" th:field="*{password}" th:errorClass="is-invalid" required>
-									<label for="password">Password</label>
-								</div>
-							</div>
-							<div class="col-md-6">
-								<div class="form-floating">
-								<input type="text" id="username" name="username" class="form-control" placeholder="username" th:value="*{username}" th:field="*{username}" th:errorClass="is-invalid" required>
-									<label for="username">Username</label>
-								</div>
-							</div>
-							<div class="col-md-3">
-								<div class="form-floating">
-									<select class="form-select" id="isAdmin" name="isAdmin" th:value="*{isAdmin}" th:field="*{isAdmin}" th:errorClass="is-invalid">
-										<option th:value="0" th:selected="*{isAdmin == false}">Not Admin</option>
-										<option th:value="1" th:selected="*{isAdmin == true}">Admin</option>
-									</select>
-									<label for="isAdmin">Admin Status</label>
-								</div>
-							</div>
-							<div class="col-md-3">
-								<div class="form-floating">
-									<select class="form-select" id="userStatus" name="userStatus" th:value="*{userStatus}" th:field="*{userStatus}" th:errorClass="is-invalid">
-										<option th:value="inactive" th:selected="*{userStatus == 'inactive'}">Inactive</option>
-										<option th:value="active" th:selected="*{userStatus == 'active'}">Active</option>
-										<option th:value="banned" th:selected="*{userStatus == 'banned'}">Banned</option>
-									</select>
-									<label for="userStatus">Status</label>
+								<div class="col-md-3">
+									<div class="form-floating">
+										<select class="form-select" id="userStatus" name="userStatus" th:value="*{userStatus}" th:field="*{userStatus}" th:errorClass="is-invalid">
+											<option th:value="Inactive" th:selected="*{userStatus == 'Inactive'}">Inactive</option>
+											<option th:value="Active" th:selected="*{userStatus == 'Active'}">Active</option>
+											<option th:value="Banned" th:selected="*{userStatus == 'Banned'}">Banned</option>
+										</select>
+										<label for="userStatus">Status</label>
+									</div>
 								</div>
 							</div>
 						</form>
 					</div>
 					<div class="card-footer text-end">
-						<button form="form" type="submit" id="editUserSubmit" class="btn btn-outline-primary">Update User Information</button>
+						<button form="editUser" type="submit" id="editUserSubmit" class="btn btn-outline-primary">Update User Information</button>
 					</div>
 				</div>
 			</div>

@@ -1,13 +1,14 @@
 package com.example.letsgo.entities;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.sql.Timestamp;
+import java.util.Comparator;
 import java.util.List;
-import java.util.Set;
 
 @Data
 @Entity
@@ -15,16 +16,17 @@ import java.util.Set;
 @NoArgsConstructor
 public class Rider {
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY) public Integer riderId;
-    @OneToOne(fetch = FetchType.LAZY) @JoinColumn(name = "user_id") public User user;
+    @OneToOne(fetch = FetchType.LAZY) @JoinColumn(name = "user_id") @JsonIgnoreProperties({"hibernateLazyInitializer"}) public User user;
     @OneToMany(mappedBy = "ratedRider", cascade = CascadeType.ALL, fetch = FetchType.LAZY) public List<RiderRating> riderRatings;
-    @ManyToMany @JoinTable(
-            name = "rider_trip",
-            joinColumns = @JoinColumn(name = "rider_id"),
-            inverseJoinColumns = @JoinColumn(name = "trip_id")
-    )
-    public Set<Trip> riderTrips;
+//    @ManyToMany @JoinTable(
+//            name = "rider_trip",
+//            joinColumns = @JoinColumn(name = "rider_id"),
+//            inverseJoinColumns = @JoinColumn(name = "trip_id")
+//    )
+//    public Set<Trip> riderTrips;
+//    @ManyToMany(mappedBy = "riders") private Set<Trip> trips = new HashSet<>();
     @Column(columnDefinition = "BOOLEAN DEFAULT FALSE") public Boolean isActive = false;
-    @Column(columnDefinition = "VARCHAR(255) DEFAULT 'inactive'") public String riderStatus;
+    @Column(columnDefinition = "VARCHAR(255) DEFAULT 'Inactive'") public String riderStatus = "Inactive";
     @Column(columnDefinition = "INTEGER DEFAULT '0'") public Integer tripsTaken = 0;
     @Column(columnDefinition = "INTEGER DEFAULT '0'") public Integer timesRated = 0;
     @Column(columnDefinition = "FLOAT DEFAULT '0'") public Float riderSafetyScore = 0f;
@@ -35,18 +37,33 @@ public class Rider {
     public Rider(User user) {
         this.user = user;
         isActive = false;
-        riderStatus = "inactive";
+        riderStatus = "Inactive";
         createdAt = new Timestamp(System.currentTimeMillis());
         updatedAt = new Timestamp(System.currentTimeMillis());
     }
+
+    public String getFullName() {
+        return getUser().getFullName();
+    }
+    public String getFirstName() {
+        return getUser().getFirstName();
+    }
+    public String getLastName() {
+        return getUser().getLastName();
+    }
+    public Integer getDriverId() { return getUser().getDriver().getDriverId(); }
+    public static void sortByFullName(List<Rider> riders) {
+        riders.sort(Comparator.comparing(Rider::getLastName).thenComparing(Rider::getFirstName));
+    }
+
     public Boolean toggleIsActive() {
-        if (!riderStatus.equals("banned")) {
+        if (!riderStatus.equals("Banned")) {
             if (!isActive) {
                 isActive = true;
-                riderStatus = "active";
+                riderStatus = "Active";
             } else {
                 isActive = false;
-                riderStatus = "inactive";
+                riderStatus = "Inactive";
             }
         } else {
             isActive = false;
@@ -56,14 +73,14 @@ public class Rider {
     }
     public void updateStatus(String riderStatus) {
         this.riderStatus = riderStatus;
-        if (riderStatus.equals("active")) {
+        if (riderStatus.equals("Active")) {
             isActive = true;
         } else {
             isActive = false;
         }
     }
     public void updateStatus() {
-        isActive = riderStatus.equals("active");
+        isActive = riderStatus.equals("Active");
     }
     public void updateUpdatedAt() {
         updatedAt = new Timestamp(System.currentTimeMillis());
@@ -72,7 +89,7 @@ public class Rider {
     // simplified methods for temporary use:
     public void updateSafetyScore() {
         if (timesRated > 0) {
-            riderSafetyScore = (timesRated + riderSafetyRating + riderResponsibilityRating) / timesRated;
+            riderSafetyScore = (1 + riderSafetyRating + riderResponsibilityRating);
         }
     }
 }

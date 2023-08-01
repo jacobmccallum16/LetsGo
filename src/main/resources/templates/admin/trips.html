@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+	<meta charset="UTF-8">
+	<title>Let's Go! - Trips</title>
+	<th:block th:insert="~{fragments/scripts}"></th:block>
+</head>
+<body class="vh-100 d-flex flex-column">
+<th:block th:insert="~{fragments/navbar}"></th:block>
+<div class="d-flex flex-fill">
+	<th:block th:insert="~{fragments/sidebar}"></th:block>
+	<main class="container-sm text-center flex-grow-1">
+		<h1 th:text="${title}">Trips</h1>
+		<table class="table table-striped table-hover table-sm align-middle">
+			<thead class="table-dark">
+			<tr>
+				<th></th>
+				<th>ID</th>
+				<th colspan="2">From</th>
+				<th colspan="2">Destination</th>
+				<th>Status</th>
+				<th>Driver</th>
+				<th>Riders</th>
+				<th>Edit</th>
+				<th>Delete</th>
+			</tr>
+			</thead>
+			<tbody class="table-group-divider border-indigo-subtle">
+			<tr th:rowspan="2" th:each="trip:${trips}" th:object="${trip}">
+				<td><img th:src="@{${'/routeImages/' + trip.getRoute().routeImageSource}}" height="100px"></td>
+				<td th:text="*{tripId}"></td>
+				<td th:text="*{getRoute().locationStart}"></td>
+				<td th:text="*{date + ' ' + (departureTime != null ? departureTime.toString() : 'null')}"></td>
+				<td th:text="*{getRoute().locationEnd}"></td>
+				<td th:text="*{date + ' ' + (arrivalTime != null ? arrivalTime.toString() : 'null')}"></td>
+				<td>
+					<a th:if="*{tripStatus == 'Completed'}" class="btn btn-sm btn-dark active">Completed</a>
+					<a th:if="*{tripStatus == 'Planned'}" class="btn btn-sm btn-teal active">Planned</a>
+					<a th:if="*{tripStatus == 'Requested'}" class="btn btn-sm btn-indigo active">Requested</a>
+					<a th:if="*{tripStatus == 'Cancelled'}" class="btn btn-sm btn-red active">Cancelled</a>
+				</td>
+				<td th:text="*{(driver != null ? driver.getFullName() : '—')}"></td>
+				<td>
+					<button type="button" class="btn btn-sm btn-teal" data-bs-toggle="modal" data-bs-target="#tripRidersModal" th:data-trip-id="*{tripId}" onclick="setTripIdAndLoadTripRidersModal(this)">Riders</button>
+				</td>
+				<td>
+					<a class="btn btn-sm btn-cyan" th:href="@{/admin/trips/editTrip(id=*{tripId})}">Edit</a>
+				</td>
+				<td>
+					<a class="btn btn-sm btn-red" th:href="@{/admin/trips/deleteTrip(id=*{tripId})}">Delete</a>
+				</td>
+			</tr>
+			</tbody>
+		</table>
+	</main>
+</div>
+<th:block th:insert="~{fragments/modals/tripRiders}"></th:block>
+</body>
+</html>

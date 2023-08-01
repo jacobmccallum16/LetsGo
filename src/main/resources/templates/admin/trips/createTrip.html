@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+	<meta charset="UTF-8">
+	<title>Let's Go! - Create Trip</title>
+	<th:block th:insert="~{fragments/scripts}"></th:block>
+</head>
+<body class="vh-100 d-flex flex-column">
+<th:block th:insert="~{fragments/navbar}"></th:block>
+<div class="d-flex flex-fill">
+	<th:block th:insert="~{fragments/sidebar}"></th:block>
+	<main class="container-sm text-center flex-grow-1">
+		<div class="row">
+			<div class="col-12 col-md-10 col-lg-9 col-xl-8 col-xxl-7 my-3 mx-auto align-middle">
+				<div class="card">
+					<div class="card-header">
+						Create Route
+					</div>
+					<div class="card-body text-start">
+						<form id="form" class="needs-validation" novalidate method="post" th:action="@{/admin/trips/createTrip}" th:object="${trip}">
+							<div class="row g-3">
+								<div class="col-6">
+									<div class="form-floating">
+										<input id="route" class="form-control" type="number" placeholder="floating" th:value="${trip.route.routeId}" disabled>
+										<input type="hidden" th:field="${trip.route}">
+										<label for="route" class="form-label">Route ID</label>
+									</div>
+								</div>
+								<div class="col-6">
+									<div class="form-floating">
+										<select id="tripStatus" class="form-select" th:field="*{tripStatus}" required>
+											<option th:value="Planned" th:selected="*{tripStatus == 'Planned'}">Planned</option>
+											<option th:value="Requested" th:selected="*{tripStatus == 'Requested'}">Requested</option>
+										</select>
+										<label for="tripStatus">Trip Status</label>
+									</div>
+								</div>
+								<div class="col-6" th:insert="~{fragments/inputs :: divFloatingRequired('date', 'date', 'date', 'Date')}"></div>
+								<div class="col-6" th:insert="~{fragments/inputs :: divFloatingRequired('time', 'departureTime', 'departureTime', 'Departure Time')}"></div>
+							</div>
+						</form>
+					</div>
+					<div class="card-footer text-end">
+						<button form="form" type="submit" id="submit" class="btn btn-outline-primary">Create Trip</button>
+					</div>
+				</div>
+			</div>
+		</div>
+	</main>
+</div>
+</body>
+</html>

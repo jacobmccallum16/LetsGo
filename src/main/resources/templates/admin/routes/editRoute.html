@@ -17,13 +17,7 @@
 					<div class="card-body text-start">
 						<form id="form" class="needs-validation" novalidate method="post" th:action="@{/admin/routes/editRoute}" th:object="${route}">
 							<div class="row g-3">
-								<div hidden>
-								</div>
-								<div class="col-2">
-									<label for="routeId" class="form-label">ID</label>
-									<input type="hidden" th:field="*{routeId}">
-									<input id="routeId" class="form-control" type="number" th:value="*{routeId}" disabled>
-								</div>
+								<div class="col-2" th:insert="~{fragments/inputs :: divFloatingDisabledData('number', 'routeId', 'routeId', 'Route ID')}"></div>
 								<div class="col-5">
 									<label for="locationStart" class="form-label">Location Start</label>
 									<input id="locationStart" class="form-control" type="text" th:field="*{locationStart}" required>
@@ -35,9 +29,9 @@
 								<div class="col-3">
 									<label for="routeStatus" class="form-label">Status</label>
 									<select id="routeStatus" class="form-select" th:field="*{routeStatus}" required>
-										<option th:value="active" th:selected="*{routeStatus == 'active'}">Active</option>
-										<option th:value="inactive" th:selected="*{routeStatus == 'inactive'}">Inactive</option>
-										<option th:value="requested" th:selected="*{routeStatus == 'requested'}">Requested</option>
+										<option th:value="Active" th:selected="*{routeStatus == 'Active'}">Active</option>
+										<option th:value="Inactive" th:selected="*{routeStatus == 'Inactive'}">Inactive</option>
+										<option th:value="Requested" th:selected="*{routeStatus == 'Requested'}">Requested</option>
 									</select>
 								</div>
 								<div class="col-3">
@@ -70,7 +64,7 @@
 						</form>
 					</div>
 					<div class="card-footer text-end">
-						<button form="form" type="submit" id="editRiderSubmit" class="btn btn-outline-primary">Update Route</button>
+						<button form="form" type="submit" id="editRouteSubmit" class="btn btn-outline-primary">Update Route</button>
 					</div>
 				</div>
 			</div>

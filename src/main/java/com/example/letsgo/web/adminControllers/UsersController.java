@@ -37,7 +37,7 @@ public class UsersController {
             users = userRepository.findAll();
         } else {
             Integer id = Integer.parseInt(keyId);
-            users = userRepository.findUserByUserId(id);
+            users = userRepository.findUsersByUserId(id);
         }
         model.addAttribute("listUsers", users);
         httpSession.setAttribute("section", "admin");
@@ -77,7 +77,7 @@ public class UsersController {
 
     @GetMapping("/admin/users/editUser")
     public String editUser(Integer id, Model model) {
-        User user = userRepository.findUserByUserId(id).get(0);
+        User user = userRepository.findUsersByUserId(id).get(0);
         model.addAttribute("user", user);
         httpSession.setAttribute("section", "admin");
         return "/admin/users/editUser";

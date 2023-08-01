@@ -37,16 +37,17 @@ public class AdminController {
     }
     @GetMapping("/admin/viewAccount")
     public String adminViewAccount(Integer id, Model model) {
-        List<User> users;
-        users = userRepository.findUserByUserId(id);
-        model.addAttribute("users", users);
+        User user = userRepository.findUserByUserId(id);
+        model.addAttribute("user", user);
+        model.addAttribute("rider", user.rider);
+        model.addAttribute("driver", user.driver);
         httpSession.setAttribute("section", "admin");
         httpSession.setAttribute("page", "viewAccount");
         return "/admin/viewAccount";
     }
     @GetMapping("/admin/activateRider")
     public String activateRider(Integer id, Model model) {
-        List<User> users = userRepository.findUserByUserId(id);
+        List<User> users = userRepository.findUsersByUserId(id);
         model.addAttribute("users", users);
         User user = users.get(0);
         Rider rider = users.get(0).getRider();
@@ -58,7 +59,7 @@ public class AdminController {
     }
     @GetMapping("/admin/activateDriver")
     public String activateDriver(Integer id, Model model) {
-        List<User> users = userRepository.findUserByUserId(id);
+        List<User> users = userRepository.findUsersByUserId(id);
         model.addAttribute("users", users);
         User user = users.get(0);
         Driver driver = users.get(0).getDriver();

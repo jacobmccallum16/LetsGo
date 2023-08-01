@@ -1,11 +1,13 @@
 package com.example.letsgo.entities;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.sql.Timestamp;
+import java.util.Comparator;
 import java.util.List;
 import java.util.Set;
 
@@ -16,8 +18,8 @@ import java.util.Set;
 @Inheritance(strategy = InheritanceType.JOINED)
 public class User {
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY) public Integer userId;
-    @OneToOne(mappedBy = "user", cascade = CascadeType.ALL, fetch = FetchType.LAZY) public Rider rider;
-    @OneToOne(mappedBy = "user", cascade = CascadeType.ALL, fetch = FetchType.LAZY) public Driver driver;
+    @OneToOne(mappedBy = "user", cascade = CascadeType.ALL, fetch = FetchType.LAZY) @JsonIgnore public Rider rider;
+    @OneToOne(mappedBy = "user", cascade = CascadeType.ALL, fetch = FetchType.LAZY) @JsonIgnore public Driver driver;
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, fetch = FetchType.LAZY) public List<TripTransaction> tripTransaction;
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, fetch = FetchType.LAZY) public List<PaymentMethod> paymentMethods;
     @OneToMany(mappedBy = "ratedByUser", cascade = CascadeType.ALL, fetch = FetchType.LAZY) public List<DriverRating> driverRatings;
@@ -41,7 +43,7 @@ public class User {
     @Column(columnDefinition = "BOOLEAN DEFAULT FALSE") public Boolean isAdmin = false;
     @Column(columnDefinition = "VARCHAR(255) DEFAULT ''") public String username = "";
     @Column(columnDefinition = "BOOLEAN DEFAULT FALSE") public Boolean isActive = false;
-    @Column(columnDefinition = "VARCHAR(255) DEFAULT 'inactive'") public String userStatus = "inactive";
+    @Column(columnDefinition = "VARCHAR(255) DEFAULT 'Inactive'") public String userStatus = "Inactive";
     @Column(columnDefinition = "INTEGER DEFAULT '0'") public Integer timesRated = 0;
     @Column(columnDefinition = "FLOAT DEFAULT '0'") public Float overallSafetyScore = 0f;
     @Column(columnDefinition = "FLOAT DEFAULT '0'") public Float overallSafetyRating = 0f;
@@ -74,17 +76,17 @@ public class User {
     }
 
     public Boolean updateIsActive() {
-        if (!userStatus.equals("banned")) {
+        if (!userStatus.equals("Banned")) {
             if (rider.isActive || driver.isActive) {
                 isActive = true;
-                userStatus = "active";
+                userStatus = "Active";
             } else {
                 isActive = false;
-                userStatus = "inactive";
+                userStatus = "Inactive";
             }
         } else {
             isActive = false;
-            userStatus = "banned";
+            userStatus = "Banned";
         }
         updatedAt = new Timestamp(System.currentTimeMillis());
         return isActive;
@@ -95,6 +97,13 @@ public class User {
         updatedAt = timestamp;
         rider.setUpdatedAt(timestamp);
         driver.setUpdatedAt(timestamp);
+    }
+
+    public String getFullName() {
+        return firstName + " " + lastName;
+    }
+    public static void sortByFullName(List<User> users) {
+        users.sort(Comparator.comparing(User::getLastName).thenComparing(User::getFirstName));
     }
 
 }

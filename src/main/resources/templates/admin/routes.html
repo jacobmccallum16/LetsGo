@@ -22,7 +22,10 @@
 				<th>Distance</th>
 				<th>Duration</th>
 				<th>Status</th>
+				<th></th>
 				<th>Edit</th>
+				<th></th>
+				<th>Delete</th>
 			</tr>
 			</thead>
 			<tbody class="table-group-divider border-indigo-subtle">
@@ -34,12 +37,21 @@
 				<td th:text="*{#numbers.formatDecimal(routeDistance,1,1) + ' km'}"></td>
 				<td th:text="*{#numbers.formatInteger(routeDuration, 1) + ' min'}"></td>
 				<td>
-					<a th:if="*{routeStatus == 'active'}" class="btn btn-sm btn-green active">Active</a>
-					<a th:if="*{routeStatus == 'inactive'}" class="btn btn-sm btn-yellow active">Inactive</a>
-					<a th:if="*{routeStatus == 'requested'}" class="btn btn-sm btn-indigo active">Requested</a>
+					<a th:if="*{routeStatus == 'Active'}" class="btn btn-sm btn-green active">Active</a>
+					<a th:if="*{routeStatus == 'Inactive'}" class="btn btn-sm btn-yellow active">Inactive</a>
+					<a th:if="*{routeStatus == 'Requested'}" class="btn btn-sm btn-indigo active">Requested</a>
+				</td>
+				<td>
+					<a class="btn btn-sm btn-outline-blue" th:href="@{/admin/trips(routeId=*{routeId})}">View Trips</a>
 				</td>
 				<td>
 					<a class="btn btn-sm btn-cyan" th:href="@{/admin/routes/editRoute(id=*{routeId})}">Edit</a>
+				</td>
+				<td>
+					<a class="btn btn-sm btn-outline-indigo" th:href="@{/admin/trips/createTrip(routeId=*{routeId})}">Create Trip</a>
+				</td>
+				<td>
+					<a class="btn btn-sm btn-red" th:href="@{/admin/routes/deleteRoute(id=*{routeId})}">Delete</a>
 				</td>
 			</tr>
 			</tbody>

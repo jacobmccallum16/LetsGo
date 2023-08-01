@@ -11,7 +11,7 @@
 <div class="d-flex flex-fill">
 	<th:block th:insert="~{fragments/sidebar}"></th:block>
 	<main class="container-sm text-center flex-grow-1">
-		<h1>Active Riders</h1>
+		<h1>Riders</h1>
 		<table class="table table-striped table-hover table-sm align-middle">
 			<thead class="table-dark">
 			<tr>
@@ -19,6 +19,8 @@
 				<th>Name</th>
 				<th>Trips<br>Taken</th>
 				<th>Times<br>Rated</th>
+				<th>Safety<br>Rating</th>
+				<th>Responsibility<br>Rating</th>
 				<th>Safety<br>Score</th>
 				<th>Rider<br>Status</th>
 				<th>Account</th>
@@ -26,22 +28,24 @@
 			</tr>
 			</thead>
 			<tbody class="table-group-divider border-indigo-subtle">
-			<tr th:each="r:${riders}">
+			<tr th:each="r:${riders}" th:object="${r}">
 				<td><div class="alert alert-light" th:text="${r.riderId}"></div></td>
-				<td><div class="alert alert-light" th:text="${r.user.firstName} + ' ' + ${r.user.lastName}"></div></td>
+				<td><div class="alert alert-light" th:text="${r.user.firstName + ' ' + r.user.lastName}"></div></td>
 				<td><div class="alert alert-light" th:text="${r.tripsTaken}"></div></td>
 				<td><div class="alert alert-light" th:text="${r.timesRated}"></div></td>
+				<td><div class="alert alert-light" th:text="*{#numbers.formatDecimal(riderSafetyRating,1,2)}"></div></td>
+				<td><div class="alert alert-light" th:text="*{#numbers.formatDecimal(riderResponsibilityRating,1,2)}"></div></td>
 				<td><div class="alert fw-bold" th:text="${#numbers.formatDecimal(r.riderSafetyScore,1,1)}"
 				         th:classappend="${r.riderSafetyScore} > 0 ? (${r.riderSafetyScore} >= 2 ? (${r.riderSafetyScore} >= 3 ? (${r.riderSafetyScore} >= 4 ?
 				         'alert-green' : 'alert-yellow') : 'alert-orange') : 'alert-red') : 'alert-secondary'"></div></td>
 				<td>
-					<a th:href="@{/admin/riders/riderStatus(id=${r.riderId}, status='active')}" class="btn btn-sm" th:classappend="${r.riderStatus} == 'active' ? 'btn-green active' : 'btn-outline-green'" th:text="${r.riderStatus} == 'active' ? 'Active' : 'Activate'"/>
-					<a th:href="@{/admin/riders/riderStatus(id=${r.riderId}, status='inactive')}" class="btn btn-sm" th:classappend="${r.riderStatus} == 'inactive' ? 'btn-yellow active' : 'btn-outline-yellow'" th:text="${r.riderStatus} == 'inactive' ? 'Inactive' : 'Deactivate'"/>
-					<a th:href="@{/admin/riders/riderStatus(id=${r.riderId}, status='banned')}" class="btn btn-sm" th:classappend="${r.riderStatus} == 'banned' ? 'btn-red active' : 'btn-outline-red'" th:text="${r.riderStatus} == 'banned' ? 'Banned' : 'Ban'"/>
+					<a th:if="*{riderStatus == 'Active'}" class="btn btn-sm btn-green active">Active</a>
+					<a th:if="*{riderStatus == 'Inactive'}" class="btn btn-sm btn-yellow active">Inactive</a>
+					<a th:if="*{riderStatus == 'Banned'}" class="btn btn-sm btn-red active">Banned</a>
 				</td>
 				<td><a class="btn btn-sm btn-outline-primary" th:href="@{/admin/viewAccount(id=${r.user.userId})}">View Account</a></td>
 				<td>
-					<a class="btn btn-sm btn-outline-cyan" th:href="@{/admin/riders/editRider(id=${r.riderId})}">Edit Rider</a>
+					<a class="btn btn-sm btn-outline-cyan" th:href="@{/admin/riders/editRider(id=${r.riderId})}">Edit</a>
 				</td>
 			</tr>
 			</tbody>
