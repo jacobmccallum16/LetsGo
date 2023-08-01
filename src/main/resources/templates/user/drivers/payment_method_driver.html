@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Let's Go! - Payment Method</title>
+    <th:block th:insert="~{fragments/scripts}"></th:block>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.13.1/css/all.min.css" integrity="sha256-2XFplPlrFClt0bIdPgpz8H7ojnk10H69xRqd9+uTShA=" crossorigin="anonymous" />
+    <style>
+        .logo {
+            width: 100px;
+            height: 100px;
+            margin-top: 20px;
+            margin-left: 20px;
+        }
+        body{margin-top:20px;
+            background-color:#f2f6fc;
+            color:#69707a;
+        }
+        .card {
+            box-shadow: 0 0.15rem 1.75rem 0 rgb(33 40 50 / 15%);
+        }
+        .card .card-header {
+            font-weight: 500;
+        }
+        .card-header:first-child {
+            border-radius: 0.35rem 0.35rem 0 0;
+        }
+        .card-header {
+            padding: 1rem 1.35rem;
+            margin-bottom: 0;
+            background-color: rgba(33, 40, 50, 0.03);
+            border-bottom: 1px solid rgba(33, 40, 50, 0.125);
+        }
+        .form-control, .dataTable-input {
+            display: block;
+            width: 100%;
+            padding: 0.875rem 1.125rem;
+            font-size: 0.875rem;
+            font-weight: 400;
+            line-height: 1;
+            color: #69707a;
+            background-color: #fff;
+            background-clip: padding-box;
+            border: 1px solid #c5ccd6;
+            -webkit-appearance: none;
+            -moz-appearance: none;
+            appearance: none;
+            border-radius: 0.35rem;
+            transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
+        }
+    </style>
+</head>
+<body>
+<a th:href="@{/user/drivers/home_driver}">
+    <img th:src="@{/company-logo.png}" alt="Let's Go! Logo" class="logo">
+</a>
+<a class="navbar-brand bg-indigo-600 rounded-pill px-3 text-info fw-bold fst-italic" th:href="@{/user/drivers/home_driver}">Let's Go!</a>
+<div class="d-flex flex-fill">
+    <th:block th:insert="~{fragments/sidebar_driver}"></th:block>
+    <div class="container-xl px-4 mt-4">
+        <div class="row">
+            <div class="col-xl-8">
+                <div class="card mb-4">
+                    <div class="card-header">Account Details</div>
+                    <div class="card-body">
+                        <form>
+                            <div class="mb-3">
+                                <label class="small mb-1" for="cardnumber">Card number</label>
+                                <input class="form-control" id="cardnumber" type="number" placeholder="Enter your card number" minlength="16" maxlength="16" required>
+                            </div>
+                            <div class="mb-3">
+                                <label class="small mb-1" for="name">Name on card</label>
+                                <input class="form-control" id="name" type="text" placeholder="Enter your full name" required>
+                            </div>
+                            <div class="row gx-3 mb-3">
+                                <div class="col-md-6">
+                                    <label class="small mb-1" for="expmonth">Exp. Month</label>
+                                    <input class="form-control" id="expmonth" type="number" placeholder="MM" min="01" max="12" required>
+                                </div>
+                                <div class="col-md-6">
+                                    <label class="small mb-1" for="expyear">Exp. Year</label>
+                                    <input class="form-control" id="expyear" type="number" placeholder="YY" min="23" max="50" required>
+                                </div>
+                            </div>
+                            <div class="mb-3">
+                                <label class="small mb-1" for="cvv">CVV</label>
+                                <input class="form-control" id="cvv" type="number" placeholder="Enter your 3 digit CVV" minlength="3" max="999">
+                            </div>
+                            <div class="mb-3">
+                                <label class="small mb-1" for="zipcode">ZIP code</label>
+                                <input class="form-control" type="text" id="zipcode" name="zipcode" pattern="[A-Za-z0-9]{6}">
+                            </div>
+                            <button type="button" href="/" class="btn btn-primary">Save changes</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+</html>

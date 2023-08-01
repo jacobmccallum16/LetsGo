@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <title>Let's Go! - Login</title>
+  <th:block th:insert="~{fragments/scripts}"></th:block>
+  <link href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700" rel="stylesheet">
+  <style>
+    .logo {
+      width: 100px;
+      height: 100px;
+      margin-top: 20px;
+      margin-left: 20px;
+    }
+    html, body {
+      display: flex;
+      justify-content: center;
+      font-size: 15px;
+    }
+    h1 {
+      text-align:center;
+    }
+    .main-block {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      height: 100%;
+      padding: 30px;
+      background-color: lightgray;
+    }
+    input[type=text], input[type=password] {
+      width: 100%;
+      padding: 16px 8px;
+      margin: 8px 0;
+      display: inline-block;
+      border: 1px solid #ccc;
+      box-sizing: border-box;
+    }
+    button {
+      width: 100%;
+      padding: 14px 0;
+      margin: 10px 0;
+      border: none;
+      text-decoration: none;
+      border: none;
+      border-radius: 5px;
+      font-size: 18px;
+    }
+    span {
+      color: #eee;
+    }
+    .formcontainer {
+      text-align: left;
+      margin: 24px 50px 12px;
+    }
+    .container {
+      width: 100%;
+      margin: 0 auto;
+      padding: 20px;
+    }
+    span.password {
+      float: right;
+      padding-top: 0;
+      padding-right: 15px;
+    }
+    @media screen and (max-width: 300px) {
+      span.password {
+        display: block;
+        float: none;
+      }
+    }
+  </style>
+</head>
+<body>
+<div class="container">
+<a th:href="@{/index}">
+  <img th:src="@{/company-logo.png}" alt="Let's Go! Logo" class="logo">
+</a>
+<a class="navbar-brand bg-indigo-600 rounded-pill px-3 text-info fw-bold fst-italic" th:href="@{/index}">Let's Go!</a>
+  <main class="main-block text-center flex-grow-1">
+  <form action="/action_page.php">
+    <h1 class="text-primary">Login</h1>
+    <div class="formcontainer">
+      <hr/>
+      <div class="container">
+        <label for="username"><strong>Email / Phone number</strong></label>
+        <input type="text" placeholder="Enter email or phone number" id="username" name="username" required>
+        <label for="password"><strong>Password</strong></label>
+        <input type="password" placeholder="Enter Password" id="password" name="password" required>
+      <button type="submit" href="/" class="button btn btn-lg btn-primary btn-block">Login</button>
+      <span class="password"><a th:href="@{/user/forgot-password}">Forgot password?</a></span>
+      </div>
+    </div>
+  </form>
+  </main>
+</div>
+</body>
+</html>

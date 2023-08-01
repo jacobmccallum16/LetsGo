@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Let's Go! - Driver Registration</title>
+    <th:block th:insert="~{fragments/scripts}"></th:block>
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.4.1/css/all.css" integrity="sha384-5sAR7xN1Nv6T6+dT2mhtzEpVJvfS3NScPQTrOxhwjIuvcA67KV2R5Jz6kr4abQsz" crossorigin="anonymous">
+    <link href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700" rel="stylesheet">
+    <style>
+        html, body {
+            min-height: 100%;
+        }
+        body, div, form, input, select, p {
+            padding: 0;
+            margin: 0;
+            outline: none;
+            font-size: 16px;
+            color: #eee;
+        }
+        h2 {
+            margin: 0 0 0 8px;
+        }
+        .logo {
+            width: 100px;
+            height: 100px;
+            margin-top: 20px;
+            margin-left: 20px;
+        }
+        .main-block {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            height: 100%;
+            padding: 30px;
+            background-color: lightgray;
+        }
+        .left-part, form {
+            padding: 50px;
+        }
+        .left-part {
+            text-align: center;
+        }
+        form {
+            background: rgba(0, 0, 0, 0.7);
+        }
+        .title {
+            display: flex;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+        .info {
+            display: flex;
+            flex-direction: column;
+        }
+        input, select {
+            padding: 5px;
+            margin-bottom: 20px;
+            background: transparent;
+            border: none;
+            border-bottom: 1px solid #eee;
+        }
+        input::placeholder {
+            color: #eee;
+        }
+        option:focus {
+            border: none;
+        }
+        option {
+            background: black;
+            border: none;
+        }
+        .checkbox input {
+            margin: 0 10px 0 0;
+            vertical-align: middle;
+        }
+        .checkbox a {
+            color: #26a9e0;
+        }
+        .checkbox a:hover {
+            color: #85d6de;
+        }
+        .button {
+            width: 100%;
+            padding: 15px 30px;
+            margin: 10px;
+            text-decoration: none;
+            border: none;
+            border-radius: 5px;
+            font-size: 18px;
+        }
+        span {
+            color: #eee;
+        }
+        @media (min-width: 568px) {
+            html, body {
+                height: 100%;
+            }
+            .main-block {
+                flex-direction: row;
+                height: calc(100% - 50px);
+            }
+            .left-part, form {
+                flex: 1;
+                height: auto;
+            }
+        }
+    </style>
+</head>
+<body>
+<a th:href="@{/index}">
+    <img th:src="@{/company-logo.png}" alt="Let's Go! Logo" class="logo">
+</a>
+<a class="navbar-brand bg-indigo-600 rounded-pill px-3 text-info fw-bold fst-italic" th:href="@{/index}">Let's Go!</a>
+<div class="main-block">
+    <div class="left-part">
+        <h1 class="text-primary">Register to Drive with Let's Go!</h1>
+    </div>
+    <form action="/">
+        <div class="title">
+            <h2 class="text-purple">Sign Up as Driver</h2>
+        </div>
+        <div class="info">
+            <input class="fname" type="text" id="fname" name="fname" placeholder="First name" required>
+            <input class="lname" type="text" id="lname" name="lname" placeholder="Last name" required>
+            <input type="text" id="email" name="email" placeholder="Email" required>
+            <input type="tel" id="phone" name="phone" placeholder="Phone number" required>
+            <label for="dateofbirth">Dat of Birth:</label>
+            <input type="date" id="dateofbirth" name="dateofbirth" placeholder="yyyy-mm-dd" min="1900-01-01" max="2022-12-31" required>
+            <input type="password" id="password" name="password" placeholder="Password" required>
+            <input type="number" id="license" name="license" placeholder="Driver's license number" required>
+            <input type="number" id="sin" name="sin" placeholder="Social insurance number" minlength="9" maxlength="9" required>
+        </div>
+        <div class="checkbox">
+            <input type="checkbox" name="checkbox"><span>I agree to the <a href="#">Terms of Use</a>
+            and <a href="#">Privacy Policy.</a></span>
+        </div>
+        <button type="submit" href="/" class="button btn btn-lg btn-primary btn-block">Continue</button>
+    </form>
+</div>
+</body>
+</html>
