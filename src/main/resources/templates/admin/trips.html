@@ -20,7 +20,7 @@
 				<th colspan="2">Destination</th>
 				<th>Status</th>
 				<th>Driver</th>
-				<th></th>
+				<th>Riders</th>
 				<th>Edit</th>
 				<th>Delete</th>
 			</tr>
@@ -41,7 +41,7 @@
 				</td>
 				<td th:text="*{(driver != null ? driver.getFullName() : '—')}"></td>
 				<td>
-					<a class="btn btn-sm btn-outline-blue" th:href="@{/admin/trips/calculateArrivalTime(tripId=*{tripId}, routeId=*{getRoute().routeId})}">Calculate Arrival</a>
+					<button type="button" class="btn btn-sm btn-teal" data-bs-toggle="modal" data-bs-target="#tripRidersModal" th:data-trip-id="*{tripId}" onclick="setTripIdAndLoadTripRidersModal(this)">Riders</button>
 				</td>
 				<td>
 					<a class="btn btn-sm btn-cyan" th:href="@{/admin/trips/editTrip(id=*{tripId})}">Edit</a>
@@ -54,5 +54,6 @@
 		</table>
 	</main>
 </div>
+<th:block th:insert="~{fragments/modals/tripRiders}"></th:block>
 </body>
 </html>

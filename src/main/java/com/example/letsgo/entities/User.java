@@ -18,7 +18,7 @@ import java.util.Set;
 @Inheritance(strategy = InheritanceType.JOINED)
 public class User {
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY) public Integer userId;
-    @OneToOne(mappedBy = "user", cascade = CascadeType.ALL, fetch = FetchType.LAZY) public Rider rider;
+    @OneToOne(mappedBy = "user", cascade = CascadeType.ALL, fetch = FetchType.LAZY) @JsonIgnore public Rider rider;
     @OneToOne(mappedBy = "user", cascade = CascadeType.ALL, fetch = FetchType.LAZY) @JsonIgnore public Driver driver;
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, fetch = FetchType.LAZY) public List<TripTransaction> tripTransaction;
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, fetch = FetchType.LAZY) public List<PaymentMethod> paymentMethods;
