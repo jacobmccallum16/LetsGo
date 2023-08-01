@@ -1,0 +1,120 @@
+<div class="modal fade" id="tripRidersModal" tabindex="-1" aria-labelledby="tripRidersModalLabel" aria-hidden="true">
+	<div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
+		<div class="modal-content">
+			<div class="modal-header">
+				<h1 class="modal-title fs-5" id="tripRidersModalLabel">Riders on trip</h1>
+				<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+			</div>
+			<div class="modal-body">
+				<table class="table table-striped table-hover table-sm align-middle">
+					<thead class="table-dark">
+					<tr>
+						<th>ID</th>
+						<th>Rider</th>
+						<th></th>
+					</tr>
+					</thead>
+					<tbody class="table-group-divider border-indigo-subtle">
+					</tbody>
+				</table>
+				<hr>
+				<div class="row g-3">
+					<div class="col-8">
+						<div class="form-floating">
+							<select id="tripRiderSelect" class="form-select" name="tripRider">
+								<option value="" selected>-- None --</option>
+								<option value=""></option>
+							</select>
+							<label for="tripRiderSelect">Add Rider</label>
+						</div>
+					</div>
+					<div class="col-4">
+						<button id="addTripRiderButton" onclick="addTripRider()" class="btn btn-primary w-100 h-100">Add Rider</button>
+					</div>
+				</div>
+			</div>
+			<div class="modal-footer">
+				<button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+			</div>
+		</div>
+	</div>
+</div>
+<script>
+	const modalTitle = document.querySelector('#tripRidersModal h1.modal-title');
+	const modalTBody = document.querySelector("#tripRidersModal .modal-body tbody");
+	const modalSelect = document.querySelector('#tripRidersModal #tripRiderSelect');
+	let tripId;
+	function setTripIdAndLoadTripRidersModal(button) {
+		setTripId(button);
+		loadTripRidersModal();
+	}
+	function setTripId(button) {
+		tripId = button.getAttribute('data-trip-id');
+	}
+	async function loadTripRidersModal() {
+		let tripRidersObj = await fetch('/api/trip-rider/' + tripId + '/riders');
+		let tripRidersText = await tripRidersObj.text();
+		let tripRidersData = JSON.parse(tripRidersText);
+		let titleHtml = 'Riders on this trip';
+		let tBodyHtml = '';
+		tripRidersData.forEach((tripRider) => {
+			tBodyHtml += `<tr id="tripRiderId${tripRider.tripRiderId}">`;
+			tBodyHtml += '<td>' + tripRider.riderId + '</td>';
+			tBodyHtml += '<td>' + tripRider.fullName + '</td>';
+			tBodyHtml += '<td><button class="btn btn-sm btn-danger" data-trip-rider-id="' + tripRider.tripRiderId + '" onClick="removeTripRider(this)">Remove</button></td>';
+			tBodyHtml += '</tr>';
+		});
+		modalTitle.innerHTML = titleHtml;
+		modalTBody.innerHTML = tBodyHtml;
+		let potentialRidersObj = await fetch('/api/trip-rider/' + tripId + '/getPotentialRiders');
+		let potentialRidersText = await potentialRidersObj.text();
+		let potentialRiderData = JSON.parse(potentialRidersText);
+		let selectInnerHtml = `<option value="" selected>-- None --</option>`;
+		potentialRiderData.forEach((potentialRider) => {
+			selectInnerHtml += '<option value="' + potentialRider.riderId + '">' + potentialRider.fullName + '</option>'
+		});
+		modalSelect.innerHTML = selectInnerHtml;
+	}
+	function addTripRider() {
+		let riderId = modalSelect.value;
+		let fullName = modalSelect.options[modalSelect.selectedIndex].text;
+		let addTripRiderData = {
+			tripId: tripId,
+			riderId: parseInt(riderId),
+			fullName: fullName,
+		}
+		fetch(`/api/trip-rider/${tripId}/addRider`, {
+			method: 'POST',
+			headers: { 'Content-Type': 'application/json' },
+			body: JSON.stringify(addTripRiderData)
+		})
+			.then((response) => response.json())
+			.then((addTripRiderData) => {
+				console.log('Rider added:', addTripRiderData);
+				loadTripRidersModal();
+			})
+			.catch((error) => {
+				console.error('Error adding rider:', error);
+			});
+	}
+	function removeTripRider(button) {
+		let tripRiderId = button.getAttribute('data-trip-rider-id');
+		deleteRow(tripRiderId);
+		fetch(`/api/trip-rider/removeById/${tripRiderId}`, {
+			method: 'DELETE'
+		})
+			.then((response) => response.json())
+			.then((data) => {
+				console.log('Rider removed from trip', data);
+				loadTripRidersModal();
+			})
+			.catch((error) => {
+				console.error("It probably worked but there's an error message anyway", error);
+				loadTripRidersModal();
+			});
+	}
+	function deleteRow(rowId) {
+		let query = `#tripRidersModal .modal-body tbody #tripRiderId` + rowId.toString();
+		document.querySelector(query).remove();
+	}
+</script>

@@ -1,5 +1,6 @@
 package com.example.letsgo.entities;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -7,9 +8,7 @@ import lombok.NoArgsConstructor;
 
 import java.sql.Timestamp;
 import java.util.Comparator;
-import java.util.HashSet;
 import java.util.List;
-import java.util.Set;
 
 @Data
 @Entity
@@ -17,7 +16,7 @@ import java.util.Set;
 @NoArgsConstructor
 public class Rider {
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY) public Integer riderId;
-    @OneToOne(fetch = FetchType.LAZY) @JoinColumn(name = "user_id") public User user;
+    @OneToOne(fetch = FetchType.LAZY) @JoinColumn(name = "user_id") @JsonIgnoreProperties({"hibernateLazyInitializer"}) public User user;
     @OneToMany(mappedBy = "ratedRider", cascade = CascadeType.ALL, fetch = FetchType.LAZY) public List<RiderRating> riderRatings;
 //    @ManyToMany @JoinTable(
 //            name = "rider_trip",
@@ -25,7 +24,7 @@ public class Rider {
 //            inverseJoinColumns = @JoinColumn(name = "trip_id")
 //    )
 //    public Set<Trip> riderTrips;
-    @ManyToMany(mappedBy = "riders") private Set<Trip> trips = new HashSet<>();
+//    @ManyToMany(mappedBy = "riders") private Set<Trip> trips = new HashSet<>();
     @Column(columnDefinition = "BOOLEAN DEFAULT FALSE") public Boolean isActive = false;
     @Column(columnDefinition = "VARCHAR(255) DEFAULT 'Inactive'") public String riderStatus = "Inactive";
     @Column(columnDefinition = "INTEGER DEFAULT '0'") public Integer tripsTaken = 0;
@@ -52,6 +51,7 @@ public class Rider {
     public String getLastName() {
         return getUser().getLastName();
     }
+    public Integer getDriverId() { return getUser().getDriver().getDriverId(); }
     public static void sortByFullName(List<Rider> riders) {
         riders.sort(Comparator.comparing(Rider::getLastName).thenComparing(Rider::getFirstName));
     }

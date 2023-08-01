@@ -1,6 +1,6 @@
 package com.example.letsgo.entities;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -16,7 +16,7 @@ import java.util.List;
 @NoArgsConstructor
 public class Driver {
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY) public Integer driverId;
-    @OneToOne(fetch = FetchType.LAZY) @JoinColumn(name = "user_id") @JsonIgnore private User user;
+    @OneToOne(fetch = FetchType.LAZY) @JoinColumn(name = "user_id") @JsonIgnoreProperties({"hibernateLazyInitializer"}) private User user;
     @OneToMany(mappedBy = "driver", cascade = CascadeType.ALL, fetch = FetchType.LAZY) public List<Vehicle> vehicle;
     @OneToMany(mappedBy = "ratedDriver", cascade = CascadeType.ALL, fetch = FetchType.LAZY) public List<DriverRating> driverRatings;
     @Column(columnDefinition = "BOOLEAN DEFAULT FALSE") public Boolean isActive = false;
@@ -45,6 +45,7 @@ public class Driver {
     public String getLastName() {
         return getUser().getLastName();
     }
+    public Integer getRiderId() { return getUser().getRider().getRiderId(); }
     public static void sortByFullName(List<Driver> drivers) {
         drivers.sort(Comparator.comparing(Driver::getLastName).thenComparing(Driver::getFirstName));
     }
