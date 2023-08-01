@@ -1,0 +1,289 @@
+<div class="modal fade" id="vehiclesModal" tabindex="-1" aria-labelledby="vehiclesModalLabel" aria-hidden="true">
+	<div class="modal-dialog modal-dialog-centered modal-dialog-scrollable modal-xl">
+		<div class="modal-content">
+			<div class="modal-header">
+				<h1 class="modal-title fs-5" id="vehiclesModalLabel">Vehicles</h1>
+				<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+			</div>
+			<div class="modal-body">
+				<table class="table table-striped table-hover table-sm align-middle text-center">
+					<thead class="table-dark">
+					<tr>
+						<th>VehicleID</th>
+						<th>Driver</th>
+						<th>Status</th>
+						<th>Primary</th>
+						<th>Year</th>
+						<th>Make</th>
+						<th>Model</th>
+						<th>Color</th>
+						<th>Seats</th>
+						<th>Available</th>
+						<th>Edit</th>
+						<th>Delete</th>
+					</tr>
+					</thead>
+					<tbody class="table-group-divider border-indigo-subtle">
+					</tbody>
+				</table>
+				<div class="text-end">
+					<button class="btn btn-sm btn-primary" onclick="setCreateVehicleForm()">Create New Vehicle</button>
+				</div>
+				<hr>
+				<div class="row g-3">
+					<div class="col-2">
+						<div class="form-floating">
+							<input type="text" value="" id="VehicleVehicleId" class="form-control" placeholder="floating" disabled>
+							<label for="VehicleVehicleId" class="form-label">Vehicle ID</label>
+						</div>
+					</div>
+					<div class="col-2">
+						<div class="form-floating">
+							<input type="text" value="" id="VehicleDriverId" class="form-control" placeholder="floating" disabled>
+							<label for="VehicleDriverId" class="form-label">Driver ID</label>
+						</div>
+					</div>
+					<div class="col-2">
+						<div class="form-floating">
+							<select id="VehicleVehicleStatus" class="form-select">
+								<option value="Inactive" selected>Inactive</option>
+								<option value="Active">Active</option>
+							</select>
+							<label for="VehicleVehicleStatus">Status</label>
+						</div>
+					</div>
+					<div class="col-3">
+						<div class="form-floating">
+							<input type="text" value="" id="VehicleColor" class="form-control" placeholder="floating">
+							<label for="VehicleColor" class="form-label">Color</label>
+						</div>
+					</div>
+					<div class="col-3">
+						<div class="form-floating">
+							<input type="color" value="#999999" id="VehicleColorHexCode" class="form-control" placeholder="floating">
+							<label for="VehicleColorHexCode" class="form-label">Color Hex Code</label>
+						</div>
+					</div>
+					<div class="col-2">
+						<div class="form-floating">
+							<input type="number" value="" id="VehicleYear" class="form-control" placeholder="floating">
+							<label for="VehicleYear" class="form-label">Year</label>
+						</div>
+					</div>
+					<div class="col-4">
+						<div class="form-floating">
+							<input type="text" value="" id="VehicleMake" class="form-control" placeholder="floating">
+							<label for="VehicleMake" class="form-label">Make</label>
+						</div>
+					</div>
+					<div class="col-6">
+						<div class="form-floating">
+							<input type="text" value="" id="VehicleModel" class="form-control" placeholder="floating">
+							<label for="VehicleModel" class="form-label">Model</label>
+						</div>
+					</div>
+					<div class="col-3">
+						<div class="form-floating">
+							<input type="number" value="5" id="VehicleSeatsTotal" class="form-control" placeholder="floating">
+							<label for="VehicleSeatsTotal" class="form-label">Seats Total</label>
+						</div>
+					</div>
+					<div class="col-3">
+						<div class="form-floating">
+							<input type="number" value="2" id="VehicleSeatsAvailable" class="form-control" placeholder="floating">
+							<label for="VehicleSeatsAvailable" class="form-label">Seats Available</label>
+						</div>
+					</div>
+					<div class="col-auto ms-auto">
+						<button id="submitVehicleButton" onclick="createVehicle()" class="btn btn-primary h-100">Add Vehicle</button>
+					</div>
+				</div>
+			</div>
+			<div class="modal-footer">
+				<button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+			</div>
+		</div>
+	</div>
+</div>
+<script>
+	const vehiclesTitle = document.querySelector('#vehiclesModal h1.modal-title');
+	const vehiclesTBody = document.querySelector("#vehiclesModal .modal-body tbody");
+	const VehicleVehicleId = document.querySelector('#vehiclesModal #VehicleVehicleId');
+	const VehicleDriverId = document.querySelector('#vehiclesModal #VehicleDriverId');
+	const VehicleVehicleStatus = document.querySelector('#vehiclesModal #VehicleVehicleStatus');
+	const VehicleYear = document.querySelector('#vehiclesModal #VehicleYear');
+	const VehicleMake = document.querySelector('#vehiclesModal #VehicleMake');
+	const VehicleModel = document.querySelector('#vehiclesModal #VehicleModel');
+	const VehicleColor = document.querySelector('#vehiclesModal #VehicleColor');
+	const VehicleColorHexCode = document.querySelector('#vehiclesModal #VehicleColorHexCode');
+	const VehicleSeatsTotal = document.querySelector('#vehiclesModal #VehicleSeatsTotal');
+	const VehicleSeatsAvailable = document.querySelector('#vehiclesModal #VehicleSeatsAvailable');
+	const submitVehicleButton = document.querySelector('#vehiclesModal #submitVehicleButton');
+	let driverId;
+	let vehicleId;
+	function setDriverIdAndLoadVehiclesModal(button) {
+		setDriverId(button);
+		loadVehiclesModal();
+	}
+	function setDriverId(button) {
+		driverId = button.getAttribute('data-driver-id');
+		vehicleId = null;
+		VehicleVehicleId.setAttribute("value", vehicleId);
+		VehicleDriverId.setAttribute("value", driverId);
+		submitVehicleButton.innerText = "Create Vehicle";
+		submitVehicleButton.setAttribute("onClick", "createVehicle()");
+		submitVehicleButton.classList.replace("btn-info", "btn-primary");
+	}
+	function editVehicle(button) {
+		vehicleId = button.getAttribute('data-vehicle-id');
+		setEditVehicleForm();
+	}
+	function setCreateVehicleForm() {
+		vehicleId = null;
+		VehicleVehicleId.setAttribute("value", vehicleId);
+		VehicleDriverId.setAttribute("value", driverId);
+		VehicleVehicleStatus.setAttribute("value", "Inactive");
+		VehicleYear.setAttribute("value", 2000);
+		VehicleMake.setAttribute("value", "");
+		VehicleModel.setAttribute("value", "");
+		VehicleColor.setAttribute("value", "");
+		VehicleColorHexCode.setAttribute("value", "#999999");
+		VehicleSeatsTotal.setAttribute("value", 5);
+		VehicleSeatsAvailable.setAttribute("value", 2);
+		submitVehicleButton.innerText = "Create Vehicle";
+		submitVehicleButton.setAttribute("onClick", "createVehicle()");
+		submitVehicleButton.classList.replace("btn-info", "btn-primary");
+	}
+	async function setEditVehicleForm() {
+		let editVehicleObj = await fetch(`/api/vehicle/getVehicleById/${vehicleId}`);
+		let editVehicleText = await editVehicleObj.text();
+		let editVehiclesData = JSON.parse(editVehicleText);
+		VehicleVehicleId.setAttribute("value", vehicleId);
+		VehicleDriverId.setAttribute("value", editVehiclesData.driverId);
+		VehicleVehicleStatus.setAttribute("value", editVehiclesData.vehicleStatus);
+		VehicleYear.setAttribute("value", editVehiclesData.year);
+		VehicleMake.setAttribute("value", editVehiclesData.make);
+		VehicleModel.setAttribute("value", editVehiclesData.model);
+		VehicleColor.setAttribute("value", editVehiclesData.color);
+		VehicleColorHexCode.setAttribute("value", editVehiclesData.colorHexCode);
+		VehicleSeatsTotal.setAttribute("value", editVehiclesData.seatsTotal);
+		VehicleSeatsAvailable.setAttribute("value", editVehiclesData.seatsAvailable);
+		submitVehicleButton.innerText = "Update Vehicle";
+		submitVehicleButton.setAttribute("onClick", "updateVehicle()");
+		submitVehicleButton.classList.replace("btn-primary", "btn-info");
+	}
+	async function loadVehiclesModal() {
+		let vehiclesObj = await fetch('/api/vehicle/getVehiclesByDriverId/' + driverId);
+		let vehiclesText = await vehiclesObj.text();
+		let vehiclesData = JSON.parse(vehiclesText);
+		let titleHtml = 'Vehicles';
+		let tBodyHtml = '';
+		console.log(vehiclesData);
+		vehiclesData.forEach((vehicle) => {
+			tBodyHtml += `<tr id="vehicleId${vehicle.vehicleId}">`;
+			tBodyHtml += '<td>' + vehicle.vehicleId + '</td>'
+			tBodyHtml += '<td>' + vehicle.driver.fullName + '</td>';
+			tBodyHtml += '<td>' + vehicle.vehicleStatus + '</td>';
+			if (vehicle.primaryVehicle) {
+				tBodyHtml += `<td><button class="btn btn-sm btn-blue fw-bold" data-vehicle-id="${vehicle.vehicleId}" onclick="unsetPrimaryVehicle(this)">Primary Vehicle</button></td>`
+			} else {
+				tBodyHtml += `<td><button class="btn btn-sm btn-outline-blue" data-vehicle-id="${vehicle.vehicleId}" onclick="setPrimaryVehicle(this)">Make Primary</button></td>`
+			}
+			tBodyHtml += '<td>' + vehicle.year + '</td>';
+			tBodyHtml += '<td>' + vehicle.make + '</td>';
+			tBodyHtml += '<td>' + vehicle.model + '</td>';
+			tBodyHtml += `<td><i class="bi bi-car-front-fill" style="color: ${vehicle.colorHexCode}"></i> ${vehicle.color}</td>`;
+			tBodyHtml += '<td>' + vehicle.seatsTotal + '</td>';
+			tBodyHtml += '<td>' + vehicle.seatsAvailable + '</td>';
+			tBodyHtml += '<td><button class="btn btn-sm btn-teal" data-vehicle-id="' + vehicle.vehicleId + '" onClick="editVehicle(this)">Edit</button></td>';
+			tBodyHtml += '<td><button class="btn btn-sm btn-danger" data-vehicle-id="' + vehicle.vehicleId + '" onClick="deleteVehicle(this)">Delete</button></td>';
+			tBodyHtml += '</tr>';
+		});
+		vehiclesTitle.innerHTML = titleHtml;
+		vehiclesTBody.innerHTML = tBodyHtml;
+	}
+	function createVehicle() {
+		let VehicleData = {
+			vehicleStatus: VehicleVehicleStatus.options[VehicleVehicleStatus.selectedIndex].text,
+			primaryVehicle: false,
+			year: parseInt(VehicleYear.value),
+			make: VehicleMake.value,
+			model: VehicleModel.value,
+			color: VehicleColor.value,
+			colorHexCode: VehicleColorHexCode.value,
+			seatsTotal: parseInt(VehicleSeatsTotal.value),
+			seatsAvailable: parseInt(VehicleSeatsAvailable.value)
+		}
+		fetch(`/api/vehicle/createVehicle/${driverId}`, {
+			method: 'POST',
+			headers: { 'Content-Type': 'application/json' },
+			body: JSON.stringify(VehicleData)
+		})
+			.then((response) => response.json())
+			.then((data) => {
+				console.log('Vehicle created:', data);
+				loadVehiclesModal();
+			})
+			.catch((error) => {
+				console.error('Error creating vehicle:', error);
+			});
+	}
+	function updateVehicle() {
+		let VehicleData = {
+			vehicleId: parseInt(VehicleVehicleId.value),
+			vehicleStatus: VehicleVehicleStatus.options[VehicleVehicleStatus.selectedIndex].text,
+			primaryVehicle: false,
+			year: parseInt(VehicleYear.value),
+			make: VehicleMake.value,
+			model: VehicleModel.value,
+			color: VehicleColor.value,
+			colorHexCode: VehicleColorHexCode.value,
+			seatsTotal: parseInt(VehicleSeatsTotal.value),
+			seatsAvailable: parseInt(VehicleSeatsAvailable.value)
+		}
+		fetch(`/api/vehicle/updateVehicle/${driverId}`, {
+			method: 'PUT',
+			headers: { 'Content-Type': 'application/json' },
+			body: JSON.stringify(VehicleData)
+		})
+			.then((response) => response.json())
+			.then((data) => {
+				console.log('Vehicle updated:', data);
+				loadVehiclesModal();
+			})
+			.catch((error) => {
+				console.error('Error updating vehicle:', error);
+			});
+	}
+	async function deleteVehicle(button) {
+		let vehicleId = button.getAttribute('data-vehicle-id');
+		await fetch(`/api/vehicle/deleteVehicle/${vehicleId}`, {
+			method: 'DELETE'
+		});
+		loadVehiclesModal();
+	}
+	async function setPrimaryVehicle(button) {
+		let vehicleId = button.getAttribute("data-vehicle-id");
+		let vehicleData = {
+			vehicleId: vehicleId
+		}
+		await fetch(`/api/vehicle/setPrimaryVehicle/${vehicleId}`, {
+			method: 'PUT',
+			headers: { 'Content-Type': 'application/json' },
+			body: JSON.stringify(vehicleData)
+		});
+		loadVehiclesModal();
+	}
+	async function unsetPrimaryVehicle(button) {
+		let vehicleId = button.getAttribute("data-vehicle-id");
+		let vehicleData = {
+			vehicleId: vehicleId
+		}
+		await fetch(`/api/vehicle/unsetPrimaryVehicle/${vehicleId}`, {
+			method: 'PUT',
+			headers: { 'Content-Type': 'application/json' },
+			body: JSON.stringify(vehicleData)
+		});
+		loadVehiclesModal();
+	}
+</script>
