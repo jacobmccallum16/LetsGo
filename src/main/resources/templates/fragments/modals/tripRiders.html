@@ -99,19 +99,18 @@
 	}
 	function removeTripRider(button) {
 		let tripRiderId = button.getAttribute('data-trip-rider-id');
-		deleteRow(tripRiderId);
+		// deleteRow(tripRiderId);
 		fetch(`/api/trip-rider/removeById/${tripRiderId}`, {
 			method: 'DELETE'
 		})
-			.then((response) => response.json())
-			.then((data) => {
-				console.log('Rider removed from trip', data);
+			.then((response) => {
+				if (response.status === 204) {
+					console.log("Rider removed successfully");
+				} else {
+					console.log("It probably didn't work", data);
+				}
 				loadTripRidersModal();
 			})
-			.catch((error) => {
-				console.error("It probably worked but there's an error message anyway", error);
-				loadTripRidersModal();
-			});
 	}
 	function deleteRow(rowId) {
 		let query = `#tripRidersModal .modal-body tbody #tripRiderId` + rowId.toString();
