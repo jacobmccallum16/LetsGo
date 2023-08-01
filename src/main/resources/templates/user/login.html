@@ -79,7 +79,7 @@
 </a>
 <a class="navbar-brand bg-indigo-600 rounded-pill px-3 text-info fw-bold fst-italic" th:href="@{/index}">Let's Go!</a>
   <main class="main-block text-center flex-grow-1">
-  <form action="/action_page.php">
+  <form method="post" th:action="@{/user/login}">
     <h1 class="text-primary">Login</h1>
     <div class="formcontainer">
       <hr/>
@@ -88,7 +88,7 @@
         <input type="text" placeholder="Enter email or phone number" id="username" name="username" required>
         <label for="password"><strong>Password</strong></label>
         <input type="password" placeholder="Enter Password" id="password" name="password" required>
-      <button type="submit" href="/" class="button btn btn-lg btn-primary btn-block">Login</button>
+      <button type="submit" class="button btn btn-lg btn-primary btn-block">Login</button>
       <span class="password"><a th:href="@{/user/forgot-password}">Forgot password?</a></span>
       </div>
     </div>
