@@ -21,7 +21,8 @@
 				<th>Times<br>Rated</th>
 				<th>Safety<br>Score</th>
 				<th>Status</th>
-				<th colspan="2">Trips</th>
+				<th>Trips</th>
+				<th>Vehicles</th>
 				<th>Account</th>
 				<th>Edit</th>
 			</tr>
@@ -42,7 +43,7 @@
 					<a th:if="*{driverStatus == 'Banned'}" class="btn btn-sm btn-red active">Banned</a>
 				</td>
 				<td><button type="button" class="btn btn-sm btn-cyan" data-bs-toggle="modal" data-bs-target="#tripsModal" th:data-driver-id="*{driverId}" onclick="loadTripsModal(this)">View Trips (modal)</button></td>
-				<td><a class="btn btn-sm btn-outline-cyan" th:href="@{/admin/trips(driverId=*{driverId})}">View Trips (link)</a></td>
+				<td><button type="button" class="btn btn-sm btn-teal" data-bs-toggle="modal" data-bs-target="#vehiclesModal" th:data-driver-id="*{driverId}" onclick="setDriverIdAndLoadVehiclesModal(this)">Vehicles</button></td>
 				<td><a class="btn btn-sm btn-outline-primary" th:href="@{/admin/viewAccount(id=*{user.userId})}">View Account</a></td>
 				<td><a class="btn btn-sm btn-outline-teal" th:href="@{/admin/drivers/editDriver(id=*{driverId})}">Edit Driver</a></td>
 			</tr>
@@ -120,6 +121,6 @@
 		modalTBody.innerHTML = tripsHtml;
 	}
 </script>
-
+<th:block th:insert="~{fragments/modals/vehicles}"></th:block>
 </body>
 </html>
