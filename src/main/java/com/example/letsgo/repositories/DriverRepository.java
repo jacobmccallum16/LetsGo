@@ -18,4 +18,5 @@ public interface DriverRepository extends JpaRepository<Driver,Integer> {
     List<Driver> findDriversByIsActive(Boolean bool);
     List<Driver> findDriversByDriverStatus(String driverStatus);
     List<Driver> findDriversByDriverStatusOrDriverStatus(String driverStatus1, String driverStatus2);
+    Boolean existsByDriverId(Integer driverId);
 }

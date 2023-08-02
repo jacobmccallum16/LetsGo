@@ -14,4 +14,5 @@ public interface TripRiderRepository extends JpaRepository<TripRider, Integer> {
     List<TripRider> findTripRidersByRiderId(Integer riderId);
     List<TripRider> findTripRidersByFullName(String fullName);
     void deleteAllByTripId(Integer tripId);
+    Integer countByTripId(Integer tripId);
 }

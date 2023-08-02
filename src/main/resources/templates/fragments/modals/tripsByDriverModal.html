@@ -29,20 +29,20 @@
 	const tripsByDriverModalTitle = document.querySelector('#tripsByDriverModal h1.modal-title');
 	const tripsByDriverModalTBody = document.querySelector("#tripsByDriverModal .modal-body tbody");
 	const tripsByDriverStatusStyle = {
-		Completed: "btn-dark", Planned: "btn-teal", Requested: "btn-indigo", Cancelled: "btn-red"
+		Completed: "btn-dark", Scheduled: "btn-green", Planned: "btn-teal", Requested: "btn-indigo", Cancelled: "btn-red"
 	}
-	const months = [,"Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
-	const days = [,"1st", "2nd", "3rd", "4th", "5th", "6th", "7th", "8th", "9th", "10th",
+	let months = [,"Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
+	let days = [,"1st", "2nd", "3rd", "4th", "5th", "6th", "7th", "8th", "9th", "10th",
 		"11th", "12th", "13th", "14th", "15th", "16th", "17th", "18th", "19th", "20th",
 		"21st", "22nd", "23rd", "24th", "25th", "26th", "27th", "28th", "29th", "30th", "31st"];
-	const hours = ["12", "1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11",
+	let hours = ["12", "1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11",
 		"12", "1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11"]
-	const minutes = ["00", "01", "02", "03", "04", "05", "06", "07", "08", "09", "10", "11", "12", "13", "14",
+	let minutes = ["00", "01", "02", "03", "04", "05", "06", "07", "08", "09", "10", "11", "12", "13", "14",
 		"15", "16", "17", "18", "19", "20", "21", "22", "23", "24", "25", "26", "27", "28", "29",
 		"30", "31", "32", "33", "34", "35", "36", "37", "38", "39", "40", "41", "42", "43", "44",
 		"45", "46", "47", "48", "49", "50", "51", "52", "53", "54", "55", "56", "57", "58", "59"]
-	const suffix = [" am", " am", " am", " am", " am", " am", " am", " am", " am", " am", " am", " am",
-		" pm", " pm", " pm", " pm", " pm", " pm", " pm", " pm", " pm", " pm", " pm", " pm"];
+	let suffix = [" a.m.", " a.m.", " a.m.", " a.m.", " a.m.", " a.m.", " a.m.", " a.m.", " a.m.", " a.m.", " a.m.", " a.m.",
+		" p.m.", " p.m.", " p.m.", " p.m.", " p.m.", " p.m.", " p.m.", " p.m.", " p.m.", " p.m.", " p.m.", " p.m."];
 	async function loadTripsByDriverModal(button) {
 		let driverId = button.getAttribute('data-driver-id');
 		let tripsByDriverObj = await fetch('/api/getTripsByDriver/' + driverId);
@@ -59,8 +59,8 @@
 			tripsHtml += '<td><a class="btn btn-sm ' + tripsByDriverStatusStyle[trip.tripStatus] + ' active">' + trip.tripStatus + '</a></td>';
 			tripsHtml += '</tr>';
 			tripsHtml += '<tr>';
-			tripsHtml += '<td>' + hours[trip.departureTime[0]] + ':' + minutes[trip.departureTime[1]] + suffix[trip.departureTime[0]] + ' on ' + months[trip.date[1]] + ' ' + days[trip.date[2]] + ', ' + trip.date[0] + '</td>';
-			tripsHtml += '<td>' + hours[trip.arrivalTime[0]] + ':' + minutes[trip.arrivalTime[1]] + suffix[trip.arrivalTime[0]] + ' on ' + months[trip.date[1]] + ' ' + days[trip.date[2]] + ', ' + trip.date[0] + '</td>';
+			tripsHtml += `<td>${months[trip.departureTime[1]]} ${days[trip.departureTime[2]]},<br>${hours[trip.departureTime[3]]}:${minutes[trip.departureTime[4]]} ${suffix[trip.departureTime[3]]}</td>`;
+			tripsHtml += `<td>${months[trip.arrivalTime[1]]} ${days[trip.arrivalTime[2]]},<br>${hours[trip.arrivalTime[3]]}:${minutes[trip.arrivalTime[4]]} ${suffix[trip.arrivalTime[3]]}</td>`;
 			tripsHtml += '<td><a class="btn btn-sm btn-cyan" href="/admin/trips/editTrip?id=' + trip.tripId + '">Edit</a></td>';
 			tripsHtml += '</tr>';
 		});

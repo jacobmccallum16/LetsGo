@@ -48,6 +48,7 @@ public class Rider {
     public static void sortByFullName(List<Rider> riders) {
         riders.sort(Comparator.comparing(Rider::getLastName).thenComparing(Rider::getFirstName));
     }
+    public Driver getDriver() { return getUser().getDriver(); }
 
     public Boolean toggleIsActive() {
         if (!riderStatus.equals("Banned")) {

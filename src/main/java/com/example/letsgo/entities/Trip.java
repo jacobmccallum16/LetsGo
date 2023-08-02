@@ -1,6 +1,5 @@
 package com.example.letsgo.entities;
 
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -18,10 +17,10 @@ import java.util.Set;
 @AllArgsConstructor
 @NoArgsConstructor
 public class Trip {
-    @Id @GeneratedValue(strategy = GenerationType.IDENTITY) public Integer tripId;
-    @ManyToOne(fetch = FetchType.LAZY) @JoinColumn(name = "route_id") @JsonIgnoreProperties({"hibernateLazyInitializer"}) public Route route;
-    @ManyToOne(fetch = FetchType.LAZY) @JoinColumn(name = "driver_id") @JsonIgnoreProperties({"hibernateLazyInitializer"}) public Driver driver;
-    @ManyToOne(fetch = FetchType.LAZY) @JoinColumn(name = "vehicle_id") @JsonIgnoreProperties({"hibernateLazyInitializer"}) public Vehicle vehicle;
+    @Id @GeneratedValue(strategy = GenerationType.IDENTITY) private Integer tripId;
+    @ManyToOne(fetch = FetchType.LAZY) @JoinColumn(name = "route_id") private Route route;
+    @ManyToOne(fetch = FetchType.LAZY) @JoinColumn(name = "driver_id") private Driver driver;
+    @ManyToOne(fetch = FetchType.LAZY) @JoinColumn(name = "vehicle_id") private Vehicle vehicle;
 //    @OneToMany(mappedBy = "trip", cascade = CascadeType.ALL, fetch = FetchType.LAZY) private List<TripTransaction> tripTransaction;
     @OneToMany(mappedBy = "trip", cascade = CascadeType.ALL, fetch = FetchType.LAZY) public List<RiderRating> riderRatings;
     @OneToMany(mappedBy = "trip", cascade = CascadeType.ALL, fetch = FetchType.LAZY) public List<DriverRating> driverRatings;
@@ -51,10 +50,10 @@ public class Trip {
     public Integer getRouteId() {
         return getRoute().getRouteId();
     }
+    public Integer getDriverId() { return getDriver().getDriverId(); }
     public Integer getDriverRiderId() { return getDriver().getRiderId(); }
     public void calculateArrivalTime() {
-        long duration = (long) route.routeDuration;
-        arrivalTime = departureTime.plusMinutes(duration);
+        arrivalTime = departureTime.plusMinutes(tripDurationActual.longValue());
         return;
     }
     public String printDateTime(LocalDateTime localDateTime) {

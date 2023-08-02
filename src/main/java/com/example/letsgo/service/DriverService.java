@@ -21,7 +21,7 @@ public class DriverService {
         if (!driverId.isEmpty()) {
             drivers = driverRepository.findDriversByDriverId(Integer.parseInt(driverId));
         } else {
-            drivers = driverRepository.findAll();
+            drivers = driverRepository.findDriversByIsActive(true);
         }
         drivers.sort(Comparator.comparing(Driver::getLastName).thenComparing(Driver::getFirstName));
         return drivers;
