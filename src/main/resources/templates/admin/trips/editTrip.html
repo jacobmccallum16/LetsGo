@@ -20,7 +20,13 @@
 						<form id="form" class="row g-3 needs-validation" novalidate method="post" th:action="@{/admin/trips/editTrip}" th:object="${trip}">
 <!--							<div class="col-4"><img th:src="@{${'/routeImages/' + trip.getRoute().routeImageSource}}"></div>-->
 							<div class="col-4" th:insert="~{fragments/inputs :: divFloatingDisabledData('number', 'tripId', 'tripId', 'Trip ID')}"></div>
+							<div class="col-4" th:insert="~{fragments/inputs :: divFloatingDisabledUnit('number', 'tripDistanceEstimated', 'tripDistanceEstimated', 'Distance estimated', 'km')}"></div>
+							<div class="col-4" th:insert="~{fragments/inputs :: divFloatingDisabledUnit('number', 'tripDurationEstimated', 'tripDurationEstimated', 'Duration estimated', 'min')}"></div>
 							<div class="col-4" th:insert="~{fragments/inputs :: divFloatingDisabledData('number', 'route.routeId', 'route.routeId', 'Route ID')}"></div>
+							<div class="col-4" th:insert="~{fragments/inputs :: divFloatingDisabledUnit('number', 'tripDistanceActual', 'tripDistanceActual', 'Disance actual', 'km')}"></div>
+							<div class="col-4" th:insert="~{fragments/inputs :: divFloatingDisabledUnit('number', 'tripDurationActual', 'tripDurationActual', 'Duration actual', 'min')}"></div>
+							<div class="col-4" th:insert="~{fragments/inputs :: divFloatingDisabled('number', 'tripImageSource', 'tripImageSource', 'Trip Image URL')}"></div>
+							<div class="col-4"></div>
 							<div class="col-4">
 								<div class="form-floating">
 									<select id="tripStatus" class="form-select" th:field="*{tripStatus}" required>
@@ -32,13 +38,10 @@
 									<label for="tripStatus">Trip Status</label>
 								</div>
 							</div>
-							<div class="col-4" th:insert="~{fragments/inputs :: divFloatingDisabledUnit('number', 'route.routeDistance', 'route.routeDistance', 'Distance', 'km')}"></div>
-							<div class="col-4" th:insert="~{fragments/inputs :: divFloatingDisabledUnitData('number', 'route.routeDuration', 'route.routeDuration', 'Duration', 'min')}"></div>
-							<div class="col-4" th:insert="~{fragments/inputs :: divFloatingRequiredEdit('date', 'date', 'date', 'Date')}"></div>
 							<div class="col-8" th:insert="~{fragments/inputs :: divFloatingDisabled('text', 'route.locationStart', 'route.locationStart', 'Start Location')}"></div>
-							<div class="col-4" th:insert="~{fragments/inputs :: divFloatingRequiredEdit('time', 'departureTime', 'departureTime', 'Departure Time')}"></div>
+							<div class="col-4" th:insert="~{fragments/inputs :: divFloatingRequiredEdit('datetime-local', 'departureTime', 'departureTime', 'Departure Time')}"></div>
 							<div class="col-8" th:insert="~{fragments/inputs :: divFloatingDisabled('text', 'route.locationEnd', 'route.locationEnd', 'Destination')}"></div>
-							<div class="col-4" th:insert="~{fragments/inputs :: divFloatingDisabled('time', 'arrivalTime', 'arrivalTime', 'Arrival Time')}"></div>
+							<div class="col-4" th:insert="~{fragments/inputs :: divFloatingDisabled('datetime-local', 'arrivalTime', 'arrivalTime', 'Arrival Time')}"></div>
 							<div class="col-4">
 								<div class="form-floating">
 									<select id="driver" class="form-select" th:field="*{driver.driverId}" required>

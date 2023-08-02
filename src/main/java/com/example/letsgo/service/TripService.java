@@ -51,4 +51,13 @@ public class TripService {
         return title;
     }
 
+    public void tripCalculations(Integer tripId) {
+        Trip trip = tripRepository.findTripByTripId(tripId);
+        Route route = routeRepository.findRouteByRouteId(trip.getRoute().getRouteId());
+        trip.setTripDistanceEstimated(route.getRouteDistance());
+        trip.setTripDistanceActual(route.getRouteDistance());
+        trip.setTripDurationEstimated(route.getRouteDuration());
+        trip.setTripDurationActual(route.getRouteDuration());
+        tripRepository.save(trip);
+    }
 }

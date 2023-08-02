@@ -30,9 +30,9 @@
 				<td><img th:src="@{${'/routeImages/' + trip.getRoute().routeImageSource}}" height="100px"></td>
 				<td th:text="*{tripId}"></td>
 				<td th:text="*{getRoute().locationStart}"></td>
-				<td th:text="*{date + ' ' + (departureTime != null ? departureTime.toString() : 'null')}"></td>
+				<td><span th:text="*{(printDate(departureTime) ?: _)}"></span><br><span th:text="*{(printTime(departureTime) ?: _)}"></span></td>
 				<td th:text="*{getRoute().locationEnd}"></td>
-				<td th:text="*{date + ' ' + (arrivalTime != null ? arrivalTime.toString() : 'null')}"></td>
+				<td><span th:text="*{(printDate(arrivalTime) ?: _)}"></span><br><span th:text="*{(printTime(arrivalTime) ?: _)}"></span></td>
 				<td>
 					<a th:if="*{tripStatus == 'Completed'}" class="btn btn-sm btn-dark active">Completed</a>
 					<a th:if="*{tripStatus == 'Planned'}" class="btn btn-sm btn-teal active">Planned</a>
@@ -49,11 +49,13 @@
 				<td>
 					<a class="btn btn-sm btn-red" th:href="@{/admin/trips/deleteTrip(id=*{tripId})}">Delete</a>
 				</td>
+				<td><a class="btn btn-sm btn-pink" th:data-trip-id="*{tripId}" onclick="tripCalculations(this)">Run calculations</a></td>
 			</tr>
 			</tbody>
 		</table>
+		<th:block th:insert="~{fragments/modals/tripRidersModal}"></th:block>
+		<th:block th:insert="~{fragments/scripts/tripCalculations}"></th:block>
 	</main>
 </div>
-<th:block th:insert="~{fragments/modals/tripRidersModal}"></th:block>
 </body>
 </html>
