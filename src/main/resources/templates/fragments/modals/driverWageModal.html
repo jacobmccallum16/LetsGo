@@ -1,0 +1,76 @@
+<div class="modal fade" id="driverWageModal" tabindex="-1" aria-labelledby="driverWageModalLabel" aria-hidden="true">
+	<div class="modal-dialog modal-lg modal-dialog-centered modal-dialog-scrollable">
+		<div class="modal-content">
+			<div class="modal-header">
+				<h1 class="modal-title fs-5" id="driverWageModalLabel">Driver Wage</h1>
+				<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+			</div>
+			<div class="modal-body">
+				<table class="table table-hover table-sm align-middle">
+					<thead class="table-dark">
+						<tr>
+							<th></th>
+							<th></th>
+							<th>Current</th>
+							<th></th>
+							<th>Max</th>
+						</tr>
+					</thead>
+					<tbody class="table-group-divider">
+					</tbody>
+					<tfoot class="table-indigo">
+						<tr>
+							<td colspan="2">Pre-trip Quote:</td>
+							<td id="preTripQuote">$0.00</td>
+							<td></td>
+							<td id="preTripQuoteMax">$0.00</td>
+						</tr>
+					</tfoot>
+				</table>
+				<hr>
+				<div class="row g-3">
+					<div class="col-8">
+						<div class="form-floating">
+							<select id="tripRiderSelect" class="form-select" name="tripRider">
+								<option value="" selected>-- None --</option>
+								<option value=""></option>
+							</select>
+							<label for="tripRiderSelect">Add Rider</label>
+						</div>
+					</div>
+					<div class="col-4">
+						<button id="addTripRiderButton" onclick="addTripRider()" class="btn btn-primary w-100 h-100">Add Rider</button>
+					</div>
+				</div>
+			</div>
+			<div class="modal-footer">
+				<button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+			</div>
+		</div>
+	</div>
+</div>
+<script>
+	let driverWageModalTitle = document.querySelector('#driverWageModal h1.modal-title');
+	let driverWageModalTBody = document.querySelector("#driverWageModal .modal-body tbody");
+	let tripId;
+	function setTripId(button) {
+		tripId = button.getAttribute('data-trip-id');
+	}
+	async function loadDriverWageModal(button) {
+		setTripId(button);
+		let driverTripTransactionObj = await fetch(`/api/trip-transactions/${tripId}/getDriverTripTransaction`);
+		let driverTripTransactionText = await driverTripTransactionObj.text();
+		let data = JSON.parse(driverTripTransactionText);
+		let titleHtml = `Wage for this trip`;
+		let tBodyHtml = '';
+		tBodyHtml += `<tr> <td>Time</td> <td>${data.durationEstimate} min</td> <td>$${data.durationSubtotal}</td> <td></td><td></td> </tr>`;
+		tBodyHtml += `<tr> <td>Time</td> <td>${data.distanceEstimate} km</td> <td>$${data.distanceSubtotal}</td> <td></td><td></td> </tr>`;
+		tBodyHtml += `<tr class="bg-secondary"> <td colspan="2">Subtotal</td> <td>$${data.baseRateSubtotal}</td> <td></td><td></td> </tr>`;
+		tBodyHtml += `<tr class="text-green-800"> <td>Multipassenger Bonus</td> <td>+${data.multiPassengerMultiplier * 100}%</td> <td>$${data.multiPassengerBonus}</td> <td>+${data.multiPassengerMultiplierMax * 100}%</td> <td>$${data.multiPassengerBonusMax}</td> </tr>`;
+		tBodyHtml += `<tr class="bg-secondary"> <td colspan="2">Total before Tip</td> <td>$${data.preTripQuote * 100}%</td> <td></td> <td>$${data.preTripQuoteMax}</td> </tr>`;
+		driverWageModalTitle.innerHTML = titleHtml;
+		driverWageModalTBody.innerHTML = tBodyHtml;
+		document.querySelector("#driverWageModal .modal-body #preTripQuote").innerHTML = `$${data.preTripQuote}`;
+		document.querySelector("#driverWageModal .modal-body #preTripQuoteMax").innerHTML = `$${data.preTripQuoteMax}`;
+	}
+</script>

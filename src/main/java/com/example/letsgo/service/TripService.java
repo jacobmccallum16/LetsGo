@@ -15,6 +15,7 @@ public class TripService {
     @Autowired private VehicleRepository vehicleRepository;
     @Autowired private RiderRepository riderRepository;
     @Autowired private TripRiderRepository tripRiderRepository;
+    @Autowired private TripTransactionService tripTransactionService;
 
     public List<Trip> getTripsByRouteId(Integer routeId) {
         Route route = routeRepository.findRouteByRouteId(routeId);
@@ -72,6 +73,7 @@ public class TripService {
             trip.setDriver(null);
         }
         updateTrip(trip);
+        tripTransactionService.createDriverTripTransaction(trip);
     }
     public void saveTrip(Trip trip) {
         tripRepository.save(trip);

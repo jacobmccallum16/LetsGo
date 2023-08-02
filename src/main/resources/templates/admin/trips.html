@@ -40,7 +40,10 @@
 					<div th:if="*{tripStatus == 'Requested'}" class="btn btn-sm btn-indigo active">Requested</div>
 					<div th:if="*{tripStatus == 'Cancelled'}" class="btn btn-sm btn-red active">Cancelled</div>
 				</td>
-				<td th:text="*{(driver != null ? driver.getFullName() : '—')}"></td>
+				<td>
+					<span th:text="*{(driver != null ? driver.getFullName() : '—')}"></span><br>
+					<button type="button" class="btn btn-sm btn-secondary" data-bs-toggle="modal" data-bs-target="#driverWageModel" th:data-trip-id="*{tripId}" onclick="loadDriverWageModal(this)">View Wage</button>
+				</td>
 				<td>
 					<span th:text="*{passengers + ' of ' + passengersMax}"></span><br>
 					<button type="button" class="btn btn-sm btn-teal" data-bs-toggle="modal" data-bs-target="#tripRidersModal" th:data-trip-id="*{tripId}" onclick="setTripIdAndLoadTripRidersModal(this)">Riders</button>
@@ -54,6 +57,7 @@
 			</tr>
 			</tbody>
 		</table>
+		<th:block th:insert="~{fragments/modals/driverWageModal}"></th:block>
 		<th:block th:insert="~{fragments/modals/tripRidersModal}"></th:block>
 		<th:block th:insert="~{fragments/scripts/tripCalculations}"></th:block>
 	</main>
