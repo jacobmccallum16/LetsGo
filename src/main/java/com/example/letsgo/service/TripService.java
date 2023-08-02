@@ -15,7 +15,8 @@ public class TripService {
     @Autowired private VehicleRepository vehicleRepository;
     @Autowired private RiderRepository riderRepository;
     @Autowired private TripRiderRepository tripRiderRepository;
-    @Autowired private TripTransactionService tripTransactionService;
+    @Autowired DriverTripTransactionRepository driverTripTransactionRepository;
+    @Autowired RiderTripTransactionRepository riderTripTransactionRepository;
 
     public List<Trip> getTripsByRouteId(Integer routeId) {
         Route route = routeRepository.findRouteByRouteId(routeId);
@@ -73,7 +74,7 @@ public class TripService {
             trip.setDriver(null);
         }
         updateTrip(trip);
-        tripTransactionService.createDriverTripTransaction(trip);
+        createDriverTripTransaction(trip);
     }
     public void saveTrip(Trip trip) {
         tripRepository.save(trip);
@@ -114,4 +115,55 @@ public class TripService {
         }
         return drivers;
     }
+
+    public DriverTripTransaction getDriverTripTransactionByTripId(Integer tripId) {
+        Trip trip = tripRepository.findTripByTripId(tripId);
+        return driverTripTransactionRepository.findByTrip(trip);
+    }
+    public void createDriverTripTransaction(Trip trip) {
+        Driver driver = trip.getDriver();
+        DriverTripTransaction driverTripTransaction;
+        if (driverTripTransactionRepository.existsByTrip(trip)) {
+            driverTripTransaction = driverTripTransactionRepository.findByTrip(trip);
+        } else {
+            driverTripTransaction = new DriverTripTransaction(trip, driver);
+        }
+        driverTripTransaction.preTripCalculations(driver);
+        save(driverTripTransaction);
+    }
+    public void createRiderTripTransaction(TripRider tripRider) {
+        Trip trip = tripRepository.findTripByTripId(tripRider.getTripId());
+        Rider rider = riderRepository.findRiderByRiderId(tripRider.getRiderId());
+        RiderTripTransaction riderTripTransaction;
+        if (riderTripTransactionRepository.existsByTripAndRiderId(trip, rider.getRiderId())) {
+            riderTripTransaction = riderTripTransactionRepository.findByTripAndRiderId(trip, rider.getRiderId());
+        } else {
+            riderTripTransaction = new RiderTripTransaction(trip, rider);
+        }
+        riderTripTransaction.preTripCalculations(rider);
+        save(riderTripTransaction);
+    }
+    public void deleteRiderTripTransaction(Integer tripRiderId) {
+        TripRider tripRider = tripRiderRepository.findTripRiderByTripRiderId(tripRiderId);
+        Trip trip = tripRepository.findTripByTripId(tripRider.getTripId());
+        Rider rider = riderRepository.findRiderByRiderId(tripRider.getRiderId());
+        RiderTripTransaction riderTripTransaction = riderTripTransactionRepository.findByTripAndRiderId(trip, rider.getRiderId());
+        riderTripTransactionRepository.delete(riderTripTransaction);
+    }
+
+    public void save(DriverTripTransaction driverTripTransaction) {
+        driverTripTransactionRepository.save(driverTripTransaction);
+    }
+    public void save(RiderTripTransaction riderTripTransaction) {
+        riderTripTransactionRepository.save(riderTripTransaction);
+    }
+    public void saveAll(List<RiderTripTransaction> riderTripTransactions) {
+        riderTripTransactionRepository.saveAll(riderTripTransactions);
+    }
+    public void saveAll(DriverTripTransaction driverTripTransaction, List<RiderTripTransaction> riderTripTransactions) {
+        driverTripTransactionRepository.save(driverTripTransaction);
+        riderTripTransactionRepository.saveAll(riderTripTransactions);
+    }
+
+
 }

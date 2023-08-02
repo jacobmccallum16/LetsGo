@@ -46,25 +46,26 @@ public class RiderTripTransaction {
     @Column(columnDefinition = "TIMESTAMP DEFAULT CURRENT_TIMESTAMP") public Timestamp createdAt = new Timestamp(System.currentTimeMillis());
     @Column(columnDefinition = "TIMESTAMP DEFAULT CURRENT_TIMESTAMP") public Timestamp updatedAt = new Timestamp(System.currentTimeMillis());
 
-
     public RiderTripTransaction(Trip trip, Rider rider) {
         this.trip = trip;
-        riderId = rider.getRiderId();
-        driverId = trip.getDriverId();
+        riderId = rider.riderId;
+        preTripCalculations(rider);
+    }
 
-        riderTripTransactionStatus = "Potential";
 
-        riderSafetyScore = Math.round(rider.getRiderSafetyScore() * 10) / 10f;
+    public void preTripCalculations(Rider rider) {
+        riderTripTransactionStatus = trip.getTripStatus();
 
-//        if (riderSafetyScore >= 4) {
-//            baseRateMultiplier = BigDecimal.valueOf(0.9);
-//        } else if (riderSafetyScore >= 3 || riderSafetyScore == 0) {
-//            baseRateMultiplier = BigDecimal.valueOf(1);
-//        } else if (riderSafetyScore >= 2.5) {
-//            baseRateMultiplier = BigDecimal.valueOf(1.1);
-//        } else {
-//            baseRateMultiplier = BigDecimal.valueOf(1.2);
-//        }
+        passengers = trip.getPassengers();
+        if (trip.getDriver() != null) {
+            driverId = trip.getDriverId();
+            passengersMax = trip.getPassengersMax();
+        } else {
+            driverId = null;
+            passengersMax = 6;
+        }
+        riderSafetyScore = rider.getRiderSafetyScore();
+
         baseRateMultiplier = BigDecimal.ONE;
 
         baseRateDistance = BigDecimal.valueOf(0.5);
@@ -75,22 +76,19 @@ public class RiderTripTransaction {
         durationEstimated = trip.getTripDurationEstimated();
         durationActual = trip.getTripDurationActual();
 
-        passengers = trip.getPassengers();
-        passengersMax = trip.getPassengersMax();
-
         if (passengers == 1) {
-            multiPassengerMultiplier = BigDecimal.valueOf(1);
+            multiPassengerMultiplier = BigDecimal.valueOf(0);
         } else if (passengers < 7) {
-            multiPassengerMultiplier = BigDecimal.valueOf( 1 + (passengers * 0.05) );
+            multiPassengerMultiplier = BigDecimal.valueOf(passengers * 0.05);
         } else {
-            multiPassengerMultiplier = BigDecimal.valueOf(1.3);
+            multiPassengerMultiplier = BigDecimal.valueOf(0.3);
         }
         if (passengersMax == 1) {
-            multiPassengerMultiplierMax = BigDecimal.valueOf(1);
+            multiPassengerMultiplierMax = BigDecimal.valueOf(0);
         } else if (passengersMax < 7) {
-            multiPassengerMultiplierMax = BigDecimal.valueOf( 1 - (passengersMax * 0.05) );
+            multiPassengerMultiplierMax = BigDecimal.valueOf(passengersMax * 0.05);
         } else {
-            multiPassengerMultiplierMax = BigDecimal.valueOf(0.7);
+            multiPassengerMultiplierMax = BigDecimal.valueOf(0.3);
         }
 
         distanceSubtotal = BigDecimal.valueOf(((double) distanceEstimated * 0.5) + ((double) distanceActual * 0.5)).multiply(baseRateDistance).multiply(baseRateMultiplier);
@@ -100,12 +98,12 @@ public class RiderTripTransaction {
         multiPassengerDiscount = baseRateSubtotal.multiply(multiPassengerMultiplier);
         multiPassengerDiscountMax = baseRateSubtotal.multiply(multiPassengerMultiplierMax);
 
-        preTripQuote = baseRateSubtotal.add(multiPassengerDiscount);
-        preTripQuoteMax = baseRateSubtotal.add(multiPassengerDiscountMax);
+        preTripQuote = baseRateSubtotal.subtract(multiPassengerDiscount);
+        preTripQuoteMax = baseRateSubtotal.subtract(multiPassengerDiscountMax);
 
-        tripTotal = BigDecimal.ZERO;
-        tipAmount = BigDecimal.ZERO;
-        finalTotal = BigDecimal.ZERO;
+        tripTotal = BigDecimal.valueOf(0);
+        tipAmount = BigDecimal.valueOf(0);
+        finalTotal = BigDecimal.valueOf(0);
     }
 
 

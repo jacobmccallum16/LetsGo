@@ -72,4 +72,5 @@ public class Trip {
     public static void sortByRouteId(List<Trip> trips) {
         trips.sort(Comparator.comparing(Trip::getRouteId));
     }
+
 }

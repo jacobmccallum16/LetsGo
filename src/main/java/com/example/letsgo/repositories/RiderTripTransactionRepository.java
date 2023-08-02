@@ -11,4 +11,7 @@ import java.util.List;
 public interface RiderTripTransactionRepository extends JpaRepository<RiderTripTransaction, Integer> {
     List<RiderTripTransaction> findAllByTrip(Trip trip);
     RiderTripTransaction findByRiderTripTransactionId(Integer riderTripTransactionId);
+    RiderTripTransaction findByTripAndRiderId(Trip trip, Integer riderId);
+    Boolean existsByTripAndRiderId(Trip trip, Integer riderId);
+    void deleteByTripAndRiderId(Trip trip, Integer riderId);
 }
