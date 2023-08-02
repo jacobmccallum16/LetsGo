@@ -17,7 +17,7 @@ import java.util.Set;
 @Entity
 @Inheritance(strategy = InheritanceType.JOINED)
 public class User {
-    @Id @GeneratedValue(strategy = GenerationType.IDENTITY) public Integer userId;
+    @Id @GeneratedValue(strategy = GenerationType.IDENTITY) private Integer userId;
     @OneToOne(mappedBy = "user", cascade = CascadeType.ALL, fetch = FetchType.LAZY) @JsonIgnore public Rider rider;
     @OneToOne(mappedBy = "user", cascade = CascadeType.ALL, fetch = FetchType.LAZY) @JsonIgnore public Driver driver;
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, fetch = FetchType.LAZY) public List<TripTransaction> tripTransaction;
@@ -77,7 +77,7 @@ public class User {
 
     public Boolean updateIsActive() {
         if (!userStatus.equals("Banned")) {
-            if (rider.isActive || driver.isActive) {
+            if (rider.isActive || driver.getIsActive()) {
                 isActive = true;
                 userStatus = "Active";
             } else {

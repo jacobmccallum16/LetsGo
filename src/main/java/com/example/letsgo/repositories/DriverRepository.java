@@ -15,4 +15,7 @@ public interface DriverRepository extends JpaRepository<Driver,Integer> {
     List<Driver> findActiveDriversSortedByName();
     @Query("SELECT d FROM Driver d JOIN d.user u WHERE d.isActive = true ORDER BY u.lastName, u.firstName")
     List<Driver> findIsActiveDriversSortedByName();
+    List<Driver> findDriversByIsActive(Boolean bool);
+    List<Driver> findDriversByDriverStatus(String driverStatus);
+    List<Driver> findDriversByDriverStatusOrDriverStatus(String driverStatus1, String driverStatus2);
 }
