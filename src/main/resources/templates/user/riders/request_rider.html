@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <title>Let's Go! - Rider Request</title>
+  <th:block th:insert="~{fragments/scripts}"></th:block>
+  <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.5.0/css/all.css" integrity="sha384-B4dIYHKNBt8Bc12p+WXckhzcICo0wtJAoU8YZTY5qE0Id1GSseTk6S+L3BlXeVIU" crossorigin="anonymous">
+  <style>
+    html, body {
+      min-height: 100%;
+    }
+    body {
+      margin-top:20px;
+      background-color:#f2f6fc;
+    }
+    body, div, input, select, p {
+      padding: 0;
+      margin: 0;
+      outline: none;
+      font-size: 14px;
+      color: #666;
+    }
+    .logo {
+      width: 100px;
+      height: 100px;
+      margin-top: 20px;
+      margin-left: 20px;
+    }
+    .container {
+      justify-content: center;
+      align-items: center;
+      margin: 20px;
+      padding: 50px;
+      width: 100%;
+      border-radius: 5px;
+      background: #fff;
+      box-shadow: 0 0 20px 0 #333;
+    }
+    input {
+      width: 200px;
+    }
+    .help {
+      text-align: center;
+      font-size: small;
+    }
+  </style>
+</head>
+<body>
+<a th:href="@{/user/riders/home_rider}">
+  <img th:src="@{/company-logo.png}" alt="Let's Go! Logo" class="logo">
+</a>
+<a class="navbar-brand bg-indigo-600 rounded-pill px-3 text-info fw-bold fst-italic" th:href="@{/user/riders/home_rider}">Let's Go!</a>
+<div class="d-flex flex-fill">
+  <th:block th:insert="~{fragments/sidebar_rider}"></th:block>
+  <div class="container">
+    <div class="col-sm-3 col-md-4 offset-md-1 mobile">
+      <div class="py-4 d-flex justify-content-end">
+        <h6><a th:href="@{/user/riders/home_rider}">Cancel and return to website</a></h6>
+      </div>
+      <div class="bg-light rounded d-flex flex-column">
+        <div class="p-2 ml-3"><h4>Trip Summary</h4></div>
+        <div class="p-2 d-flex">
+          <div class="col-8">Base fare</div>
+          <div class="ml-auto">$8.77</div>
+        </div>
+        <div class="p-2 d-flex">
+          <div class="col-8">Distance</div>
+          <div class="ml-auto">$3.00</div>
+        </div>
+        <div class="p-2 d-flex">
+          <div class="col-8">Time</div>
+          <div class="ml-auto">$1.00</div>
+        </div>
+        <div class="p-2 d-flex">
+          <div class="col-8">Surcharge</div>
+          <div class="ml-auto">$1.00</div>
+        </div>
+        <div class="border-top px-4 mx-3">
+        </div>
+        <div class="p-2 d-flex pt-3">
+          <div class="col-8">GST</div>
+          <div class="ml-auto">$0.90</div>
+        </div>
+        <div class="border-top px-4 mx-3"></div>
+        <div class="border-top px-4 mx-3"></div>
+        <div class="p-2 d-flex pt-3">
+          <div class="col-8"><b>Total</b></div>
+          <div class="ml-auto"><b>$14.67</b></div>
+        </div>
+      </div>
+    </div>
+    <br/>
+    <input type="text" name="discount" id="discount" placeholder="Enter your discount code here">
+    <button type="button">Apply</button>
+    <br/><br/>
+    <div class="d-flex align-items-center justify-content-between px-4">
+      <div class="d-flex align-items-center">
+        <i class="fab fa-cc-visa fa-2x cc-color-visa"></i>
+        <div class="ms-4">
+          <div class="small">Visa ending in 1234</div>
+          <div class="text-xs text-muted">Expires 12/2024</div>
+          <a th:href="@{payment_method_rider}">Edit</a>
+        </div>
+      </div>
+    </div>
+    <br/><br/>
+    <button class="btn btn-primary" th:href="@{checkout_rider}">Confirm</button>
+    <br/><br/>
+    <div class="help">
+      <p>Need help? Contact us at customerservice@letsgo.com</p>
+    </div>
+  </div>
+</div>
+</body>
+</html>
