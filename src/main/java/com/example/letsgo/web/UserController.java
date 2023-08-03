@@ -57,6 +57,16 @@ public class UserController {
         return "/user/riders/profile_rider";
     }
 
+    @GetMapping("/user/riders/request_rider")
+    public String requestRider() {
+        return "/user/riders/request_rider";
+    }
+
+    @GetMapping("/user/riders/checkout_rider")
+    public String checkoutRider() {
+        return "/user/riders/checkout_rider";
+    }
+
     @GetMapping("/user/riders/my_trips_rider")
     public String myTripsRider() {
         return "/user/riders/my_trips_rider";
@@ -82,6 +92,11 @@ public class UserController {
         return "/user/drivers/profile_driver";
     }
 
+    @GetMapping("/user/drivers/request_driver")
+    public String requestDriver() {
+        return "/user/drivers/request_driver";
+    }
+
     @GetMapping("/user/drivers/my_trips_driver")
     public String myTripsDriver() {
         return "/user/drivers/my_trips_driver";
@@ -96,4 +111,5 @@ public class UserController {
     public String paymentMethodDriver() {
         return "/user/drivers/payment_method_driver";
     }
+
 }
