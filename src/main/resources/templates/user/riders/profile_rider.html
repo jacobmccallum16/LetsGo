@@ -11,17 +11,29 @@
             margin-top: 20px;
             margin-left: 20px;
         }
+        body {
+            margin-top:20px;
+            background-color:#f2f6fc;
+        }
         main {
-            width: 80%;
+            width: 100%;
             height: 100%;
             overflow: auto;
+            padding: 20px;
         }
-        h2 {
-            width: 25%;
+        .card {
+            box-shadow: 0 0.15rem 1.75rem 0 rgb(33 40 50 / 15%);
+            font-weight: 500;
+        }
+        h6 {
             display: inline-block;
-            text-align: right;
+            text-align: center;
             clear: left;
-            margin:0 10px;
+            margin:10px;
+        }
+        img {
+            width: 200px;
+            height: 200px;
         }
         .button {
             width: 100%;
@@ -41,18 +53,25 @@
 <a class="navbar-brand bg-indigo-600 rounded-pill px-3 text-info fw-bold fst-italic" th:href="@{/user/riders/home_rider}">Let's Go!</a>
 <div class="d-flex flex-fill">
     <th:block th:insert="~{fragments/sidebar_rider}"></th:block>
-<main>
-    <img src="#" alt="profile picture" style="width:100%">
-    <h2>Name</h2>
-    <h3>Rating:</h3><span>100</span>
-    <br />
-    <h3>Membership:</h3><span>100</span>
-    <br />
-    <h3>Rider since:</h3><span>100</span>
-    <br />
-    <h3>Trips taken:</h3><span>100</span>
-    <a th:href="@{/user/logout}" class="button btn btn-lg btn-primary btn-block">Log out</a>
-</main>
+    <main>
+    <div class="card mb-4 mb-xl-0">
+        <div class="card-body text-center">
+            <img class="img-account-profile rounded-circle mb-2" src="#">
+            <div class="mb-2">
+            <h3>Name</h3>
+            <h6>Rating:</h6><span>100</span>
+            <br />
+            <h6>Membership:</h6><span>Free</span><br/>
+                <button type="button" class="btn btn-primary">Subscribe</button>
+            <br />
+            <h6>Rider since:</h6><span>100</span>
+            <br />
+            <h6>Trips taken:</h6><span>100</span>
+            <a th:href="@{/user/logout}" class="button btn btn-lg btn-primary btn-block">Log out</a>
+            </div>
+        </div>
+    </div>
+    </main>
 </div>
 </body>
 </html>

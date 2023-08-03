@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <title>Let's Go! - Driver Request</title>
+  <th:block th:insert="~{fragments/scripts}"></th:block>
+  <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.5.0/css/all.css" integrity="sha384-B4dIYHKNBt8Bc12p+WXckhzcICo0wtJAoU8YZTY5qE0Id1GSseTk6S+L3BlXeVIU" crossorigin="anonymous">
+  <style>
+    html, body {
+      min-height: 100%;
+    }
+    body {
+      margin-top:20px;
+      background-color:#f2f6fc;
+    }
+    body, div, input, select, p {
+      padding: 0;
+      margin: 0;
+      outline: none;
+      font-size: 14px;
+      color: #666;
+    }
+    .logo {
+      width: 100px;
+      height: 100px;
+      margin-top: 20px;
+      margin-left: 20px;
+    }
+    .container {
+      justify-content: center;
+      align-items: center;
+      margin: 20px;
+      padding: 50px;
+      width: 100%;
+      border-radius: 5px;
+      background: #fff;
+      box-shadow: 0 0 20px 0 #333;
+    }
+  </style>
+</head>
+<body>
+<a th:href="@{/user/drivers/home_driver}">
+  <img th:src="@{/company-logo.png}" alt="Let's Go! Logo" class="logo">
+</a>
+<a class="navbar-brand bg-indigo-600 rounded-pill px-3 text-info fw-bold fst-italic" th:href="@{/user/drivers/home_driver}">Let's Go!</a>
+<div class="d-flex flex-fill">
+  <th:block th:insert="~{fragments/sidebar_driver}"></th:block>
+  <div class="container">
+    <h2 class="text-primary">Current Requests</h2>
+</div>
+</div>
+</body>
+</html>
