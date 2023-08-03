@@ -41,8 +41,6 @@ public class AdminController {
         model.addAttribute("user", user);
         model.addAttribute("rider", user.getRider());
         model.addAttribute("driver", user.getDriver());
-        httpSession.setAttribute("section", "admin");
-        httpSession.setAttribute("page", "viewAccount");
         return "/admin/viewAccount";
     }
     @GetMapping("/admin/activateRider")

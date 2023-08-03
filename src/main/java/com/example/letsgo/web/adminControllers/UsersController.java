@@ -40,8 +40,6 @@ public class UsersController {
             users = userRepository.findUsersByUserId(id);
         }
         model.addAttribute("listUsers", users);
-        httpSession.setAttribute("section", "admin");
-        httpSession.setAttribute("page", "users");
         return "/admin/users";
     }
 
