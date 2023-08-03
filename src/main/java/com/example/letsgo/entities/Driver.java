@@ -15,19 +15,19 @@ import java.util.List;
 @AllArgsConstructor
 @NoArgsConstructor
 public class Driver {
-    @Id @GeneratedValue(strategy = GenerationType.IDENTITY) public Integer driverId;
-    @OneToOne(fetch = FetchType.LAZY) @JoinColumn(name = "user_id") @JsonIgnoreProperties({"hibernateLazyInitializer"}) private User user;
+    @Id @GeneratedValue(strategy = GenerationType.IDENTITY) private Integer driverId;
+    @OneToOne(fetch = FetchType.LAZY) @JoinColumn(name = "user_id") @JsonIgnoreProperties({"hibernateLazyInitializer", "driver"}) private User user;
 //    @OneToMany(mappedBy = "driver", cascade = CascadeType.ALL, fetch = FetchType.LAZY) private List<Vehicle> vehicle;
-    @OneToMany(mappedBy = "ratedDriver", cascade = CascadeType.ALL, fetch = FetchType.LAZY) public List<DriverRating> driverRatings;
-    @Column(columnDefinition = "BOOLEAN DEFAULT FALSE") public Boolean isActive = false;
-    @Column(columnDefinition = "VARCHAR(255) DEFAULT 'Inactive'") public String driverStatus = "Inactive";
-    @Column(columnDefinition = "INTEGER DEFAULT 0") public Integer tripsDriven = 0;
-    @Column(columnDefinition = "INTEGER DEFAULT '0'") public Integer timesRated = 0;
-    @Column(columnDefinition = "FLOAT DEFAULT '0'") public Float driverSafetyScore = 0f;
-    @Column(columnDefinition = "FLOAT DEFAULT '0'") public Float driverSafetyRating = 0f;
-    @Column(columnDefinition = "FLOAT DEFAULT '0'") public Float driverResponsibilityRating = 0f;
-    @Column(columnDefinition = "TIMESTAMP DEFAULT CURRENT_TIMESTAMP") public Timestamp createdAt = new Timestamp(System.currentTimeMillis());
-    @Column(columnDefinition = "TIMESTAMP DEFAULT CURRENT_TIMESTAMP") public Timestamp updatedAt = new Timestamp(System.currentTimeMillis());
+    @OneToMany(mappedBy = "ratedDriver", cascade = CascadeType.ALL, fetch = FetchType.LAZY) private List<DriverRating> driverRatings;
+    @Column(columnDefinition = "BOOLEAN DEFAULT FALSE") private Boolean isActive = false;
+    @Column(columnDefinition = "VARCHAR(255) DEFAULT 'Inactive'") private String driverStatus = "Inactive";
+    @Column(columnDefinition = "INTEGER DEFAULT 0") private Integer tripsDriven = 0;
+    @Column(columnDefinition = "INTEGER DEFAULT '0'") private Integer timesRated = 0;
+    @Column(columnDefinition = "FLOAT DEFAULT '0'") private Float driverSafetyScore = 0f;
+    @Column(columnDefinition = "FLOAT DEFAULT '0'") private Float driverSafetyRating = 0f;
+    @Column(columnDefinition = "FLOAT DEFAULT '0'") private Float driverResponsibilityRating = 0f;
+    @Column(columnDefinition = "TIMESTAMP DEFAULT CURRENT_TIMESTAMP") private Timestamp createdAt = new Timestamp(System.currentTimeMillis());
+    @Column(columnDefinition = "TIMESTAMP DEFAULT CURRENT_TIMESTAMP") private Timestamp updatedAt = new Timestamp(System.currentTimeMillis());
     public Driver(User user) {
         setUser(user);
         isActive = false;

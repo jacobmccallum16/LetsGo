@@ -41,9 +41,8 @@ public class TripRiderRestController {
         return tripRiderService.addTripRider(tripRider);
     }
     @DeleteMapping("/removeById/{tripRiderId}")
-    public ResponseEntity<Void> removeTripRider(@PathVariable Integer tripRiderId) {
+    public void removeTripRider(@PathVariable Integer tripRiderId) {
         tripRiderService.deleteTripRider(tripRiderId);
-        return ResponseEntity.noContent().build();
     }
     @GetMapping("/removeById/{tripRiderId}")
     public ResponseEntity<Void> removeTripRiderGet(@PathVariable Integer tripRiderId) {

@@ -1,0 +1,13 @@
+<script>
+	async function tripCalculations(button) {
+		let tripId = button.getAttribute("data-trip-id");
+		let data = {
+			tripId: tripId
+		}
+		await fetch(`/api/trips/${tripId}/tripCalculations`, {
+			method: 'PUT',
+			headers: { 'Content-Type': 'application/json' },
+			body: JSON.stringify(data)
+		});
+	}
+</script>

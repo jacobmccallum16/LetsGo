@@ -18,6 +18,7 @@ public class TripRiderService {
     @Autowired private TripRepository tripRepository;
     @Autowired private DriverRepository driverRepository;
     @Autowired private RiderRepository riderRepository;
+    @Autowired private TripService tripService;
 
     public TripRider getTripRiderById(String id) {
         return tripRiderRepository.findTripRiderByTripRiderId(Integer.parseInt(id));
@@ -68,9 +69,27 @@ public class TripRiderService {
         tripRiderRepository.saveAll(updatedRiders);
     }
     public TripRider addTripRider(TripRider tripRider) {
+        tripService.createRiderTripTransaction(tripRider);
+        addOnePassenger(tripRider.getTripId());
         return tripRiderRepository.save(tripRider);
     }
     public void deleteTripRider(Integer tripRiderId) {
+        TripRider tripRider = tripRiderRepository.findTripRiderByTripRiderId(tripRiderId);
+        Trip trip = tripRepository.findTripByTripId(tripRider.getTripId());
+        tripService.deleteRiderTripTransaction(tripRiderId);
         tripRiderRepository.deleteById(tripRiderId);
+        updatePassengerCount(trip);
+    }
+    public void updatePassengerCount(Trip trip) {
+        Integer riderCount = tripRiderRepository.countByTripId(trip.getTripId());
+        trip.setPassengers(riderCount);
+        trip.setSeatsLeft(trip.getPassengersMax() - trip.getPassengers());
+        tripRepository.save(trip);
+    }
+    public void addOnePassenger(Integer tripId) {
+        Trip trip = tripRepository.findTripByTripId(tripId);
+        trip.setPassengers(trip.getPassengers() + 1);
+        trip.setSeatsLeft(trip.getSeatsLeft() - 1);
+        tripRepository.save(trip);
     }
 }

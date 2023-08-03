@@ -32,6 +32,18 @@
 						<li><a class="dropdown-item link-primary" th:href="@{/admin/routes/createRoute}">Create Route</a></li>
 					</ul>
 				</li>
+				<li class="nav-item dropdown">
+					<a th:if="${session.status == 'Admin'}" class="nav-link link-primary dropdown-toggle" th:href="@{/admin/users}" role="button" data-bs-toggle="dropdown" aria-expanded="false">Admin Account</a>
+					<a th:if="${session.status == 'User'}" class="nav-link link-primary dropdown-toggle" th:href="@{/admin/users}" role="button" data-bs-toggle="dropdown" aria-expanded="false">User Account</a>
+					<a th:if="${session.status == 'Guest'}" class="nav-link link-primary dropdown-toggle" th:href="@{/admin/users}" role="button" data-bs-toggle="dropdown" aria-expanded="false">Guest Account</a>
+					<a th:unless="${session.status}" class="nav-link link-primary dropdown-toggle" th:href="@{/admin/users}" role="button" data-bs-toggle="dropdown" aria-expanded="false">Account</a>
+					<ul class="dropdown-menu">
+						<li th:if="${session.status == 'Admin'}"><a class="dropdown-item link-primary" th:href="@{/user/logout}">Log Out</a></li>
+						<li th:if="${session.status == 'User'}"><a class="dropdown-item link-primary" th:href="@{/user/logout}">Log Out</a></li>
+						<li th:if="${session.status == 'Guest'}"><a class="dropdown-item link-primary" th:href="@{/user/login}">Log In</a></li>
+						<li th:unless="${session.status}"><a class="dropdown-item link-primary" th:href="@{/user/login}">Log In</a></li>
+					</ul>
+				</li>
 			</ul>
 <!--			<form class="d-flex" role="search" method="get" th:action="@{/admin/users}">-->
 <!--				<input class="form-control me-2" type="search" placeholder="Search User" name="keyId" aria-label="Search">-->
