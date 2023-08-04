@@ -1,0 +1,29 @@
+<script th:inline="javascript">
+	async function populateTripDetails() {
+		let table = document.querySelector("#ridersTable table");
+		let trRider = document.querySelector("#ridersTable #trRider");
+		let trDistance = document.querySelector("#ridersTable #trDistance");
+		let trDuration = document.querySelector("#ridersTable #trDuration");
+		let trBaseRate = document.querySelector("#ridersTable #trBaseRate");
+		let trBonus = document.querySelector("#ridersTable #trBonus");
+		let trPreTripQuote = document.querySelector("#ridersTable #trPreTripQuote");
+		let trTripAmount = document.querySelector("#ridersTable #trTripAmount");
+		let trTip = document.querySelector("#ridersTable #trTip");
+		let trTotal = document.querySelector("#ridersTable #trTotal");
+		let tripDetailsRidersObj = await fetch(`/api/trips/[[${trip.getTripId()}]]/tripDetails/riders`);
+		let tripDetailsRidersText = await tripDetailsRidersObj.text();
+		let tripDetailsRidersData = JSON.parse(tripDetailsRidersText);
+		tripDetailsRidersData.forEach((rider) => {
+			trRider.innerHTML += `<th>${rider.fullName}</th>`;
+			trDistance.innerHTML += `<td>$${rider.distanceSubtotal.toFixed(2)}</td>`;
+			trDuration.innerHTML += `<td>$${rider.durationSubtotal.toFixed(2)}</td>`;
+			trBaseRate.innerHTML += `<td>$${rider.baseRateSubtotal.toFixed(2)}</td>`;
+			trBonus.innerHTML += `<td>-$${rider.multiPassengerDiscount.toFixed(2)}</td>`;
+			trPreTripQuote.innerHTML += `<td>$${rider.preTripQuote.toFixed(2)}</td>`;
+			trTripAmount.innerHTML += `<td>$${rider.tripTotal.toFixed(2)}</td>`;
+			trTip.innerHTML += `<td>$${rider.tipAmount.toFixed(2)}</td>`;
+			trTotal.innerHTML += `<td>$${rider.finalTotal.toFixed(2)}</td>`;
+		});
+	}
+	populateTripDetails();
+</script>

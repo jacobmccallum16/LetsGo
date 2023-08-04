@@ -23,13 +23,11 @@ public class TripRiderRestController {
 
     @GetMapping("/{tripId}/getPotentialRiders")
     public List<Rider> getPotentialRidersByTrip(@PathVariable Integer tripId) {
-        List<Rider> potentialRiders = tripRiderService.getPotentialRidersByTripSortedByName(String.valueOf(tripId));
-        return potentialRiders;
+        return tripRiderService.getPotentialRidersByTripSortedByName(String.valueOf(tripId));
     }
     @GetMapping("/{tripId}/riders")
     public List<TripRider> getTripRiders(@PathVariable Integer tripId) {
-        List<TripRider> tripRiders = tripRiderService.getTripRidersByTripId(String.valueOf(tripId));
-        return tripRiders;
+        return tripRiderService.getTripRidersByTripId(String.valueOf(tripId));
     }
     @PutMapping("/{tripId}/riders")
     public void updateTripRiders(@PathVariable Integer tripId, @RequestBody List<TripRider> updatedRiders) {
