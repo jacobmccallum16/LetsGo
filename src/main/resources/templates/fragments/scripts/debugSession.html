@@ -1,48 +1,59 @@
 <script th:inline="javascript" th:fragment="debugSessionMain()">
-	let sessionDebugData = /*[[${session}]]*/;
+	let session = /*[[${session}]]*/;
 	let main = document.getElementsByTagName("main").item(0);
-	
-	let sessionDebugP0 = document.createElement("p");
-	sessionDebugP0.innerHTML = JSON.stringify(sessionDebugData, null, "<br>");
-	main.insertBefore(sessionDebugP0, main.children[0]);
-	
-	let sessionDebugP1 = document.createElement("p");
-	sessionDebugP1.innerHTML = JSON.stringify(sessionDebugData, null, "<br>");
-	main.insertBefore(sessionDebugP1, main.children[1]);
-	
-	let debugTable1 = document.createElement("table");
-	debugTable1.outerHtml += `<table class="mx-auto">`;
-	debugTable1.outerHtml += `<thead>
-																<tr> <th colspan="2">Session Debug</th> </tr>
-																<tr> <th>Key</th> <th>Value</th> </tr>
-															</thead>`;
-	debugTable1.outerHtml +=    `<tbody>`;
-	debugTable1.outerHtml += `		<tr> <td>Size</td> <td>${sessionDebugData}</td> </tr>`;
-	debugTable1.outerHtml += `	</tbody>`;
-	debugTable1.outerHtml += `	<tfoot>
-																<tr> <th></th> <td></td> </tr>
-															</tfoot>`;
-	debugTable1.outerHtml += `</table>`;
-	
-	main.insertBefore(sessionDebugP1, main.children[0]);
-	main.insertBefore(sessionDebugP0, main.children[0]);
-	main.insertBefore(debugTable1, main.children[0]);
-
-	
+	let debugDiv = document.createElement("div")
+	debugDiv.classList.add("row", "m-3", "justify-content-center");
+	debugDiv.innerHTML = `
+<div class="col col-auto">
+	<table class="table mx-auto align-middle">
+	  <thead class="table-green">
+	    <tr><th colspan="2">Session Debug</th></tr>
+	  </thead>
+	  <tbody id="debugTBody">
+	  </tbody>
+	  <tfoot id="debugTFoot">
+	    <tr class="table-group-divider"> <th>Entries</th> <th id="debugTDSessionSize"></th> </tr>
+		</tfoot>
+	</table>
+</div>`;
+	main.insertBefore(debugDiv, main.children[0]);
+	let debugTBody = document.getElementById("debugTBody");
+	let sessionSize = 0;
+	for (let key in session) {
+		console.log(`${key}: ${session[key]}`)
+		debugTBody.innerHTML += `<tr> <th class="text-end">${key}: </th> <td class="text-start">${session[key]}</td> </tr>`;
+		sessionSize += 1;
+	}
+	document.getElementById("debugTDSessionSize").innerText = sessionSize;
 </script>
+
+
 <script th:inline="javascript" th:fragment="debugSessionBody()">
-	let sessionDebugData = /*[[${session}]]*/;
+	let session = /*[[${session}]]*/;
 	let body = document.getElementsByTagName("body").item(0);
-	
-	let sessionDebugP0 = document.createElement("p");
-	sessionDebugP0.innerHTML = JSON.stringify(sessionDebugData, null, " ");
-	body.insertBefore(sessionDebugP0, body.children[1]);
-	
-	let sessionDebugP1 = document.createElement("p");
-	sessionDebugP1.innerHTML = JSON.stringify(sessionDebugData, null, "<br>");
-	body.insertBefore(sessionDebugP1, body.children[2]);
-	
-	let sessionDebugP2 = document.createElement("p");
-	sessionDebugP2.innerHTML = JSON.stringify(sessionDebugData, null, "\n");
-	body.insertBefore(sessionDebugP2, body.children[3]);
+	let debugDiv = document.createElement("div")
+	debugDiv.classList.add("row", "mb-3", "justify-content-center");
+	debugDiv.innerHTML = `
+<div class="col col-auto">
+	<table class="table mx-auto">
+	  <thead class="table-green">
+	    <tr><th colspan="2">Session Debug</th></tr>
+	    <tr><td>Key</td><td>Value</td></tr>
+	  </thead>
+	  <tbody id="debugTBody">
+	  </tbody>
+	  <tfoot id="debugTFoot">
+	    <tr class="table-group-divider"> <th>Entries</th> <th id="debugTDSessionSize"></th> </tr>
+		</tfoot>
+	</table>
+</div>`;
+	body.insertBefore(debugDiv, body.children[0]);
+	let debugTBody = document.getElementById("debugTBody");
+	let sessionSize = 0;
+	for (let key in session) {
+		console.log(`${key}: ${session[key]}`)
+		debugTBody.innerHTML += `<tr> <th class="text-end">${key}: </th> <td class="text-start">${session[key]}</td> </tr>`;
+		sessionSize += 1;
+	}
+	document.getElementById("debugTDSessionSize").innerText = sessionSize;
 </script>
