@@ -19,6 +19,7 @@ public class SecurityService {
             user = userRepository.findByEmailAndPassword(usernameEmail, password);
         }
         if (user != null) {
+            session.removeAttribute("LOGIN_FAIL");
             session.setAttribute("firstName", user.getFirstName());
             session.setAttribute("lastName", user.getLastName());
             session.setAttribute("fullName", user.getFullName());
@@ -72,6 +73,7 @@ public class SecurityService {
             session.removeAttribute("AUTH");
             // set role to guest so that the link logic function better
             session.setAttribute("ROLE", "Guest");
+            session.setAttribute("LOGIN_FAIL", true);
 
             // "admin" "admin" login bypass for demo purposes
             if (usernameEmail.toLowerCase().equals("admin") && password.toLowerCase().equals("admin")) {
@@ -80,6 +82,7 @@ public class SecurityService {
                 session.setAttribute("fullName", "Admin");
                 session.setAttribute("AUTH", "ADMIN");
                 session.setAttribute("ROLE", "Admin");
+                session.removeAttribute("LOGIN_FAIL");
             }
             // Obviously for a real deployment this would be deleted, but it makes it easier to access the app,
             // especially if you want to test things out while the database has no users in it

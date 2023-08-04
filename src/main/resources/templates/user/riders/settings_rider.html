@@ -56,7 +56,8 @@
         }
     </style>
 </head>
-<body>
+<body th:insert="~{fragments/security/userSecurity}"></body>
+<body th:if="${session.AUTH == 'USER' || session.AUTH == 'ADMIN'}" class="vh-100">
 <a th:href="@{/user/riders/home_rider}">
     <img th:src="@{/company-logo.png}" alt="Let's Go! Logo" class="logo">
 </a>
@@ -131,7 +132,7 @@
 </div>
 </div>
 
-<script>
+<script th:inline="javascript">
     var uploadField = document.getElementById("picture");
 
     uploadField.onchange = function() {
@@ -140,6 +141,16 @@
             this.value = "";
         };
     };
+    
+    async function getRiderData() {
+	    let riderObj = await fetch(`/api/user/rider/[[${session.riderId}]]/getRider`);
+	    let riderText = await riderObj.text();
+	    let riderData = JSON.parse(riderText);
+	    document.getElementById("fname").value = riderData.firstName;
+	    document.getElementById("lname").value = riderData.lastName;
+	    document.getElementById("email").value = riderData.user.email;
+    }
+    getRiderData();
 </script>
 
 </body>

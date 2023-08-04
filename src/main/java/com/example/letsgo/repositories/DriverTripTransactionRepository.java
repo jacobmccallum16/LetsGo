@@ -10,6 +10,7 @@ import java.util.List;
 @Repository
 public interface DriverTripTransactionRepository extends JpaRepository<DriverTripTransaction, Integer> {
     List<DriverTripTransaction> findAllByTrip(Trip trip);
+    List<DriverTripTransaction> findAllByDriverId(Integer driverID);
     DriverTripTransaction findByDriverTripTransactionId(Integer driverTripTransactionId);
     DriverTripTransaction findByTrip(Trip trip);
     Boolean existsByTrip(Trip trip);

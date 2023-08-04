@@ -28,22 +28,36 @@
         }
     </style>
 </head>
-<body>
+<body th:insert="~{fragments/security/userSecurity}"></body>
+<body th:if="${session.AUTH == 'USER' || session.AUTH == 'ADMIN'}" class="vh-100">
 <a th:href="@{/user/drivers/home_driver}">
     <img th:src="@{/company-logo.png}" alt="Let's Go! Logo" class="logo">
 </a>
 <a class="navbar-brand bg-indigo-600 rounded-pill px-3 text-info fw-bold fst-italic" th:href="@{/user/drivers/home_driver}">Let's Go!</a>
 <div class="d-flex flex-fill">
-    <th:block th:insert="~{fragments/sidebar_driver}"></th:block>
-    <div class="container">
-        <h2 class="text-primary">Weekly Summary</h2>
-        <h4><b>Weekly earnings:</b></h4>
-        <h6>Completed trips:</h6>
-        <h6>Acceptance rate:</h6>
-        <h6>Driver Cancellations:</h6>
+  <th:block th:insert="~{fragments/sidebar_driver}"></th:block>
+	<div class="container">
+		<main>
+			<h2 class="text-primary">Weekly Summary</h2>
+			<h4 id="weeklyEarnings"><b>Weekly earnings: </b></h4>
+			<h6 id="tripsDriven">Completed trips: </h6>
+			<h6 id="acceptanceRate">Acceptance rate: </h6>
+			<h6 id="driverCancellations">Driver Cancellations: </h6>
+		</main>
     </div>
 </div>
 
-<th:block th:insert="~{fragments/scripts/debugSession :: debugSessionBody()}"></th:block>
+<script th:inline="javascript">
+	async function getDriverData() {
+		let driverObj = await fetch(`/api/user/driver/[[${session.driverId}]]/getDriver`);
+		let driverText = await driverObj.text();
+		let driverData = JSON.parse(driverText);
+		document.getElementById("weeklyEarnings").innerHTML += "Not yet computed";
+		document.getElementById("tripsDriven").innerHTML += driverData.tripsDriven;
+		document.getElementById("acceptanceRate").innerHTML += "Not yet tracked";
+		document.getElementById("driverCancellations").innerHTML += "Not yet tracked";
+	}
+	getDriverData();
+</script>
 </body>
 </html>

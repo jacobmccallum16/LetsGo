@@ -16,14 +16,15 @@ public class SecurityController {
     @Autowired private SecurityService securityService;
     @Autowired public HttpSession httpSession;
 
+    @PostMapping("/login")
+     public String login(@RequestParam String username, @RequestParam String password) {
+        httpSession = securityService.login(username, password, httpSession);
+        String redirect = httpSession.getAttribute("redirect").toString();
+        httpSession.removeAttribute("redirect");
+        return redirect;
+    }
+
     @PostMapping("/user/login")
-
-//     public String login(@RequestParam String username, @RequestParam String password) {
-//         httpSession = securityService.login(username, password, httpSession);
-//         String redirect = httpSession.getAttribute("redirect").toString();
-//         httpSession.removeAttribute("redirect");
-//         return redirect;
-
     public String login(@RequestParam String username, @RequestParam String password, ModelMap mm, HttpSession session) {
         String status = securityService.login(username, password);
         session.setAttribute("status", status);
@@ -38,8 +39,8 @@ public class SecurityController {
             mm.put("fail", 2);
             return "redirect:/user/login" ;
         }
-
     }
+
     @GetMapping("/logout")
     public String logout() {
         httpSession = securityService.logout(httpSession);

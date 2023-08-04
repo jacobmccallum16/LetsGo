@@ -1,14 +1,48 @@
 <script th:inline="javascript" th:fragment="debugSessionMain()">
 	let sessionDebugData = /*[[${session}]]*/;
-	let sessionDebugP = document.createElement("p");
-	sessionDebugP.innerHTML = JSON.stringify(sessionDebugData);
 	let main = document.getElementsByTagName("main").item(0);
-	main.insertBefore(sessionDebugP, main.children[0]);
+	
+	let sessionDebugP0 = document.createElement("p");
+	sessionDebugP0.innerHTML = JSON.stringify(sessionDebugData, null, "<br>");
+	main.insertBefore(sessionDebugP0, main.children[0]);
+	
+	let sessionDebugP1 = document.createElement("p");
+	sessionDebugP1.innerHTML = JSON.stringify(sessionDebugData, null, "<br>");
+	main.insertBefore(sessionDebugP1, main.children[1]);
+	
+	let debugTable1 = document.createElement("table");
+	debugTable1.outerHtml += `<table class="mx-auto">`;
+	debugTable1.outerHtml += `<thead>
+																<tr> <th colspan="2">Session Debug</th> </tr>
+																<tr> <th>Key</th> <th>Value</th> </tr>
+															</thead>`;
+	debugTable1.outerHtml +=    `<tbody>`;
+	debugTable1.outerHtml += `		<tr> <td>Size</td> <td>${sessionDebugData}</td> </tr>`;
+	debugTable1.outerHtml += `	</tbody>`;
+	debugTable1.outerHtml += `	<tfoot>
+																<tr> <th></th> <td></td> </tr>
+															</tfoot>`;
+	debugTable1.outerHtml += `</table>`;
+	
+	main.insertBefore(sessionDebugP1, main.children[0]);
+	main.insertBefore(sessionDebugP0, main.children[0]);
+	main.insertBefore(debugTable1, main.children[0]);
+
+	
 </script>
 <script th:inline="javascript" th:fragment="debugSessionBody()">
 	let sessionDebugData = /*[[${session}]]*/;
-	let sessionDebugP = document.createElement("p");
-	sessionDebugP.innerHTML = JSON.stringify(sessionDebugData);
 	let body = document.getElementsByTagName("body").item(0);
-	body.insertBefore(sessionDebugP, body.children[0]);
+	
+	let sessionDebugP0 = document.createElement("p");
+	sessionDebugP0.innerHTML = JSON.stringify(sessionDebugData, null, " ");
+	body.insertBefore(sessionDebugP0, body.children[1]);
+	
+	let sessionDebugP1 = document.createElement("p");
+	sessionDebugP1.innerHTML = JSON.stringify(sessionDebugData, null, "<br>");
+	body.insertBefore(sessionDebugP1, body.children[2]);
+	
+	let sessionDebugP2 = document.createElement("p");
+	sessionDebugP2.innerHTML = JSON.stringify(sessionDebugData, null, "\n");
+	body.insertBefore(sessionDebugP2, body.children[3]);
 </script>

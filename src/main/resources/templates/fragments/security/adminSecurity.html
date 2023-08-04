@@ -1,5 +1,9 @@
-<main th:if="${session.AUTH != 'ADMIN'}" class="container text-center flex-grow-1">
-	<h1>Sorry, you don't have access to this page!</h1>
-	<br>
-	<div><a class="btn btn-lg btn-primary" th:href="@{/user/login}">Login here</a></div>
-</main>
+<body th:if="${session.AUTH != 'ADMIN'}" class="vh-100 d-flex flex-column">
+	<th:block th:insert="~{fragments/navbar}"></th:block>
+	<main class="container text-center flex-grow-1">
+		<h1>Sorry, you don't have access to this page!</h1>
+		<br>
+		<div><a class="btn btn-lg btn-primary" th:href="@{/user/login}">Login here</a></div>
+	</main>
+	<th:block th:insert="~{fragments/scripts/debugSession :: debugSessionMain()}"></th:block>
+</body>

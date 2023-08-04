@@ -46,33 +46,51 @@
         }
     </style>
 </head>
-<body>
+<body th:insert="~{fragments/security/userSecurity}"></body>
+<body th:if="${session.AUTH == 'USER' || session.AUTH == 'ADMIN'}" class="vh-100">
 <a th:href="@{/user/drivers/home_driver}">
     <img th:src="@{/company-logo.png}" alt="Let's Go! Logo" class="logo">
 </a>
 <a class="navbar-brand bg-indigo-600 rounded-pill px-3 text-info fw-bold fst-italic" th:href="@{/user/drivers/home_driver}">Let's Go!</a>
 <div class="d-flex flex-fill">
-    <th:block th:insert="~{fragments/sidebar_driver}"></th:block>
-    <main>
+	<th:block th:insert="~{fragments/sidebar_driver}"></th:block>
+	<main>
         <div class="card mb-4 mb-xl-0">
             <div class="card-body text-center">
                 <img class="img-account-profile rounded-circle mb-2" src="#">
                 <div class="mb-2">
-                    <h3>Name</h3>
-                    <h6>Rating:</h6><span>100</span>
+                    <h3 id="fullName">Name</h3>
+                    <h6>Rating:</h6><span id="driverSafetyScore">100</span>
                     <br />
-                    <h6>Driver since:</h6><span>100</span>
+                    <h6>Driver since:</h6><span id="createdAt">100</span>
                     <br />
-                    <h6>Trips delivered:</h6><span>100</span>
+                    <h6>Trips delivered:</h6><span id="tripsDriven">100</span>
                     <br />
-                    <h6>Acceptance rate:</h6><span>100</span>
+                    <h6>Acceptance rate:</h6><span id="acceptanceRate">100</span>
                     <br />
-                    <h6>Driver cancellations:</h6><span>100</span>
+                    <h6>Driver cancellations:</h6><span id="driverCancellations">100</span>
                     <a th:href="@{/user/logout}" class="button btn btn-lg btn-primary btn-block">Log out</a>
                 </div>
             </div>
         </div>
     </main>
 </div>
+
+<script th:inline="javascript">
+	async function getDriverData() {
+		let driverObj = await fetch(`/api/user/driver/[[${session.driverId}]]/getDriver`);
+		let driverText = await driverObj.text();
+		let driverData = JSON.parse(driverText);
+		document.getElementById("fullName").innerHTML = driverData.fullName;
+		document.getElementById("driverSafetyScore").innerHTML = driverData.driverSafetyScore.toPrecision(1);
+		let createdAt = new Date(driverData.createdAt);
+		document.getElementById("createdAt").innerHTML = createdAt.toDateString();
+		document.getElementById("tripsDriven").innerHTML = driverData.tripsDriven;
+		document.getElementById("acceptanceRate").innerHTML = "Not yet tracked";
+		document.getElementById("driverCancellations").innerHTML = "Not yet tracked";
+	}
+	getDriverData();
+
+</script>
 </body>
 </html>
