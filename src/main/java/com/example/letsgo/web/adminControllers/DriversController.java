@@ -4,6 +4,7 @@ import com.example.letsgo.entities.Driver;
 import com.example.letsgo.repositories.DriverRepository;
 import com.example.letsgo.repositories.RiderRepository;
 import com.example.letsgo.repositories.UserRepository;
+import com.example.letsgo.service.DriverService;
 import jakarta.servlet.http.HttpSession;
 import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,32 +21,22 @@ import java.util.List;
 @AllArgsConstructor
 public class DriversController {
 
-    @Autowired
-    private UserRepository userRepository;
-    private RiderRepository riderRepository;
-    private DriverRepository driverRepository;
-    public HttpSession httpSession;
+    @Autowired private UserRepository userRepository;
+    @Autowired private RiderRepository riderRepository;
+    @Autowired private DriverRepository driverRepository;
+    @Autowired private DriverService driverService;
+    @Autowired public HttpSession httpSession;
 
     @GetMapping("/admin/drivers")
-    public String drivers(Model model, @RequestParam(name="keyId",defaultValue = "") String keyId) {
-        List<Driver> drivers;
-        if (keyId.isEmpty()) {
-            drivers = driverRepository.findIsActiveDriversSortedByName();
-        } else {
-            drivers = driverRepository.findDriversByDriverId(Integer.parseInt(keyId));
-        }
-        for (int i = drivers.size()-1; i >= 0; i--) {
-            if (!drivers.get(i).isActive) {
-                drivers.remove(i);
-            }
-        }
+    public String drivers(Model model, @RequestParam(name="driverId",defaultValue = "") String driverId) {
+        List<Driver> drivers = driverService.getDrivers(driverId);
         model.addAttribute("drivers", drivers);
         return "/admin/drivers";
     }
 
     @GetMapping("/admin/drivers/editDriver")
     public String editDriver(Integer id, Model model) {
-        Driver driver = driverRepository.findDriversByDriverId(id).get(0);
+        Driver driver = driverService.getDriver(id);
         model.addAttribute("driver", driver);
         return "/admin/drivers/editDriver";
     }
@@ -54,18 +45,13 @@ public class DriversController {
         if (bindingResult.hasErrors()) {
             return "/admin/drivers/editDriver";
         }
-        driver.updateStatus();
-        driver.updateSafetyScore();
-        driverRepository.save(driver);
+        driverService.updateDriver(driver);
         return "redirect:/admin/drivers";
     }
 
     @GetMapping("/admin/drivers/driverStatus")
     public String driverStatus(Integer id, String status) {
-        Driver driver = driverRepository.findDriversByDriverId(id).get(0);
-        driver.driverStatus = status;
-//        driver.updateStatus();
-        driverRepository.save(driver);
+        driverService.setDriverStatus(id, status);
         return "redirect:/admin/drivers";
     }
 }

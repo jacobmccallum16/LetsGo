@@ -35,22 +35,8 @@ public class TripsController {
     public String routes(Model model, @RequestParam(name="routeId",defaultValue = "") String routeId,
                          @RequestParam(name="driverId",defaultValue = "") String driverId,
                          @RequestParam(name="tripId",defaultValue = "") String tripId) {
-        List<Trip> trips;
-        String title = "Trips";
-        if (!routeId.isEmpty()) {
-            Route route = routeRepository.findRouteByRouteId(Integer.parseInt(routeId));
-            trips = tripRepository.findTripsByRoute(route);
-            title = "Trips on route " + routeId;
-        } else if (!driverId.isEmpty()) {
-            Driver driver = driverRepository.findDriverByDriverId(Integer.parseInt(driverId));
-            trips = tripRepository.findTripsByDriver(driver);
-            title = "Trips by " + driver.getFullName();
-        } else if (!tripId.isEmpty()) {
-            trips = tripRepository.findTripsByTripId(Integer.parseInt(tripId));
-        } else {
-            trips = tripRepository.findAll();
-        }
-        Trip.sortByDateAndTime(trips);
+        List<Trip> trips = tripService.getTrips(routeId, driverId, tripId);
+        String title = tripService.getTripsTitle(routeId, driverId, tripId);
         model.addAttribute("trips", trips);
         model.addAttribute("title", title);
         return "/admin/trips";
@@ -69,7 +55,7 @@ public class TripsController {
         } else {
             trip.calculateArrivalTime();
             tripRepository.save(trip);
-            String redirect = "redirect:/admin/trips?routeId=" + trip.route.routeId.toString();
+            String redirect = "redirect:/admin/trips?routeId=" + trip.getRoute().routeId.toString();
             return redirect;
         }
     }
@@ -78,7 +64,7 @@ public class TripsController {
     public String editTrip(Integer id, Model model) {
         Trip trip = tripRepository.findTripByTripId(id);
         model.addAttribute("trip", trip);
-        List<Driver> drivers = driverRepository.findActiveDriversSortedByName();
+        List<Driver> drivers = tripService.getPotentialDriversSortedByName(id.toString());
         model.addAttribute("drivers", drivers);
         return "/admin/trips/editTrip";
     }
@@ -87,9 +73,8 @@ public class TripsController {
         if (bindingResult.hasErrors()) {
             return "/admin/trips/editTrip";
         }
-        trip.calculateArrivalTime();
-        tripRepository.save(trip);
-        return "redirect:/admin/trips";
+        tripService.processEditTripForm(trip);
+        return "redirect:/admin/trips#tripId-" + trip.getTripId().toString();
     }
 
     @GetMapping("/admin/trips/calculateArrivalTime")

@@ -2,7 +2,7 @@
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
 	<meta charset="UTF-8">
-	<title>Let's Go! - Edit Trip</title>
+	<title>Let's Go! - Trip Transactions</title>
 	<th:block th:insert="~{fragments/scripts}"></th:block>
 </head>
 <body class="vh-100 d-flex flex-column" style="min-width: 576px;">
@@ -13,24 +13,18 @@
 		<div class="row">
 			<div class="col-12 col-md-10 col-lg-9 col-xl-8 col-xxl-7 my-3 mx-auto align-middle">
 				<div class="card">
-					<div class="card-header fs-3">
-						Edit Trip
+					<div class="card-header">
+						Create Route
 					</div>
 					<div class="card-body text-start">
 						<form id="form" class="row g-3 needs-validation" novalidate method="post" th:action="@{/admin/trips/editTrip}" th:object="${trip}">
+							<!--							<div class="col-4"><img th:src="@{${'/routeImages/' + trip.getRoute().routeImageSource}}"></div>-->
 							<div class="col-4" th:insert="~{fragments/inputs :: divFloatingDisabledData('number', 'tripId', 'tripId', 'Trip ID')}"></div>
-							<div class="col-4" th:insert="~{fragments/inputs :: divFloatingDisabledUnit('number', 'tripDistanceEstimated', 'tripDistanceEstimated', 'Distance estimated', 'km')}"></div>
-							<div class="col-4" th:insert="~{fragments/inputs :: divFloatingDisabledUnit('number', 'tripDurationEstimated', 'tripDurationEstimated', 'Duration estimated', 'min')}"></div>
 							<div class="col-4" th:insert="~{fragments/inputs :: divFloatingDisabledData('number', 'route.routeId', 'route.routeId', 'Route ID')}"></div>
-							<div class="col-4" th:insert="~{fragments/inputs :: divFloatingDisabledUnit('number', 'tripDistanceActual', 'tripDistanceActual', 'Disance actual', 'km')}"></div>
-							<div class="col-4" th:insert="~{fragments/inputs :: divFloatingDisabledUnit('number', 'tripDurationActual', 'tripDurationActual', 'Duration actual', 'min')}"></div>
-							<div class="col-4" th:insert="~{fragments/inputs :: divFloatingDisabled('number', 'tripImageSource', 'tripImageSource', 'Trip Image URL')}"></div>
-							<div class="col-4"></div>
 							<div class="col-4">
 								<div class="form-floating">
 									<select id="tripStatus" class="form-select" th:field="*{tripStatus}" required>
 										<option th:value="Completed" th:selected="*{tripStatus == 'Completed'}">Completed</option>
-										<option th:value="Scheduled" th:selected="*{tripStatus == 'Scheduled'}">Scheduled</option>
 										<option th:value="Planned" th:selected="*{tripStatus == 'Planned'}">Planned</option>
 										<option th:value="Requested" th:selected="*{tripStatus == 'Requested'}">Requested</option>
 										<option th:value="Cancelled" th:selected="*{tripStatus == 'Cancelled'}">Cancelled</option>
@@ -38,20 +32,23 @@
 									<label for="tripStatus">Trip Status</label>
 								</div>
 							</div>
+							<div class="col-4" th:insert="~{fragments/inputs :: divFloatingDisabledUnit('number', 'route.routeDistance', 'route.routeDistance', 'Distance', 'km')}"></div>
+							<div class="col-4" th:insert="~{fragments/inputs :: divFloatingDisabledUnitData('number', 'route.routeDuration', 'route.routeDuration', 'Duration', 'min')}"></div>
+							<div class="col-4" th:insert="~{fragments/inputs :: divFloatingRequiredEdit('date', 'date', 'date', 'Date')}"></div>
 							<div class="col-8" th:insert="~{fragments/inputs :: divFloatingDisabled('text', 'route.locationStart', 'route.locationStart', 'Start Location')}"></div>
-							<div class="col-4" th:insert="~{fragments/inputs :: divFloatingRequiredEdit('datetime-local', 'departureTime', 'departureTime', 'Departure Time')}"></div>
+							<div class="col-4" th:insert="~{fragments/inputs :: divFloatingRequiredEdit('time', 'departureTime', 'departureTime', 'Departure Time')}"></div>
 							<div class="col-8" th:insert="~{fragments/inputs :: divFloatingDisabled('text', 'route.locationEnd', 'route.locationEnd', 'Destination')}"></div>
-							<div class="col-4" th:insert="~{fragments/inputs :: divFloatingDisabled('datetime-local', 'arrivalTime', 'arrivalTime', 'Arrival Time')}"></div>
+							<div class="col-4" th:insert="~{fragments/inputs :: divFloatingDisabled('time', 'arrivalTime', 'arrivalTime', 'Arrival Time')}"></div>
 							<div class="col-4">
 								<div class="form-floating">
 									<select id="driver" class="form-select" th:field="*{driver.driverId}" required>
-										<option value="-1">-- None --</option>
-										<option th:each="driver : ${drivers}" th:value="${driver.driverId}" th:text="${driver.getFullName()}"></option>
+										<option value="">-- None --</option>
+										<option th:each="driver : ${drivers}" th:value="${driver.driverId}" th:text="${driver.getUser().firstName + ' ' + driver.getUser().lastName}"></option>
 									</select>
 									<label for="driver">Select Driver</label>
 								</div>
 							</div>
-							<div class="col-4" th:insert="~{fragments/inputs :: divFloatingDisabled('number', 'passengersMax', 'passengersMax', 'Passengers Max')}"></div>
+							<div class="col-4" th:insert="~{fragments/inputs :: divFloatingDisabled('text', 'vehicle', 'vehicle', 'Vehicle')}"></div>
 							<div class="col-4">
 								<button type="button" th:id="${'tripRidersModalButton-' + trip.tripId}" class="btn btn-teal w-100 h-100" data-bs-toggle="modal" data-bs-target="#tripRidersModal" th:data-trip-id="*{tripId}" onclick="setTripIdAndLoadTripRidersModal(this)">Riders</button>
 							</div>

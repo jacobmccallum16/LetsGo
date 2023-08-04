@@ -26,34 +26,41 @@
 			</tr>
 			</thead>
 			<tbody class="table-group-divider border-indigo-subtle">
-			<tr th:rowspan="2" th:each="trip:${trips}" th:object="${trip}">
+			<tr th:id="${'tripId-' + trip.tripId}" th:rowspan="2" th:each="trip:${trips}" th:object="${trip}">
 				<td><img th:src="@{${'/routeImages/' + trip.getRoute().routeImageSource}}" height="100px"></td>
 				<td th:text="*{tripId}"></td>
 				<td th:text="*{getRoute().locationStart}"></td>
-				<td th:text="*{date + ' ' + (departureTime != null ? departureTime.toString() : 'null')}"></td>
+				<td><span th:text="*{(printDate(departureTime) ?: _)}"></span><br><span th:text="*{(printTime(departureTime) ?: _)}"></span></td>
 				<td th:text="*{getRoute().locationEnd}"></td>
-				<td th:text="*{date + ' ' + (arrivalTime != null ? arrivalTime.toString() : 'null')}"></td>
+				<td><span th:text="*{(printDate(arrivalTime) ?: _)}"></span><br><span th:text="*{(printTime(arrivalTime) ?: _)}"></span></td>
 				<td>
-					<a th:if="*{tripStatus == 'Completed'}" class="btn btn-sm btn-dark active">Completed</a>
-					<a th:if="*{tripStatus == 'Planned'}" class="btn btn-sm btn-teal active">Planned</a>
-					<a th:if="*{tripStatus == 'Requested'}" class="btn btn-sm btn-indigo active">Requested</a>
-					<a th:if="*{tripStatus == 'Cancelled'}" class="btn btn-sm btn-red active">Cancelled</a>
+					<div th:if="*{tripStatus == 'Completed'}" class="btn btn-sm btn-dark active">Completed</div>
+					<div th:if="*{tripStatus == 'Scheduled'}" class="btn btn-sm btn-green active">Scheduled</div>
+					<div th:if="*{tripStatus == 'Planned'}" class="btn btn-sm btn-teal active">Planned</div>
+					<div th:if="*{tripStatus == 'Requested'}" class="btn btn-sm btn-indigo active">Requested</div>
+					<div th:if="*{tripStatus == 'Cancelled'}" class="btn btn-sm btn-red active">Cancelled</div>
 				</td>
-				<td th:text="*{(driver != null ? driver.getFullName() : '—')}"></td>
 				<td>
+					<span th:text="*{(driver != null ? driver.getFullName() : '—')}"></span><br>
+<!--					<button type="button" class="btn btn-sm btn-secondary" data-bs-toggle="modal" data-bs-target="#driverWageModel" th:data-trip-id="*{tripId}" onclick="loadDriverWageModal(this)">View Wage</button>-->
+				</td>
+				<td>
+					<span th:text="*{passengers + ' of ' + passengersMax}"></span><br>
 					<button type="button" class="btn btn-sm btn-teal" data-bs-toggle="modal" data-bs-target="#tripRidersModal" th:data-trip-id="*{tripId}" onclick="setTripIdAndLoadTripRidersModal(this)">Riders</button>
 				</td>
 				<td>
-					<a class="btn btn-sm btn-cyan" th:href="@{/admin/trips/editTrip(id=*{tripId})}">Edit</a>
+					<a class="btn btn-sm btn-cyan" th:href="@{/admin/trips/editTrip(id=*{tripId})}">Edit</a><br>
+					<a class="btn btn-sm btn-outline-pink" th:data-trip-id="*{tripId}" onclick="tripCalculations(this)">Recalculate</a>
 				</td>
-				<td>
-					<a class="btn btn-sm btn-red" th:href="@{/admin/trips/deleteTrip(id=*{tripId})}">Delete</a>
-				</td>
+				<td><a class="btn btn-sm btn-red" th:href="@{/admin/trips/deleteTrip(id=*{tripId})}">Delete</a></td>
+<!--				<td><a class="btn btn-sm btn-pink" th:data-trip-id="*{tripId}" onclick="tripCalculations(this)">Run calculations</a></td>-->
 			</tr>
 			</tbody>
 		</table>
+<!--		<th:block th:insert="~{fragments/modals/driverWageModal}"></th:block>-->
+		<th:block th:insert="~{fragments/modals/tripRidersModal}"></th:block>
+		<th:block th:insert="~{fragments/scripts/tripCalculations}"></th:block>
 	</main>
 </div>
-<th:block th:insert="~{fragments/modals/tripRiders}"></th:block>
 </body>
 </html>

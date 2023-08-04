@@ -32,7 +32,7 @@ public class RidersController {
         if (keyId.isEmpty()) {
             riders = riderRepository.findAll();
         } else {
-            riders = riderRepository.findRiderByRiderId(Integer.parseInt(keyId));
+            riders = riderRepository.findRidersByRiderId(Integer.parseInt(keyId));
         }
         for (int i = riders.size()-1; i >= 0; i--) {
             if (!riders.get(i).isActive && riders.get(i).tripsTaken.equals(0)) {
@@ -45,7 +45,7 @@ public class RidersController {
 
     @GetMapping("/admin/riders/editRider")
     public String editRider(Integer id, Model model) {
-        Rider rider = riderRepository.findRiderByRiderId(id).get(0);
+        Rider rider = riderRepository.findRidersByRiderId(id).get(0);
         model.addAttribute("rider", rider);
         return "/admin/riders/editRider";
     }
@@ -64,7 +64,7 @@ public class RidersController {
 
     @GetMapping("/admin/riders/riderStatus")
     public String riderStatus(Integer id, String status) {
-        Rider rider = riderRepository.findRiderByRiderId(id).get(0);
+        Rider rider = riderRepository.findRidersByRiderId(id).get(0);
         rider.riderStatus = status;
 //        rider.updateStatus();
         riderRepository.save(rider);
