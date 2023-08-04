@@ -8,7 +8,8 @@ import org.springframework.stereotype.Service;
 
 @Service
 public class SecurityService {
-    @Autowired UserRepository userRepository;
+    @Autowired
+    UserRepository userRepository;
 
     public HttpSession login(String usernameEmail, String password, HttpSession session) {
         session.setAttribute("ROLE", "Guest");
@@ -16,7 +17,7 @@ public class SecurityService {
         User user = userRepository.findByUsernameAndPassword(usernameEmail, password);
         if (user == null) {
             user = userRepository.findByEmailAndPassword(usernameEmail, password);
-                }
+        }
         if (user != null) {
             session.setAttribute("firstName", user.getFirstName());
             session.setAttribute("lastName", user.getLastName());
@@ -85,27 +86,34 @@ public class SecurityService {
 
         }
         // set homepage links
-        if (session.getAttribute("ROLE").equals("Admin")) { session.setAttribute("redirect", "redirect:/admin/users"); }
-        if (session.getAttribute("ROLE").equals("Driver")) { session.setAttribute("redirect", "redirect:/user/drivers/home_driver"); }
-        if (session.getAttribute("ROLE").equals("Rider")) { session.setAttribute("redirect", "redirect:/user/riders/home_rider"); }
-        if (session.getAttribute("ROLE").equals("Guest")) { session.setAttribute("redirect", "redirect:/user/login"); }
+        if (session.getAttribute("ROLE").equals("Admin")) {
+            session.setAttribute("redirect", "redirect:/admin/users");
+        }
+        if (session.getAttribute("ROLE").equals("Driver")) {
+            session.setAttribute("redirect", "redirect:/user/drivers/home_driver");
+        }
+        if (session.getAttribute("ROLE").equals("Rider")) {
+            session.setAttribute("redirect", "redirect:/user/riders/home_rider");
+        }
+        if (session.getAttribute("ROLE").equals("Guest")) {
+            session.setAttribute("redirect", "redirect:/user/login");
+        }
         return session;
     }
 
 
     public String login(String username, String password) {
         String status = "Guest";
-        List<User> users = userRepository.findUsersByUsernameAndPassword(username, password);
-        if (users.isEmpty()) {
-            users = userRepository.findUsersByEmailAndPassword(username, password);
-        } if (!users.isEmpty()) {
-            if (users.get(0).isAdmin) {
+        User user = userRepository.findByUsernameAndPassword(username, password);
+        if (user == null) {
+            user = userRepository.findByUsernameAndPassword(username, password);
+        }
+        if (user != null) {
+            if (user.isAdmin) {
                 status = "Admin";
-            }
-            else if (users.get(0).getDriver().getIsActive()) {
+            } else if (user.getDriver().getIsActive()) {
                 status = "Driver";
-            }
-            else if (users.get(0).getRider().getIsActive()) {
+            } else if (user.getRider().getIsActive()) {
                 status = "Rider";
             }
         }
@@ -113,10 +121,10 @@ public class SecurityService {
             if (username.toLowerCase().equals("admin") && password.toLowerCase().equals("admin")) {
                 status = "Admin";
             }
-        return status;
         }
-  
-  
+        return status;
+    }
+
     public HttpSession logout(HttpSession session) {
         session.invalidate();
         return session;
