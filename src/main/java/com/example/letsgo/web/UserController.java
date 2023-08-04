@@ -1,13 +1,25 @@
 package com.example.letsgo.web;
 
+import com.example.letsgo.entities.Driver;
+import com.example.letsgo.entities.Rider;
+import com.example.letsgo.entities.User;
 import com.example.letsgo.repositories.DriverRepository;
 import com.example.letsgo.repositories.RiderRepository;
 import com.example.letsgo.repositories.UserRepository;
+import jakarta.servlet.http.HttpSession;
 import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.ui.ModelMap;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.SessionAttributes;
 
+import java.sql.Timestamp;
+
+@SessionAttributes({"register"})
 @Controller
 @AllArgsConstructor
 public class UserController {
@@ -38,13 +50,69 @@ public class UserController {
     }
 
     @GetMapping("/user/drivers/register_driver")
-    public String registerDriver() {
+    public String registerDriver(Model model) {
+        model.addAttribute("user", new User());
         return "/user/drivers/register_driver";
     }
 
+    @PostMapping("/user/drivers/register_driver")
+    public String registerDriver(Model model, User user, BindingResult bindingResult,
+                           ModelMap mm, HttpSession session) {
+        if (bindingResult.hasErrors()) {
+            return "/user/drivers/register_driver";
+        } else {
+            user.setTimesRated(0);
+            user.setOverallSafetyScore(0f);
+            user.setOverallSafetyRating(0f);
+            user.setOverallResponsibilityRating(0f);
+            user.setCreatedAt(new Timestamp(System.currentTimeMillis()));
+            user.setUpdatedAt(new Timestamp(System.currentTimeMillis()));
+            Rider rider = new Rider(user);
+            Driver driver = new Driver(user);
+            user.setRider(rider);
+            user.setDriver(driver);
+            user.setUserStatus("Active");
+            driver.setIsActive(true);
+            driver.setDriverStatus("Active");
+            userRepository.save(user);
+            driverRepository.save(driver);
+            riderRepository.save(rider);
+            mm.put("register", 1);
+            return "redirect:/user/login";
+        }
+    }
+
     @GetMapping("/user/riders/register_rider")
-    public String registerRider() {
+    public String registerRider(Model model) {
+        model.addAttribute("user", new User());
         return "/user/riders/register_rider";
+    }
+
+    @PostMapping("/user/riders/register_rider")
+    public String registerRider(Model model, User user, BindingResult bindingResult,
+                                 ModelMap mm, HttpSession session) {
+        if (bindingResult.hasErrors()) {
+            return "/user/riders/register_rider";
+        } else {
+            user.setTimesRated(0);
+            user.setOverallSafetyScore(0f);
+            user.setOverallSafetyRating(0f);
+            user.setOverallResponsibilityRating(0f);
+            user.setCreatedAt(new Timestamp(System.currentTimeMillis()));
+            user.setUpdatedAt(new Timestamp(System.currentTimeMillis()));
+            Rider rider = new Rider(user);
+            Driver driver = new Driver(user);
+            user.setRider(rider);
+            user.setDriver(driver);
+            user.setUserStatus("Active");
+            rider.setIsActive(true);
+            rider.setRiderStatus("Active");
+            userRepository.save(user);
+            driverRepository.save(driver);
+            riderRepository.save(rider);
+            mm.put("register", 1);
+            return "redirect:/user/login";
+        }
     }
 
     @GetMapping("/user/riders/home_rider")

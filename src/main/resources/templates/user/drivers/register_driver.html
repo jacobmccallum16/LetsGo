@@ -5,16 +5,9 @@
     <title>Let's Go! - Driver Registration</title>
     <th:block th:insert="~{fragments/scripts}"></th:block>
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.4.1/css/all.css" integrity="sha384-5sAR7xN1Nv6T6+dT2mhtzEpVJvfS3NScPQTrOxhwjIuvcA67KV2R5Jz6kr4abQsz" crossorigin="anonymous">
-    <link href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700" rel="stylesheet">
     <style>
-        html, body {
-            min-height: 100%;
-        }
         body, div, form, input, select, p {
-            padding: 0;
-            margin: 0;
             outline: none;
-            font-size: 16px;
             color: #eee;
         }
         h2 {
@@ -26,23 +19,17 @@
             margin-top: 20px;
             margin-left: 20px;
         }
-        .main-block {
-            display: flex;
-            flex-direction: column;
+        .container {
             justify-content: center;
             align-items: center;
-            height: 100%;
-            padding: 30px;
-            background-color: lightgray;
-        }
-        .left-part, form {
+            margin: 20px;
             padding: 50px;
-        }
-        .left-part {
-            text-align: center;
+            width: 100%;
         }
         form {
             background: rgba(0, 0, 0, 0.7);
+            margin: 0 50px;
+            padding: 50px;
         }
         .title {
             display: flex;
@@ -91,19 +78,6 @@
         span {
             color: #eee;
         }
-        @media (min-width: 568px) {
-            html, body {
-                height: 100%;
-            }
-            .main-block {
-                flex-direction: row;
-                height: calc(100% - 50px);
-            }
-            .left-part, form {
-                flex: 1;
-                height: auto;
-            }
-        }
     </style>
 </head>
 <body>
@@ -111,30 +85,29 @@
     <img th:src="@{/company-logo.png}" alt="Let's Go! Logo" class="logo">
 </a>
 <a class="navbar-brand bg-indigo-600 rounded-pill px-3 text-info fw-bold fst-italic" th:href="@{/index}">Let's Go!</a>
-<div class="main-block">
-    <div class="left-part">
-        <h1 class="text-primary">Register to Drive with Let's Go!</h1>
-    </div>
-    <form action="/">
+<div class="container">
+    <form method="post" th:action="@{register_driver}">
         <div class="title">
-            <h2 class="text-purple">Sign Up as Driver</h2>
+            <h2 class="text-purple-400">Sign Up as Driver</h2>
         </div>
         <div class="info">
-            <input class="fname" type="text" id="fname" name="fname" placeholder="First name" required>
-            <input class="lname" type="text" id="lname" name="lname" placeholder="Last name" required>
+            <input type="text" id="firstName" name="firstName" placeholder="First name" required>
+            <input type="text" id="lastName" name="lastName" placeholder="Last name" required>
             <input type="text" id="email" name="email" placeholder="Email" required>
             <input type="tel" id="phone" name="phone" placeholder="Phone number" required>
-            <label for="dateofbirth">Dat of Birth:</label>
-            <input type="date" id="dateofbirth" name="dateofbirth" placeholder="yyyy-mm-dd" min="1900-01-01" max="2022-12-31" required>
+            <label for="dateOfBirth">Dat of Birth:</label>
+            <input type="date" id="dateOfBirth" name="dateOfBirth" placeholder="yyyy-mm-dd" min="1900-01-01" max="2022-12-31" required>
+            <input type="text" id="username" name="username" placeholder="Username" required>
             <input type="password" id="password" name="password" placeholder="Password" required>
             <input type="number" id="license" name="license" placeholder="Driver's license number" required>
             <input type="number" id="sin" name="sin" placeholder="Social insurance number" minlength="9" maxlength="9" required>
         </div>
         <div class="checkbox">
-            <input type="checkbox" name="checkbox"><span>I agree to the <a href="#">Terms of Use</a>
+            <input type="checkbox" name="checkbox" required><span>I agree to the <a href="#">Terms of Use</a>
             and <a href="#">Privacy Policy.</a></span>
         </div>
-        <button type="submit" href="/" class="button btn btn-lg btn-primary btn-block">Submit</button>
+        <br/>
+        <button type="submit" class="button btn btn-lg btn-primary btn-block">Submit</button>
     </form>
 </div>
 </body>
