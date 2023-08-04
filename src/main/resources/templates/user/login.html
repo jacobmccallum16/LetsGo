@@ -81,6 +81,9 @@
   </main>
 </div>
 
+<th:block th:insert="~{fragments/scripts/debugSession :: debugSessionMain()}"></th:block>
+
+
 <script th:inline="javascript">
   var u = [[${session.register}]];
   var alerted = localStorage.getItem('alerted') || '';
@@ -98,6 +101,7 @@
     localStorage.setItem('alerted','yes');
   }
 </script>
+
 
 </body>
 </html>

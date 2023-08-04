@@ -1,4 +1,4 @@
-<main th:if="${session.status != 'Admin'}" class="container text-center flex-grow-1">
+<main th:if="${session.AUTH != 'ADMIN'}" class="container text-center flex-grow-1">
 	<h1>Sorry, you don't have access to this page!</h1>
 	<br>
 	<div><a class="btn btn-lg btn-primary" th:href="@{/user/login}">Login here</a></div>

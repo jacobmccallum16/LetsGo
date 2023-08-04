@@ -91,6 +91,14 @@ public class TripsController {
         return "redirect:/admin/trips";
     }
 
+    @GetMapping("/admin/trips/tripDetails")
+    public String getTripDetails(@RequestParam(name="tripId") String tripId, Model model) {
+        model.addAttribute("trip", tripService.getTripByTripId(Integer.parseInt(tripId)));
+        model.addAttribute("drivers", tripService.getDriverTripTransactionByTripId(Integer.parseInt(tripId)));
+        model.addAttribute("riders", tripService.getRiderTripTransactionsByTripId(Integer.parseInt(tripId)));
+        return "/admin/trips/tripDetails";
+    }
+
 //    @GetMapping("/admin/trips/addRiders}")
 //    public String addRiders(@RequestParam(name="tripId") String tripId, Model model) {
 //        Trip trip = tripRepository.findTripByTripId(Integer.parseInt(tripId));

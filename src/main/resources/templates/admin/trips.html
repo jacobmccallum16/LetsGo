@@ -22,6 +22,7 @@
 				<th>Driver</th>
 				<th>Riders</th>
 				<th>Edit</th>
+				<th>Details</th>
 				<th>Delete</th>
 			</tr>
 			</thead>
@@ -52,6 +53,7 @@
 					<a class="btn btn-sm btn-cyan" th:href="@{/admin/trips/editTrip(id=*{tripId})}">Edit</a><br>
 					<a class="btn btn-sm btn-outline-pink" th:data-trip-id="*{tripId}" onclick="tripCalculations(this)">Recalculate</a>
 				</td>
+				<td><a class="btn btn-sm btn-green" th:href="@{/admin/trips/tripDetails(tripId=*{tripId})}">Details</a></td>
 				<td><a class="btn btn-sm btn-red" th:href="@{/admin/trips/deleteTrip(id=*{tripId})}">Delete</a></td>
 <!--				<td><a class="btn btn-sm btn-pink" th:data-trip-id="*{tripId}" onclick="tripCalculations(this)">Run calculations</a></td>-->
 			</tr>

@@ -14,8 +14,16 @@ import org.springframework.web.bind.annotation.SessionAttributes;
 @Controller
 public class SecurityController {
     @Autowired private SecurityService securityService;
+    @Autowired public HttpSession httpSession;
 
     @PostMapping("/user/login")
+
+//     public String login(@RequestParam String username, @RequestParam String password) {
+//         httpSession = securityService.login(username, password, httpSession);
+//         String redirect = httpSession.getAttribute("redirect").toString();
+//         httpSession.removeAttribute("redirect");
+//         return redirect;
+
     public String login(@RequestParam String username, @RequestParam String password, ModelMap mm, HttpSession session) {
         String status = securityService.login(username, password);
         session.setAttribute("status", status);
@@ -30,20 +38,21 @@ public class SecurityController {
             mm.put("fail", 2);
             return "redirect:/user/login" ;
         }
+
     }
     @GetMapping("/logout")
-    public String logout(HttpSession session) {
-        session.removeAttribute("status");
+    public String logout() {
+        httpSession = securityService.logout(httpSession);
         return "redirect:/index" ;
     }
     @GetMapping("/user/logout")
-    public String userLogout(HttpSession session) {
-        session.removeAttribute("status");
+    public String userLogout() {
+        httpSession = securityService.logout(httpSession);
         return "redirect:/index" ;
     }
     @GetMapping("/admin/logout")
-    public String adminLogout(HttpSession session) {
-        session.removeAttribute("status");
-        return "redirect:/admin/" ;
+    public String adminLogout() {
+        httpSession = securityService.logout(httpSession);
+        return "redirect:/admin" ;
     }
 }

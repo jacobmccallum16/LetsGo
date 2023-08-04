@@ -1,0 +1,14 @@
+<script th:inline="javascript" th:fragment="debugSessionMain()">
+	let sessionDebugData = /*[[${session}]]*/;
+	let sessionDebugP = document.createElement("p");
+	sessionDebugP.innerHTML = JSON.stringify(sessionDebugData);
+	let main = document.getElementsByTagName("main").item(0);
+	main.insertBefore(sessionDebugP, main.children[0]);
+</script>
+<script th:inline="javascript" th:fragment="debugSessionBody()">
+	let sessionDebugData = /*[[${session}]]*/;
+	let sessionDebugP = document.createElement("p");
+	sessionDebugP.innerHTML = JSON.stringify(sessionDebugData);
+	let body = document.getElementsByTagName("body").item(0);
+	body.insertBefore(sessionDebugP, body.children[0]);
+</script>

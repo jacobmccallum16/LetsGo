@@ -33,15 +33,12 @@
 					</ul>
 				</li>
 				<li class="nav-item dropdown">
-					<a th:if="${session.status == 'Admin'}" class="nav-link link-primary dropdown-toggle" th:href="@{/admin/users}" role="button" data-bs-toggle="dropdown" aria-expanded="false">Admin Account</a>
-					<a th:if="${session.status == 'User'}" class="nav-link link-primary dropdown-toggle" th:href="@{/admin/users}" role="button" data-bs-toggle="dropdown" aria-expanded="false">User Account</a>
-					<a th:if="${session.status == 'Guest'}" class="nav-link link-primary dropdown-toggle" th:href="@{/admin/users}" role="button" data-bs-toggle="dropdown" aria-expanded="false">Guest Account</a>
-					<a th:unless="${session.status}" class="nav-link link-primary dropdown-toggle" th:href="@{/admin/users}" role="button" data-bs-toggle="dropdown" aria-expanded="false">Account</a>
+					<a th:if="${session.firstName}" class="nav-link link-primary dropdown-toggle" th:href="@{/admin/users}" role="button" data-bs-toggle="dropdown" aria-expanded="false" th:text="${session.firstName}">Account</a>
+					<a th:unless="${session.firstName}" class="nav-link link-primary dropdown-toggle" th:href="@{/admin/users}" role="button" data-bs-toggle="dropdown" aria-expanded="false">Account</a>
 					<ul class="dropdown-menu">
-						<li th:if="${session.status == 'Admin'}"><a class="dropdown-item link-primary" th:href="@{/user/logout}">Log Out</a></li>
-						<li th:if="${session.status == 'User'}"><a class="dropdown-item link-primary" th:href="@{/user/logout}">Log Out</a></li>
-						<li th:if="${session.status == 'Guest'}"><a class="dropdown-item link-primary" th:href="@{/user/login}">Log In</a></li>
-						<li th:unless="${session.status}"><a class="dropdown-item link-primary" th:href="@{/user/login}">Log In</a></li>
+						<li th:if="${session.AUTH == 'ADMIN'}"><a class="dropdown-item link-primary" th:href="@{/admin/logout}">Log Out</a></li>
+						<li th:if="${session.AUTH == 'USER'}"><a class="dropdown-item link-primary" th:href="@{/user/logout}">Log Out</a></li>
+						<li th:unless="${session.AUTH}"><a class="dropdown-item link-primary" th:href="@{/user/login}">Log In</a></li>
 					</ul>
 				</li>
 			</ul>

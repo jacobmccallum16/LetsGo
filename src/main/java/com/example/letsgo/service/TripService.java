@@ -115,11 +115,6 @@ public class TripService {
         }
         return drivers;
     }
-
-    public DriverTripTransaction getDriverTripTransactionByTripId(Integer tripId) {
-        Trip trip = tripRepository.findTripByTripId(tripId);
-        return driverTripTransactionRepository.findByTrip(trip);
-    }
     public void createDriverTripTransaction(Trip trip) {
         Driver driver = trip.getDriver();
         DriverTripTransaction driverTripTransaction;
@@ -150,6 +145,13 @@ public class TripService {
         RiderTripTransaction riderTripTransaction = riderTripTransactionRepository.findByTripAndRiderId(trip, rider.getRiderId());
         riderTripTransactionRepository.delete(riderTripTransaction);
     }
+    public void deleteRiderTripTransaction2(Integer tripRiderId) {
+        TripRider tripRider = tripRiderRepository.findTripRiderByTripRiderId(tripRiderId);
+        Trip trip = tripRepository.findTripByTripId(tripRider.getTripId());
+        Rider rider = riderRepository.findRiderByRiderId(tripRider.getRiderId());
+        RiderTripTransaction riderTripTransaction = riderTripTransactionRepository.findByTripAndRiderId(trip, rider.getRiderId());
+        riderTripTransactionRepository.delete(riderTripTransaction);
+    }
 
     public void save(DriverTripTransaction driverTripTransaction) {
         driverTripTransactionRepository.save(driverTripTransaction);
@@ -164,6 +166,33 @@ public class TripService {
         driverTripTransactionRepository.save(driverTripTransaction);
         riderTripTransactionRepository.saveAll(riderTripTransactions);
     }
+
+
+    // trip details page
+    public Driver getDriverOfTrip(Integer tripId) {
+        Trip trip = tripRepository.findTripByTripId(tripId);
+        Driver driver = null;
+        if (trip.getDriver() != null) {
+            driver = driverRepository.findDriverByDriverId(trip.getDriver().getDriverId());
+        }
+        return driver;
+    }
+    public List<TripRider> getRidersOfTrip(Integer tripId) {
+        Trip trip = tripRepository.findTripByTripId(tripId);
+        return tripRiderRepository.findTripRidersByTripId(tripId);
+    }
+    public Trip getTripByTripId(Integer tripId) {
+        return tripRepository.findTripByTripId(tripId);
+    }
+    public List<DriverTripTransaction> getDriverTripTransactionByTripId(Integer tripId) {
+        Trip trip = tripRepository.findTripByTripId(tripId);
+        return driverTripTransactionRepository.findAllByTrip(trip);
+    }
+    public List<RiderTripTransaction> getRiderTripTransactionsByTripId(Integer tripId) {
+        Trip trip = tripRepository.findTripByTripId(tripId);
+        return riderTripTransactionRepository.findAllByTrip(trip);
+    }
+
 
 
 }

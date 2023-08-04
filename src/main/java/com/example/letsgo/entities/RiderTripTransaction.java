@@ -16,6 +16,9 @@ import java.sql.Timestamp;
 public class RiderTripTransaction {
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY) private Integer riderTripTransactionId;
     @ManyToOne(fetch = FetchType.LAZY) @JoinColumn(name = "trip_id") @JsonIgnoreProperties({"hibernateLazyInitializer"}) private Trip trip;
+    private String firstName;
+    private String lastName;
+    private String fullName;
     private Integer riderId; // @ManyToOne
     private Integer routeId; // @ManyToOne
     private Integer driverId;
@@ -52,9 +55,12 @@ public class RiderTripTransaction {
         preTripCalculations(rider);
     }
 
-
     public void preTripCalculations(Rider rider) {
         riderTripTransactionStatus = trip.getTripStatus();
+
+        firstName = rider.getFirstName();
+        lastName = rider.getLastName();
+        fullName = rider.getFullName();
 
         passengers = trip.getPassengers();
         if (trip.getDriver() != null) {
