@@ -15,19 +15,10 @@
     html, body {
       display: flex;
       justify-content: center;
-      font-size: 15px;
+      width: 100%;
     }
     h1 {
       text-align:center;
-    }
-    .main-block {
-      display: flex;
-      flex-direction: column;
-      justify-content: center;
-      align-items: center;
-      height: 100%;
-      padding: 30px;
-      background-color: lightgray;
     }
     input[type=text], input[type=password] {
       width: 100%;
@@ -56,19 +47,12 @@
     }
     .container {
       width: 100%;
-      margin: 0 auto;
-      padding: 20px;
+      margin: 0 20px;
     }
     span.password {
       float: right;
       padding-top: 0;
       padding-right: 15px;
-    }
-    @media screen and (max-width: 300px) {
-      span.password {
-        display: block;
-        float: none;
-      }
     }
   </style>
 </head>
@@ -78,15 +62,16 @@
   <img th:src="@{/company-logo.png}" alt="Let's Go! Logo" class="logo">
 </a>
 <a class="navbar-brand bg-indigo-600 rounded-pill px-3 text-info fw-bold fst-italic" th:href="@{/index}">Let's Go!</a>
-  <main class="main-block text-center flex-grow-1">
+  <main class="text-center flex-grow-1">
   <form method="post" th:action="@{/user/login}">
     <h1 class="text-primary">Login</h1>
     <div class="formcontainer">
       <hr/>
       <div class="container">
-        <label for="username"><strong>Email / Phone number</strong></label>
-        <input type="text" placeholder="Enter email or phone number" id="username" name="username" required autofocus>
-        <label for="password"><strong>Password</strong></label>
+        <strong><p id="msg" style="color:red"></p></strong>
+        <label for="username">Email / Phone number</label>
+        <input type="text" placeholder="Enter username" id="username" name="username" required autofocus>
+        <label for="password">Password</label>
         <input type="password" placeholder="Enter Password" id="password" name="password" required>
       <button type="submit" class="button btn btn-lg btn-primary btn-block">Login</button>
       <span class="password"><a th:href="@{/user/forgot-password}">Forgot password?</a></span>
@@ -95,6 +80,28 @@
   </form>
   </main>
 </div>
+
 <th:block th:insert="~{fragments/scripts/debugSession :: debugSessionMain()}"></th:block>
+
+
+<script th:inline="javascript">
+  var u = [[${session.register}]];
+  var alerted = localStorage.getItem('alerted') || '';
+  if (u == 1 && alerted != 'yes') {
+    alert("Registration successful!");
+    localStorage.setItem('alerted','yes');
+  }
+</script>
+
+<script th:inline="javascript">
+  var u = [[${session.fail}]];
+  var alerted = localStorage.getItem('alerted') || '';
+  if(u == 2 && alerted != 'yes') {
+    alert("Your username or password is not correct.");
+    localStorage.setItem('alerted','yes');
+  }
+</script>
+
+
 </body>
 </html>

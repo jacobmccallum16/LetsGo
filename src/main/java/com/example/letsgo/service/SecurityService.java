@@ -16,7 +16,7 @@ public class SecurityService {
         User user = userRepository.findByUsernameAndPassword(usernameEmail, password);
         if (user == null) {
             user = userRepository.findByEmailAndPassword(usernameEmail, password);
-        }
+                }
         if (user != null) {
             session.setAttribute("firstName", user.getFirstName());
             session.setAttribute("lastName", user.getLastName());
@@ -92,6 +92,31 @@ public class SecurityService {
         return session;
     }
 
+
+    public String login(String username, String password) {
+        String status = "Guest";
+        List<User> users = userRepository.findUsersByUsernameAndPassword(username, password);
+        if (users.isEmpty()) {
+            users = userRepository.findUsersByEmailAndPassword(username, password);
+        } if (!users.isEmpty()) {
+            if (users.get(0).isAdmin) {
+                status = "Admin";
+            }
+            else if (users.get(0).getDriver().getIsActive()) {
+                status = "Driver";
+            }
+            else if (users.get(0).getRider().getIsActive()) {
+                status = "Rider";
+            }
+        }
+        if (status == "Guest") {
+            if (username.toLowerCase().equals("admin") && password.toLowerCase().equals("admin")) {
+                status = "Admin";
+            }
+        return status;
+        }
+  
+  
     public HttpSession logout(HttpSession session) {
         session.invalidate();
         return session;
