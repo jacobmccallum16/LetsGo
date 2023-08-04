@@ -217,7 +217,9 @@
             <textarea rows="3"></textarea>
         </div>
         <div class="btn-block">
-            <button type="submit" th:href="@{user/riders/request_rider}" class="btn btn-primary">Request</button>
+            <a th:href="@{request_rider}">
+                <button type="button" class="btn btn-primary">Request</button>
+            </a>
         </div>
     </form>
 </div>

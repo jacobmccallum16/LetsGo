@@ -18,8 +18,12 @@ public class SecurityService {
         } if (!users.isEmpty()) {
             if (users.get(0).isAdmin) {
                 status = "Admin";
-            } else {
-                status = "User";
+            }
+            else if (users.get(0).getDriver().getIsActive()) {
+                status = "Driver";
+            }
+            else if (users.get(0).getRider().getIsActive()) {
+                status = "Rider";
             }
         }
         if (status == "Guest") {
