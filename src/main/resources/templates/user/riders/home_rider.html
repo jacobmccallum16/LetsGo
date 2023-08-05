@@ -141,16 +141,17 @@
         }
     </style>
 </head>
-<body>
-<a th:href="@{/user/riders/home_rider}">
+<body th:insert="~{fragments/security/userSecurity}"></body>
+<body th:if="${session.AUTH == 'USER' || session.AUTH == 'ADMIN'}" class="vh-100">
+<a th:href="@{/homepage}">
     <img th:src="@{/company-logo.png}" alt="Let's Go! Logo" class="logo">
 </a>
 <a class="navbar-brand bg-indigo-600 rounded-pill px-3 text-info fw-bold fst-italic" th:href="@{/user/riders/home_rider}">Let's Go!</a>
 <div class="d-flex flex-fill">
     <th:block th:insert="~{fragments/sidebar_rider}"></th:block>
-<div class="container">
+	<div class="container">
     <form action="/">
-        <h1 class="text-primary">Welcome, Get a Ride!</h1>
+        <h1 class="text-primary">Welcome<span id="firstName"></span>, Get a Ride!</h1>
 
         <div class="item">
             <p>Number of Passengers</p>
@@ -224,7 +225,13 @@
     </form>
 </div>
 </div>
-
-<th:block th:insert="~{fragments/scripts/debugSession :: debugSessionBody()}"></th:block>
+<script th:inline="javascript">
+	async function getRiderData() {
+		let obj = await fetch(`/api/user/rider/[[${session.riderId}]]/getRider`);
+		let data = JSON.parse(await obj.text());
+		document.getElementById("firstName").innerHTML += ` ${data.firstName}`;
+	}
+	getRiderData();
+</script>
 </body>
 </html>

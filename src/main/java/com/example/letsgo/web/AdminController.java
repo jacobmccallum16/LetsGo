@@ -21,11 +21,10 @@ import java.util.List;
 @SessionAttributes({"section", "page"})
 public class AdminController {
 
-    @Autowired
-    private UserRepository userRepository;
-    private RiderRepository riderRepository;
-    private DriverRepository driverRepository;
-    public HttpSession httpSession;
+    @Autowired private UserRepository userRepository;
+    @Autowired private RiderRepository riderRepository;
+    @Autowired private DriverRepository driverRepository;
+    @Autowired public HttpSession httpSession;
 
     @GetMapping("/admin")
     public String adminHome() {

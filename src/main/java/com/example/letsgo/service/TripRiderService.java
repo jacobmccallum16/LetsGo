@@ -54,7 +54,7 @@ public class TripRiderService {
                 }
             }
             if (checkDriverRiderId) {
-                if (riderId == trip.getDriverRiderId()) {
+                if (riderId == trip.getDriver().getUser().getRider().getRiderId()) {
                     busy = true; // if potential rider is the driver of this trip
                 }
             }

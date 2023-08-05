@@ -1,0 +1,11 @@
+<body th:if="${session.AUTH != 'USER' && session.AUTH != 'ADMIN'}" style="background-color: #f2f6fc;" class="vh d-flex flex-column text-center">
+	<div class="mt-2 mb-5">
+		<a th:href="@{/index}">
+			<img th:src="@{/company-logo.png}" alt="Let's Go! Logo" style="width: 100px; height: 100px" class="m-3">
+		</a>
+		<a class="navbar-brand bg-indigo-600 rounded-pill px-3 text-info fw-bold fst-italic" th:href="@{/index}">Let's Go!</a>
+	</div>
+	<h1 class="mb-3">Sorry, you don't have access to this page!</h1>
+	<div><a class="btn btn-lg btn-primary" th:href="@{/user/login}" autofocus>Login here</a></div>
+	<th:block th:insert="~{fragments/scripts/debugSession :: debugSessionBody()}"></th:block>
+</body>

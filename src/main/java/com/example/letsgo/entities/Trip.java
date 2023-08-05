@@ -51,8 +51,6 @@ public class Trip {
     public Integer getRouteId() {
         return getRoute().getRouteId();
     }
-    public Integer getDriverId() { return getDriver().getDriverId(); }
-    public Integer getDriverRiderId() { return getDriver().getRiderId(); }
     public void calculateArrivalTime() {
         arrivalTime = departureTime.plusMinutes(tripDurationActual.longValue());
         return;

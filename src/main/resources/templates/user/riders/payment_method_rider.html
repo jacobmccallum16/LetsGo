@@ -50,8 +50,9 @@
         }
   </style>
 </head>
-<body>
-<a th:href="@{/user/riders/home_rider.html}">
+<body th:insert="~{fragments/security/userSecurity}"></body>
+<body th:if="${session.AUTH == 'USER' || session.AUTH == 'ADMIN'}" class="vh-100">
+<a th:href="@{/homepage}">
     <img th:src="@{/company-logo.png}" alt="Let's Go! Logo" class="logo">
 </a>
 <a class="navbar-brand bg-indigo-600 rounded-pill px-3 text-info fw-bold fst-italic" th:href="@{/user/riders/home_rider}">Let's Go!</a>
