@@ -10,6 +10,7 @@ import org.springframework.stereotype.Service;
 public class SecurityService {
     @Autowired UserRepository userRepository;
 
+
     public HttpSession login(String usernameEmail, String password, HttpSession session) {
         session.setAttribute("ROLE", "Guest");
         session.removeAttribute("AUTH");
@@ -30,6 +31,7 @@ public class SecurityService {
             } else {
                 session.removeAttribute("riderId");
                 session.removeAttribute("riderStatus");
+
             }
             if (user.getDriver().getIsActive()) {
                 session.setAttribute("driverId", user.getDriver().getDriverId());
