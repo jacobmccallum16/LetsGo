@@ -54,7 +54,8 @@ public class UsersController {
         if (bindingResult.hasErrors()) {
             return "/admin/users/createUser";
         } else {
-            if (user.getIsAdmin()) {user.setIsAdmin(false);}
+            if (user.getIsAdmin()) {user.setIsAdmin(true);}
+            user.setIsActive(true);
             user.setTimesRated(0);
             user.setOverallSafetyScore(0f);
             user.setOverallSafetyRating(0f);
