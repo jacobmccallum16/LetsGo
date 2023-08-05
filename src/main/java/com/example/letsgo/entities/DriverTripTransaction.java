@@ -21,6 +21,9 @@ public class DriverTripTransaction {
     @ManyToOne(fetch = FetchType.LAZY) @JoinColumn(name = "trip_id")
     @JsonIgnoreProperties({"hibernateLazyInitializer", "driver", "route", "driver.getRider()", "driver.getRiderId()"}) private Trip trip;
 //    private Integer tripId; // @OneToOne
+    private String firstName = null;
+    private String lastName = null;
+    private String fullName = null;
     private Integer routeId; // @ManyToOne
     private Integer driverId; // @ManyToOne
     private Integer vehicleId; // @ManyToOne
@@ -68,10 +71,16 @@ public class DriverTripTransaction {
             driverId = driver.getDriverId();
             driverSafetyScore = Math.round(driver.getDriverSafetyScore() * 10) / 10f;
             passengersMax = trip.getPassengersMax();
+            firstName = driver.getFirstName();
+            lastName = driver.getLastName();
+            fullName = driver.getFullName();
         } else {
             driverId = null;
             driverSafetyScore = 0f;
             passengersMax = 6;
+            firstName = null;
+            lastName = null;
+            fullName = null;
         }
 
 //        if (driverSafetyScore >= 4) {

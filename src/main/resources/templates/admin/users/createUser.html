@@ -5,7 +5,8 @@
 	<title>Let's Go! - Admin - New User</title>
 	<th:block th:insert="fragments/scripts"></th:block>
 </head>
-<body class="vh-100 d-flex flex-column">
+<body th:insert="~{fragments/security/adminSecurity}"></body>
+<body th:if="${session.AUTH == 'ADMIN'}" class="vh-100 d-flex flex-column" style="min-width: 576px;">
 	<th:block th:insert="fragments/navbar"></th:block>
 	<div class="d-flex flex-fill">
 		<th:block th:insert="fragments/sidebar"></th:block>
@@ -60,9 +61,9 @@
 								<div class="col-md-3">
 									<div class="form-floating">
 										<select class="form-select" id="userStatus" name="userStatus" th:field="*{userStatus}" th:errorClass="is-invalid">
-											<option value="inactive">Inactive</option>
-											<option value="active">Active</option>
-											<option value="banned">Banned</option>
+											<option value="Inactive">Inactive</option>
+											<option value="Active">Active</option>
+											<option value="Banned">Banned</option>
 										</select>
 										<label for="userStatus">Status</label>
 									</div>

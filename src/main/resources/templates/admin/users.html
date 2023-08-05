@@ -6,12 +6,12 @@
 	<title>Let's Go! - Admin - Users</title>
 	<th:block th:insert="~{fragments/scripts}"></th:block>
 </head>
-<body class="vh-100 d-flex flex-column">
+<body th:insert="~{fragments/security/adminSecurity}"></body>
+<body th:if="${session.AUTH == 'ADMIN'}" class="vh-100 d-flex flex-column" style="min-width: 576px;">
 	<th:block th:insert="~{fragments/navbar}"></th:block>
 	<div class="d-flex flex-fill">
 		<th:block th:insert="~{fragments/sidebar}"></th:block>
-		<th:block th:insert="~{fragments/security/adminPage}"></th:block>
-		<main th:if="${session.status == 'Admin'}" class="container text-center flex-grow-1">
+		<main class="container text-center flex-grow-1">
 			<h1>All Users</h1>
 			<table class="table table-striped table-hover table-sm align-middle">
 				<thead class="table-dark">
@@ -51,5 +51,6 @@
 			</table>
 		</main>
 	</div>
+	<th:block th:insert="~{fragments/scripts/debugSession :: debugSessionMain()}"></th:block>
 </body>
 </html>

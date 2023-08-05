@@ -24,14 +24,13 @@ import java.util.List;
 @AllArgsConstructor
 public class UsersController {
 
-    @Autowired
-    private UserRepository userRepository;
-    private RiderRepository riderRepository;
-    private DriverRepository driverRepository;
-    public HttpSession httpSession;
+    @Autowired private UserRepository userRepository;
+    @Autowired private RiderRepository riderRepository;
+    @Autowired private DriverRepository driverRepository;
+    @Autowired public HttpSession httpSession;
 
     @GetMapping("/admin/users")
-    public String users(Model model, @RequestParam(name="keyId",defaultValue = "") String keyId) {
+    public String users(Model model, @RequestParam(name="keyId",defaultValue = "") String keyId, HttpSession httpSession) {
         List<User> users;
         if (keyId.isEmpty()) {
             users = userRepository.findAll();
@@ -40,8 +39,6 @@ public class UsersController {
             users = userRepository.findUsersByUserId(id);
         }
         model.addAttribute("listUsers", users);
-        httpSession.setAttribute("section", "admin");
-        httpSession.setAttribute("page", "users");
         return "/admin/users";
     }
 
@@ -57,7 +54,8 @@ public class UsersController {
         if (bindingResult.hasErrors()) {
             return "/admin/users/createUser";
         } else {
-            if (user.getIsAdmin()) {user.setIsAdmin(false);}
+            if (user.getIsAdmin()) {user.setIsAdmin(true);}
+            user.setIsActive(true);
             user.setTimesRated(0);
             user.setOverallSafetyScore(0f);
             user.setOverallSafetyRating(0f);

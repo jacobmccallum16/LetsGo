@@ -1,6 +1,7 @@
 package com.example.letsgo.entities;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonInclude;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -13,9 +14,13 @@ import java.sql.Timestamp;
 @Entity
 @AllArgsConstructor
 @NoArgsConstructor
+@JsonInclude(JsonInclude.Include.NON_NULL)
 public class RiderTripTransaction {
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY) private Integer riderTripTransactionId;
-    @ManyToOne(fetch = FetchType.LAZY) @JoinColumn(name = "trip_id") @JsonIgnoreProperties({"hibernateLazyInitializer"}) private Trip trip;
+    @ManyToOne(fetch = FetchType.LAZY) @JoinColumn(name = "trip_id") @JsonIgnoreProperties({"hibernateLazyInitializer", "driver"}) private Trip trip;
+    private String firstName;
+    private String lastName;
+    private String fullName;
     private Integer riderId; // @ManyToOne
     private Integer routeId; // @ManyToOne
     private Integer driverId;
@@ -52,13 +57,16 @@ public class RiderTripTransaction {
         preTripCalculations(rider);
     }
 
-
     public void preTripCalculations(Rider rider) {
         riderTripTransactionStatus = trip.getTripStatus();
 
+        firstName = rider.getFirstName();
+        lastName = rider.getLastName();
+        fullName = rider.getFullName();
+
         passengers = trip.getPassengers();
         if (trip.getDriver() != null) {
-            driverId = trip.getDriverId();
+            driverId = trip.getDriver().getDriverId();
             passengersMax = trip.getPassengersMax();
         } else {
             driverId = null;

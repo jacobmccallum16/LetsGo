@@ -56,8 +56,9 @@
         }
     </style>
 </head>
-<body>
-<a th:href="@{/user/drivers/home_driver}">
+<body th:insert="~{fragments/security/userSecurity}"></body>
+<body th:if="${session.AUTH == 'USER' || session.AUTH == 'ADMIN'}" class="vh-100">
+<a th:href="@{/homepage}">
     <img th:src="@{/company-logo.png}" alt="Let's Go! Logo" class="logo">
 </a>
 <a class="navbar-brand bg-indigo-600 rounded-pill px-3 text-info fw-bold fst-italic" th:href="@{/user/drivers/home_driver}">Let's Go!</a>
@@ -131,7 +132,7 @@
     </div>
 </div>
 
-<script>
+<script th:inline="javascript">
     var uploadField = document.getElementById("picture");
 
     uploadField.onchange = function() {
@@ -140,7 +141,17 @@
             this.value = "";
         };
     };
+    
+    async function getDriverData() {
+	    let driverObj = await fetch(`/api/user/driver/[[${session.driverId}]]/getDriver`);
+	    let driverText = await driverObj.text();
+	    let driverData = JSON.parse(driverText);
+	    document.getElementById("fname").value = driverData.firstName;
+	    document.getElementById("lname").value = driverData.lastName;
+	    document.getElementById("email").value = driverData.user.email;
+    }
+    getDriverData();
+		
 </script>
-
 </body>
 </html>

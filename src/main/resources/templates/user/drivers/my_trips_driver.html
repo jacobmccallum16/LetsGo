@@ -27,23 +27,60 @@
         }
     </style>
 </head>
-<body>
-<a th:href="@{/user/drivers/home_driver}">
+<body th:insert="~{fragments/security/userSecurity}"></body>
+<body th:if="${session.AUTH == 'USER' || session.AUTH == 'ADMIN'}" class="vh-100">
+<a th:href="@{/homepage}">
     <img th:src="@{/company-logo.png}" alt="Let's Go! Logo" class="logo">
 </a>
 <a class="navbar-brand bg-indigo-600 rounded-pill px-3 text-info fw-bold fst-italic" th:href="@{/user/drivers/home_driver}">Let's Go!</a>
 <div class="d-flex flex-fill">
-    <th:block th:insert="~{fragments/sidebar_driver}"></th:block>
-    <div class="container">
-        <label for="types"><h2 class="text-primary">My Trips</h2></label>
-        <br/>
-        <select name="types" id="types">
-            <option value="">Select Trip Type</option>
-            <option value="1">Past</option>
-            <option value="2">Upcoming</option>
-        </select>
-    </div>
+	<th:block th:insert="~{fragments/sidebar_driver}"></th:block>
+	<div class="container">
+		<h2 class="text-primary">My Trips</h2>
+		<div class="form-floating">
+			<select class="form-select" id="tripTypeSelect" onchange="getDriverTrips()">
+				<option value="Completed">Completed Trips</option>
+				<option value="All" selected>All Trips</option>
+				<option value="Upcoming">Upcoming Trips</option>
+			</select>
+			<label for="tripTypeSelect">Trip Type</label>
+		</div>
+		<div>
+			<div id="jsonOutput" class="row m-3 gap-3 justify-content-evenly"></div>
+		</div>
+  </div>
 </div>
+
+<script src="/scripts/createObjectTable.js"></script>
+<script th:inline="javascript">
+	const tripTypeSelect = document.getElementById("tripTypeSelect");
+	const jsonOutput = document.getElementById("jsonOutput");
+	async function getDriverTrips() {
+		let driverTripsObj = await fetch(`/api/user/driver/[[${session.driverId}]]/getTripTransactions`);
+		let driverTripsText = await driverTripsObj.text();
+		let driverTripsData = JSON.parse(driverTripsText);
+		jsonOutput.innerHTML = "";
+		let tripTypeSelectValue = tripTypeSelect.value;
+		driverTripsData.forEach((trip) => {
+			let create = false;
+			if (tripTypeSelectValue == "All") {
+				create = true;
+			} else if (tripTypeSelectValue == "Completed") {
+				if (trip.tripStatus == "Completed") {
+					create = true;
+				}
+			} else if (tripTypeSelectValue == "Upcoming") {
+				if (trip.tripStatus != "Completed") {
+					create = true;
+				}
+			}
+			if (create) {
+				jsonOutput.innerHTML += createObjectTableString(trip);
+			}
+		});
+	}
+	getDriverTrips();
+</script>
 
 </body>
 </html>

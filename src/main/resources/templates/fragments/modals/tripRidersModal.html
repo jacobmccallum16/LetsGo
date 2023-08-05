@@ -105,7 +105,6 @@
 		fetch(`/api/trip-rider/removeById/${tripRiderId}`, {
 			method: 'DELETE'
 		});
-		loadTripRidersModal();
 	}
 	function deleteRow(rowId) {
 		let query = `#tripRidersModal .modal-body tbody #tripRiderId` + rowId.toString();

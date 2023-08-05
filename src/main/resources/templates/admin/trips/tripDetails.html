@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+	<meta charset="UTF-8">
+	<title>Let's Go! - Trip Transactions</title>
+	<th:block th:insert="~{fragments/scripts}"></th:block>
+</head>
+<body th:insert="~{fragments/security/adminSecurity}"></body>
+<body th:if="${session.AUTH == 'ADMIN'}" class="vh-100 d-flex flex-column" style="min-width: 576px;">
+<th:block th:insert="~{fragments/navbar}"></th:block>
+<div class="d-flex flex-fill">
+	<th:block th:insert="~{fragments/sidebar}"></th:block>
+	<main class="container-sm text-center flex-grow-1">
+		<div class="row">
+			<div class="col-12 col-md-10 col-lg-9 col-xl-8 col-xxl-7 my-3 mx-auto align-middle">
+				<div class="card">
+					<div class="card-header">
+						Trip Details Route
+					</div>
+					<div class="card-body text-start">
+						<table class="table table-striped table-hover table-sm align-middle">
+							<thead class="table-dark">
+							<tr>
+								<th></th>
+								<th>From</th>
+								<th>To</th>
+								<th></th>
+							</tr>
+							</thead>
+							<tbody class="table-group-divider border-indigo-subtle">
+								<tr>
+									<td rowspan="2"><img th:src="@{${'/routeImages/' + trip.getRoute().routeImageSource}}" height="100px"></td>
+									<td th:text="${trip.getRoute().getLocationStart()}"></td>
+									<td th:text="${trip.getRoute().getLocationEnd()}"></td>
+								</tr>
+								<tr>
+									<td><span th:text="${(trip.printDate(trip.getDepartureTime()) ?: _)}"></span><br><span th:text="${(trip.printTime(trip.getDepartureTime()) ?: _)}"></span></td>
+									<td><span th:text="${(trip.printDate(trip.getArrivalTime()) ?: _)}"></span><br><span th:text="${(trip.printTime(trip.getArrivalTime()) ?: _)}"></span></td>
+								</tr>
+							</tbody>
+						</table>
+						<hr>
+						<h6 class="text-center">Riders</h6>
+						<table id="ridersTable" class="table table-hover table-sm align-middle text-end">
+							<thead class="table-blue">
+							<tr id="trRider">
+								<th class="text-start">Rider: </th>
+							</tr>
+							</thead>
+							<tbody class="">
+							<tr id="trDistance">
+								<td class="text-start" th:text="${'Distance: ' + #numbers.formatDecimal(drivers.get(0).getDurationEstimated(), 1, 1) + ' km'}">Distance: 15 km</td>
+							</tr>
+							<tr id="trDuration">
+								<td class="text-start" th:text="'Duration: ' + ${#numbers.formatInteger(drivers.get(0).getDurationEstimated(), 1)} + ' min'">Duration: 28 min</td>
+							</tr>
+							<tr id="trBaseRate">
+								<td class="text-start">Base Rate: </td>
+							</tr>
+							<tr><td></td><td></td></tr>
+							<tr id="trBonus">
+								<td class="text-start" th:text="'Bonus: +' +${#numbers.formatPercent(drivers.get(0).getMultiPassengerMultiplier(), 1, 0)}">Bonus: +10%</td>
+							</tr>
+							<tr id="trPreTripQuote">
+								<td class="text-start">Pre-trip Quote: </td>
+							</tr>
+							<tr><td></td><td></td></tr>
+							<tr id="trTripAmount">
+								<td class="text-start">Trip Amount: </td>
+							</tr>
+							<tr id="trTip">
+								<td class="text-start">Tips: </td>
+							</tr>
+							<tr id="trTotal">
+								<td class="text-start">Total: </td>
+							</tr>
+							</tbody>
+						</table>
+						<hr>
+						<h6 class="text-center">Driver</h6>
+						<div class="row justify-content-center m-3">
+							<div class="col col-auto" th:each="driver : ${drivers}" th:object="${driver}">
+								<table class="table table-hover table-sm align-middle text-end">
+									<thead class="table-blue">
+										<tr>
+											<th class="text-start">Driver: </th>
+											<th th:text="${(driver.getFullName() ?: 'No Driver')}">Full Name</th>
+										</tr>
+									</thead>
+									<tbody class="">
+									<tr>
+										<td class="text-start" th:text="'Distance: ' + ${#numbers.formatDecimal(driver.getDurationEstimated(), 1, 1)} + ' km'">Distance: 15 km</td>
+										<td th:text="${#numbers.formatCurrency(driver.getDistanceSubtotal())}">$15.00</td>
+									</tr>
+									<tr>
+										<td class="text-start" th:text="'Duration: ' + ${#numbers.formatInteger(driver.getDurationEstimated(), 1)} + ' min'">Duration: 28 min</td>
+										<td th:text="${#numbers.formatCurrency(driver.getDurationSubtotal())}">$15.00</td>
+									</tr>
+									<tr>
+										<td class="text-start" th:text="'Base Rate: x' +${#numbers.formatDecimal(driver.getBaseRateMultiplier(), 1, 2)}">Base Rate: x1.0</td>
+										<td class="fw-medium" th:text=" ${#numbers.formatCurrency(driver.getBaseRateSubtotal())}">$30.00</td>
+									</tr>
+									<tr><td></td><td></td></tr>
+									<tr>
+										<td class="text-start" th:text="'Bonus: +' +${#numbers.formatPercent(driver.getMultiPassengerMultiplier(), 1, 0)}">Bonus: +10%</td>
+										<td class="" th:text="${#numbers.formatCurrency(driver.getMultiPassengerBonus())}">$10.00</td>
+									</tr>
+									<tr>
+										<td class="text-start">Pre-trip Quote: </td>
+										<td class="fw-medium" th:text="${#numbers.formatCurrency(driver.getPreTripQuote())}">$40.00</td>
+									</tr>
+									<tr><td></td><td></td></tr>
+									<tr>
+										<td class="text-start">Final Wage: </td>
+										<td class="fw-bold text-red-600" th:text="${#numbers.formatCurrency(driver.getTripTotal())}">$40.00</td>
+									</tr>
+									<tr>
+										<td class="text-start">Tips: </td>
+										<td class="" th:text="${#numbers.formatCurrency(driver.getTipAmount())}">$10.00</td>
+									</tr>
+									<tr>
+										<td class="text-start">Driver Pay: </td>
+										<td class="fw-bold" th:text="${#numbers.formatCurrency(driver.getFinalTotal())}">$50.00</td>
+									</tr>
+									</tbody>
+								</table>
+							</div>
+						</div>
+					<div class="card-footer text-end">
+<!--						<button form="form" type="submit" id="submit" class="btn btn-outline-primary">Update Trip</button>-->
+					</div>
+				</div>
+			</div>
+		</div>
+		</div>
+	</main>
+</div>
+<th:block th:insert="~{fragments/scripts/populateTripDetailsTable}"></th:block>
+</body>
+</html>
