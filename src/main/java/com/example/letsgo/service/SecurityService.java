@@ -15,7 +15,7 @@ public class SecurityService {
         session.removeAttribute("AUTH");
         User user = userRepository.findByUsernameAndPassword(usernameEmail, password);
         if (user == null) {
-            user = userRepository.findByEmailAndPassword(usernameEmail, password);
+            user = userRepository.findByEmailAndPassword(usernameEmail.toLowerCase(), password);
         }
         if (user != null) {
             session.removeAttribute("LOGIN_FAIL");

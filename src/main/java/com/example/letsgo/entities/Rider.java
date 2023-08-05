@@ -16,7 +16,7 @@ import java.util.List;
 @NoArgsConstructor
 public class Rider {
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY) public Integer riderId;
-    @OneToOne(fetch = FetchType.LAZY) @JoinColumn(name = "user_id") @JsonIgnoreProperties({"hibernateLazyInitializer"}) public User user;
+    @OneToOne(fetch = FetchType.LAZY) @JoinColumn(name = "user_id") @JsonIgnoreProperties({"hibernateLazyInitializer", "rider", "driver"}) public User user;
     @OneToMany(mappedBy = "ratedRider", cascade = CascadeType.ALL, fetch = FetchType.LAZY) public List<RiderRating> riderRatings;
     @Column(columnDefinition = "BOOLEAN DEFAULT FALSE") public Boolean isActive = false;
     @Column(columnDefinition = "VARCHAR(255) DEFAULT 'Inactive'") public String riderStatus = "Inactive";
