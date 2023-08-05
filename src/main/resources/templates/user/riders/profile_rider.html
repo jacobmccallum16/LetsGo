@@ -81,7 +81,7 @@
 		let riderText = await riderObj.text();
 		let riderData = JSON.parse(riderText);
 		document.getElementById("fullName").innerHTML = riderData.fullName;
-		document.getElementById("driverSafetyScore").innerHTML = riderData.riderSafetyScore.toPrecision(1);
+		document.getElementById("riderSafetyScore").innerHTML = riderData.riderSafetyScore.toFixed(1);
 		let createdAt = new Date(riderData.createdAt);
 		document.getElementById("createdAt").innerHTML = createdAt.toDateString();
 		document.getElementById("tripsTaken").innerHTML = riderData.tripsTaken;

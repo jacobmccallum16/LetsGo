@@ -24,14 +24,13 @@ import java.util.List;
 @AllArgsConstructor
 public class UsersController {
 
-    @Autowired
-    private UserRepository userRepository;
-    private RiderRepository riderRepository;
-    private DriverRepository driverRepository;
-    public HttpSession httpSession;
+    @Autowired private UserRepository userRepository;
+    @Autowired private RiderRepository riderRepository;
+    @Autowired private DriverRepository driverRepository;
+    @Autowired public HttpSession httpSession;
 
     @GetMapping("/admin/users")
-    public String users(Model model, @RequestParam(name="keyId",defaultValue = "") String keyId) {
+    public String users(Model model, @RequestParam(name="keyId",defaultValue = "") String keyId, HttpSession httpSession) {
         List<User> users;
         if (keyId.isEmpty()) {
             users = userRepository.findAll();

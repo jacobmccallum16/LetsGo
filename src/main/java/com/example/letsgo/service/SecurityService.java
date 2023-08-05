@@ -8,8 +8,7 @@ import org.springframework.stereotype.Service;
 
 @Service
 public class SecurityService {
-    @Autowired
-    UserRepository userRepository;
+    @Autowired UserRepository userRepository;
 
     public HttpSession login(String usernameEmail, String password, HttpSession session) {
         session.setAttribute("ROLE", "Guest");
