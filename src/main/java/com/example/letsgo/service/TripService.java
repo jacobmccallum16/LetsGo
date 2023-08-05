@@ -11,6 +11,7 @@ import java.util.List;
 public class TripService {
     @Autowired private TripRepository tripRepository;
     @Autowired private RouteRepository routeRepository;
+    @Autowired private UserRepository userRepository;
     @Autowired private DriverRepository driverRepository;
     @Autowired private VehicleRepository vehicleRepository;
     @Autowired private RiderRepository riderRepository;
@@ -74,7 +75,7 @@ public class TripService {
             trip.setDriver(null);
         }
         updateTrip(trip);
-        createDriverTripTransaction(trip);
+        createDriverTripTransaction(trip.getTripId());
     }
     public void saveTrip(Trip trip) {
         tripRepository.save(trip);
@@ -115,8 +116,9 @@ public class TripService {
         }
         return drivers;
     }
-    public void createDriverTripTransaction(Trip trip) {
-        Driver driver = trip.getDriver();
+    public void createDriverTripTransaction(Integer tripId) {
+        Trip trip = tripRepository.findTripByTripId(tripId);
+        Driver driver = driverRepository.findDriverByDriverId(trip.getDriver().getDriverId());
         DriverTripTransaction driverTripTransaction;
         if (driverTripTransactionRepository.existsByTrip(trip)) {
             driverTripTransaction = driverTripTransactionRepository.findByTrip(trip);
@@ -192,7 +194,5 @@ public class TripService {
         Trip trip = tripRepository.findTripByTripId(tripId);
         return riderTripTransactionRepository.findAllByTrip(trip);
     }
-
-
 
 }

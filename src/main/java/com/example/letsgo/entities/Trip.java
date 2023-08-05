@@ -20,8 +20,8 @@ import java.util.Set;
 public class Trip {
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY) private Integer tripId;
     @ManyToOne(fetch = FetchType.LAZY) @JoinColumn(name = "route_id") @JsonIgnoreProperties({"hibernateLazyInitializer"}) private Route route;
-    @ManyToOne(fetch = FetchType.LAZY) @JoinColumn(name = "driver_id") @JsonIgnoreProperties({"hibernateLazyInitializer"}) private Driver driver;
-    @ManyToOne(fetch = FetchType.LAZY) @JoinColumn(name = "vehicle_id") @JsonIgnoreProperties({"hibernateLazyInitializer"}) private Vehicle vehicle;
+    @ManyToOne(fetch = FetchType.LAZY) @JoinColumn(name = "driver_id") @JsonIgnoreProperties({"hibernateLazyInitializer", "driver"}) private Driver driver;
+    @ManyToOne(fetch = FetchType.LAZY) @JoinColumn(name = "vehicle_id") @JsonIgnoreProperties({"hibernateLazyInitializer", "driver"}) private Vehicle vehicle;
 //    @OneToMany(mappedBy = "trip", cascade = CascadeType.ALL, fetch = FetchType.LAZY) private List<TripTransaction> tripTransaction;
     @OneToMany(mappedBy = "trip", cascade = CascadeType.ALL, fetch = FetchType.LAZY) public List<RiderRating> riderRatings;
     @OneToMany(mappedBy = "trip", cascade = CascadeType.ALL, fetch = FetchType.LAZY) public List<DriverRating> driverRatings;

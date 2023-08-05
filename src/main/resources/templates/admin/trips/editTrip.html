@@ -18,14 +18,14 @@
 					</div>
 					<div class="card-body text-start">
 						<form id="form" class="row g-3 needs-validation" novalidate method="post" th:action="@{/admin/trips/editTrip}" th:object="${trip}">
-							<div class="col-4" th:insert="~{fragments/inputs :: divFloatingDisabledData('number', 'tripId', 'tripId', 'Trip ID')}"></div>
-							<div class="col-4" th:insert="~{fragments/inputs :: divFloatingDisabledUnit('number', 'tripDistanceEstimated', 'tripDistanceEstimated', 'Distance estimated', 'km')}"></div>
-							<div class="col-4" th:insert="~{fragments/inputs :: divFloatingDisabledUnit('number', 'tripDurationEstimated', 'tripDurationEstimated', 'Duration estimated', 'min')}"></div>
-							<div class="col-4" th:insert="~{fragments/inputs :: divFloatingDisabledData('number', 'route.routeId', 'route.routeId', 'Route ID')}"></div>
-							<div class="col-4" th:insert="~{fragments/inputs :: divFloatingDisabledUnit('number', 'tripDistanceActual', 'tripDistanceActual', 'Disance actual', 'km')}"></div>
-							<div class="col-4" th:insert="~{fragments/inputs :: divFloatingDisabledUnit('number', 'tripDurationActual', 'tripDurationActual', 'Duration actual', 'min')}"></div>
-							<div class="col-4" th:insert="~{fragments/inputs :: divFloatingDisabled('number', 'tripImageSource', 'tripImageSource', 'Trip Image URL')}"></div>
-							<div class="col-4"></div>
+							<div class="col-6" th:insert="~{fragments/inputs :: divFloatingDisabledData('number', 'tripId', 'tripId', 'Trip ID')}"></div>
+							<div class="col-6" th:insert="~{fragments/inputs :: divFloatingDisabledUnit('number', 'tripDistanceEstimated', 'tripDistanceEstimated', 'Distance estimated', 'km')}"></div>
+							<div class="col-6" th:insert="~{fragments/inputs :: divFloatingDisabledUnit('number', 'tripDurationEstimated', 'tripDurationEstimated', 'Duration estimated', 'min')}"></div>
+							<div class="col-6" th:insert="~{fragments/inputs :: divFloatingDisabledData('number', 'route.routeId', 'route.routeId', 'Route ID')}"></div>
+							<div class="col-6" th:insert="~{fragments/inputs :: divFloatingDisabledUnit('number', 'tripDistanceActual', 'tripDistanceActual', 'Disance actual', 'km')}"></div>
+							<div class="col-6" th:insert="~{fragments/inputs :: divFloatingDisabledUnit('number', 'tripDurationActual', 'tripDurationActual', 'Duration actual', 'min')}"></div>
+							<div class="col-6" th:insert="~{fragments/inputs :: divFloatingDisabled('number', 'tripImageSource', 'tripImageSource', 'Trip Image URL')}"></div>
+							<div class="col-2"></div>
 							<div class="col-4">
 								<div class="form-floating">
 									<select id="tripStatus" class="form-select" th:field="*{tripStatus}" required>

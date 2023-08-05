@@ -83,15 +83,6 @@ public class DriverTripTransaction {
             fullName = null;
         }
 
-//        if (driverSafetyScore >= 4) {
-//            baseRateMultiplier = BigDecimal.valueOf(1.1);
-//        } else if (driverSafetyScore >= 3 || driverSafetyScore == 0) {
-//            baseRateMultiplier = BigDecimal.valueOf(1);
-//        } else if (driverSafetyScore >= 2.5) {
-//            baseRateMultiplier = BigDecimal.valueOf(0.9);
-//        } else {
-//            baseRateMultiplier = BigDecimal.valueOf(0.8);
-//        }
         baseRateMultiplier = BigDecimal.ONE;
 
         baseRateDistance = BigDecimal.valueOf(0.5);

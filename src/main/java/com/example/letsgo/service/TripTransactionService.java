@@ -71,9 +71,10 @@ public class TripTransactionService {
         riderTripTransactionRepository.saveAll(riderTripTransactions);
     }
 
-    public List<DriverTripTransaction> getAllByDriverId(Integer driverID) {
-        return driverTripTransactionRepository.findAllByDriverId(driverID);
+    public List<DriverTripTransaction> getAllByDriverId(Integer driverId) {
+        return driverTripTransactionRepository.findAllByDriverId(driverId);
     }
+
 
 
 }
