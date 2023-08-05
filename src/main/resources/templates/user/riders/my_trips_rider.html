@@ -38,7 +38,7 @@
 	<div class="container">
 		<h2 class="text-primary">My Trips</h2>
 		<div class="form-floating">
-			<select class="form-select" id="tripTypeSelect" onchange="getRiderrTrips()">
+			<select class="form-select" id="tripTypeSelect" onchange="getRiderTrips()">
 				<option value="" selected>Select Trip Type</option>
 				<option value="Completed">Completed</option>
 				<option value="Upcoming">Upcoming</option>
@@ -47,40 +47,41 @@
 			<label for="tripTypeSelect">Trip Type</label>
 		</div>
 		<div>
-			<div id="jsonOutput"></div>
+			<div id="jsonOutput" class="row m-3 gap-3 justify-content-evenly"></div>
 		</div>
   </div>
 </div>
 
+<script src="/scripts/createObjectTable.js"></script>
 <script th:inline="javascript">
 	const tripTypeSelect = document.getElementById("tripTypeSelect");
+	const jsonOutput = document.getElementById("jsonOutput");
 	async function getRiderTrips() {
 		let riderTripsObj = await fetch(`/api/user/rider/[[${session.riderId}]]/getTripTransactions`);
 		let riderTripsText = await riderTripsObj.text();
 		let riderTripsData = JSON.parse(riderTripsText);
-		let jsonOutput = document.getElementById("jsonOutput");
 		jsonOutput.innerHTML = "";
 		let tripTypeSelectValue = tripTypeSelect.value;
 		riderTripsData.forEach((trip) => {
-			let output = "";
+			let create = false;
 			if (tripTypeSelectValue == "All") {
-				output = `<div class="card mb-3">${JSON.stringify(trip)}</div>`;
+				create = true;
 			} else if (tripTypeSelectValue == "Completed") {
 				if (trip.tripStatus == "Completed") {
-					output = `<div class="card mb-3">${JSON.stringify(trip)}</div>`;
+					create = true;
 				}
 			} else if (tripTypeSelectValue == "Upcoming") {
 				if (trip.tripStatus != "Completed") {
-					output = `<div class="card mb-3">${JSON.stringify(trip)}</div>`;
+					create = true;
 				}
-			} else {
-				output = "";
 			}
-			jsonOutput.innerHTML += output;
+			if (create) {
+				jsonOutput.innerHTML += createObjectTableString(trip);
+			}
 		});
 	}
 	getRiderTrips();
 </script>
-
+<th:block th:insert="~{fragments/scripts/debugSession :: debugSessionBody()}"></th:block>
 </body>
 </html>

@@ -56,4 +56,20 @@ public class SecurityController {
         httpSession = securityService.logout(httpSession);
         return "redirect:/admin" ;
     }
+
+    @GetMapping("/user/switchToRiderAccount/")
+    public String switchToRiderAccount() {
+        httpSession = securityService.switchToRiderAccount(httpSession);
+        return "redirect:/user/riders/profile_rider";
+    }
+    @GetMapping("/user/switchToDriverAccount/")
+    public String switchToDriverAccount() {
+        httpSession = securityService.switchToDriverAccount(httpSession);
+        return "redirect:/user/drivers/profile_driver";
+    }
+    @GetMapping("/user/switchToAdminAccount")
+    public String switchToAdminAccount() {
+        httpSession = securityService.switchToAdminAccount(httpSession);
+        return "redirect:/admin";
+    }
 }

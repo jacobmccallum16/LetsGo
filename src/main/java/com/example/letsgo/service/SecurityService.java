@@ -25,39 +25,37 @@ public class SecurityService {
             session.setAttribute("fullName", user.getFullName());
             session.setAttribute("userId", user.getUserId());
             session.setAttribute("userStatus", user.getUserStatus());
-            if (user.getIsActive()) {
-                if (user.getRider().getIsActive()) {
-                    session.setAttribute("riderId", user.getRider().getRiderId());
-                    session.setAttribute("riderStatus", user.getRider().getRiderStatus());
-                } else {
-                    session.removeAttribute("riderId");
-                    session.removeAttribute("riderStatus");
-                }
-                if (user.getDriver().getIsActive()) {
-                    session.setAttribute("driverId", user.getDriver().getDriverId());
-                    session.setAttribute("driverStatus", user.getDriver().getDriverStatus());
-                } else {
-                    session.removeAttribute("driverId");
-                    session.removeAttribute("driverStatus");
-                }
-                if (user.getIsAdmin()) {
-                    session.setAttribute("AUTH", "ADMIN");
-                } else {
-                    session.setAttribute("AUTH", "USER");
-                }
-                if (user.getIsAdmin()) {
-                    session.setAttribute("ROLE", "Admin");
-                } else if (user.getDriver().getDriverStatus().equals("Active")) {
-                    session.setAttribute("ROLE", "Driver");
-                } else if (user.getRider().getRiderStatus().equals("Active")) {
-                    session.setAttribute("ROLE", "Rider");
-                } else if (user.getDriver().getIsActive()) {
-                    session.setAttribute("ROLE", "Driver");
-                } else if (user.getRider().getIsActive()) {
-                    session.setAttribute("ROLE", "Rider");
-                } else {
-                    session.setAttribute("ROLE", "User");
-                }
+            if (user.getRider().getIsActive()) {
+                session.setAttribute("riderId", user.getRider().getRiderId());
+                session.setAttribute("riderStatus", user.getRider().getRiderStatus());
+            } else {
+                session.removeAttribute("riderId");
+                session.removeAttribute("riderStatus");
+            }
+            if (user.getDriver().getIsActive()) {
+                session.setAttribute("driverId", user.getDriver().getDriverId());
+                session.setAttribute("driverStatus", user.getDriver().getDriverStatus());
+            } else {
+                session.removeAttribute("driverId");
+                session.removeAttribute("driverStatus");
+            }
+            if (user.getIsAdmin()) {
+                session.setAttribute("AUTH", "ADMIN");
+            } else {
+                session.setAttribute("AUTH", "USER");
+            }
+            if (user.getIsAdmin()) {
+                session.setAttribute("ROLE", "Admin");
+            } else if (user.getDriver().getDriverStatus().equals("Active")) {
+                session.setAttribute("ROLE", "Driver");
+            } else if (user.getRider().getRiderStatus().equals("Active")) {
+                session.setAttribute("ROLE", "Rider");
+            } else if (user.getDriver().getIsActive()) {
+                session.setAttribute("ROLE", "Driver");
+            } else if (user.getRider().getIsActive()) {
+                session.setAttribute("ROLE", "Rider");
+            } else {
+                session.setAttribute("ROLE", "User");
             }
         } else {
             // remove all attributes upon failed login
@@ -91,14 +89,11 @@ public class SecurityService {
         // set homepage links
         if (session.getAttribute("ROLE").equals("Admin")) {
             session.setAttribute("redirect", "redirect:/admin/users");
-        }
-        if (session.getAttribute("ROLE").equals("Driver")) {
+        } else if (session.getAttribute("ROLE").equals("Driver")) {
             session.setAttribute("redirect", "redirect:/user/drivers/home_driver");
-        }
-        if (session.getAttribute("ROLE").equals("Rider")) {
+        } else if (session.getAttribute("ROLE").equals("Rider")) {
             session.setAttribute("redirect", "redirect:/user/riders/home_rider");
-        }
-        if (session.getAttribute("ROLE").equals("Guest")) {
+        } else if (session.getAttribute("ROLE").equals("Guest")) {
             session.setAttribute("redirect", "redirect:/user/login");
         }
         return session;
@@ -130,6 +125,19 @@ public class SecurityService {
 
     public HttpSession logout(HttpSession session) {
         session.invalidate();
+        return session;
+    }
+
+    public HttpSession switchToRiderAccount(HttpSession session) {
+        session.setAttribute("ROLE", "Rider");
+        return session;
+    }
+    public HttpSession switchToDriverAccount(HttpSession session) {
+        session.setAttribute("ROLE", "Driver");
+        return session;
+    }
+    public HttpSession switchToAdminAccount(HttpSession session) {
+        session.setAttribute("ROLE", "Admin");
         return session;
     }
 }

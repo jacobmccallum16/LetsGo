@@ -32,13 +32,12 @@
 	let session = /*[[${session}]]*/;
 	let body = document.getElementsByTagName("body").item(0);
 	let debugDiv = document.createElement("div")
-	debugDiv.classList.add("row", "mb-3", "justify-content-center");
+	debugDiv.classList.add("row", "m-3", "justify-content-center");
 	debugDiv.innerHTML = `
 <div class="col col-auto">
-	<table class="table mx-auto">
+	<table class="table mx-auto align-middle">
 	  <thead class="table-green">
 	    <tr><th colspan="2">Session Debug</th></tr>
-	    <tr><td>Key</td><td>Value</td></tr>
 	  </thead>
 	  <tbody id="debugTBody">
 	  </tbody>

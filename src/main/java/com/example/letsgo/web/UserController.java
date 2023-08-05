@@ -71,9 +71,11 @@ public class UserController {
             Driver driver = new Driver(user);
             user.setRider(rider);
             user.setDriver(driver);
+            user.setIsActive(true);
             user.setUserStatus("Active");
             driver.setIsActive(true);
             driver.setDriverStatus("Active");
+            driver.setIsActive(true);
             userRepository.save(user);
             driverRepository.save(driver);
             riderRepository.save(rider);
@@ -104,6 +106,7 @@ public class UserController {
             Driver driver = new Driver(user);
             user.setRider(rider);
             user.setDriver(driver);
+            user.setIsActive(true);
             user.setUserStatus("Active");
             rider.setIsActive(true);
             rider.setRiderStatus("Active");

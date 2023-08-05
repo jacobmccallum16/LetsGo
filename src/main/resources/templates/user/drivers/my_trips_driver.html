@@ -47,46 +47,42 @@
 			<label for="tripTypeSelect">Trip Type</label>
 		</div>
 		<div>
-			<div id="jsonOutput"></div>
+			<div id="jsonOutput" class="row m-3 gap-3 justify-content-evenly"></div>
 		</div>
   </div>
 </div>
 
+<script src="/scripts/createObjectTable.js"></script>
 <script th:inline="javascript">
 	const tripTypeSelect = document.getElementById("tripTypeSelect");
-	async function getDriverData() {
-		let driverObj = await fetch(`/api/user/driver/[[${session.driverId}]]/getDriver`);
-		let driverText = await driverObj.text();
-		let driverData = JSON.parse(driverText);
-	}
+	const jsonOutput = document.getElementById("jsonOutput");
 	async function getDriverTrips() {
 		let driverTripsObj = await fetch(`/api/user/driver/[[${session.driverId}]]/getTripTransactions`);
 		let driverTripsText = await driverTripsObj.text();
 		let driverTripsData = JSON.parse(driverTripsText);
-		let jsonOutput = document.getElementById("jsonOutput");
 		jsonOutput.innerHTML = "";
 		let tripTypeSelectValue = tripTypeSelect.value;
 		driverTripsData.forEach((trip) => {
-			let output = "";
+			let create = false;
 			if (tripTypeSelectValue == "All") {
-				output = `<div class="card mb-3">${JSON.stringify(trip)}</div>`;
+				create = true;
 			} else if (tripTypeSelectValue == "Completed") {
 				if (trip.tripStatus == "Completed") {
-					output = `<div class="card mb-3">${JSON.stringify(trip)}</div>`;
+					create = true;
 				}
 			} else if (tripTypeSelectValue == "Upcoming") {
 				if (trip.tripStatus != "Completed") {
-					output = `<div class="card mb-3">${JSON.stringify(trip)}</div>`;
+					create = true;
 				}
-			} else {
-				output = "";
 			}
-			jsonOutput.innerHTML += output;
+			if (create) {
+				jsonOutput.innerHTML += createObjectTableString(trip);
+			}
 		});
 	}
-	getDriverData();
 	getDriverTrips();
 </script>
 
+<th:block th:insert="~{fragments/scripts/debugSession :: debugSessionBody()}"></th:block>
 </body>
 </html>
