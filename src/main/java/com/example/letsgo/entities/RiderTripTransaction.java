@@ -66,7 +66,7 @@ public class RiderTripTransaction {
 
         passengers = trip.getPassengers();
         if (trip.getDriver() != null) {
-            driverId = trip.getDriverId();
+            driverId = trip.getDriver().getDriverId();
             passengersMax = trip.getPassengersMax();
         } else {
             driverId = null;

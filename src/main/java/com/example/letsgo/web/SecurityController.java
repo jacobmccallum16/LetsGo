@@ -37,6 +37,11 @@ public class SecurityController {
         return "redirect:/admin" ;
     }
 
+    @GetMapping("/homepage")
+    public String homepage() {
+        return securityService.homepage(httpSession);
+    }
+
     @GetMapping("/user/switchToRiderAccount")
     public String switchToRiderAccount() {
         securityService.switchToRiderAccount(httpSession);

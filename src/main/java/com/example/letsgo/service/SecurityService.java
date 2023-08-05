@@ -98,28 +98,18 @@ public class SecurityService {
         return session;
     }
 
-
-    public String login(String username, String password) {
-        String status = "Guest";
-        User user = userRepository.findByUsernameAndPassword(username, password);
-        if (user == null) {
-            user = userRepository.findByUsernameAndPassword(username, password);
+    public String homepage(HttpSession session) {
+        String homepage = "";
+        if (session.getAttribute("ROLE").equals("Admin")) {
+            homepage = "redirect:/admin/users";
+        } else if (session.getAttribute("ROLE").equals("Driver")) {
+            homepage = "redirect:/admin/drivers/home_driver";
+        } else if (session.getAttribute("ROLE").equals("Rider")) {
+            homepage = "redirect:/admin/riders/home_rider";
+        } else if (session.getAttribute("ROLE").equals("Guest")) {
+            homepage = "redirect:/index";
         }
-        if (user != null) {
-            if (user.isAdmin) {
-                status = "Admin";
-            } else if (user.getDriver().getIsActive()) {
-                status = "Driver";
-            } else if (user.getRider().getIsActive()) {
-                status = "Rider";
-            }
-        }
-        if (status == "Guest") {
-            if (username.toLowerCase().equals("admin") && password.toLowerCase().equals("admin")) {
-                status = "Admin";
-            }
-        }
-        return status;
+        return homepage;
     }
 
     public HttpSession logout(HttpSession session) {

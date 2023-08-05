@@ -30,7 +30,7 @@
 </head>
 <body th:insert="~{fragments/security/userSecurity}"></body>
 <body th:if="${session.AUTH == 'USER' || session.AUTH == 'ADMIN'}" class="vh-100">
-<a th:href="@{/user/drivers/home_driver}">
+<a th:href="@{/homepage}">
     <img th:src="@{/company-logo.png}" alt="Let's Go! Logo" class="logo">
 </a>
 <a class="navbar-brand bg-indigo-600 rounded-pill px-3 text-info fw-bold fst-italic" th:href="@{/user/drivers/home_driver}">Let's Go!</a>
@@ -59,6 +59,5 @@
 	}
 	getDriverData();
 </script>
-<th:block th:insert="~{fragments/scripts/debugSession :: debugSessionBody()}"></th:block>
 </body>
 </html>
